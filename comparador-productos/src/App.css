@@ -1,4 +1,16 @@
-#root {
+.content {
+  background-color: lightgray;
+  min-width: 280px;
+  min-height: 500px;
+  padding: 24px;
+}
+
+/* * {
+  height: fit-content;
+  width: fit-content;
+} */
+
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -39,4 +51,4 @@
 
 .read-the-docs {
   color: #888;
-}
+} */

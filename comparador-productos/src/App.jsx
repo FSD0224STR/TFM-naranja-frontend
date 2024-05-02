@@ -1,35 +1,97 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./App.css";
+import { Link } from "react-router-dom";
 
-function App() {
-  const [count, setCount] = useState(0)
+// import Home from "./pages/Home";
+// import About from "./pages/About";
+// import Profile from "./pages/Profile";
+// import Header from "./components/Header";
+import Login from "./components/Login";
+import Register from "./components/Register";
+
+import { Breadcrumb, Layout, Menu, theme } from "antd";
+const { Header, Content, Footer } = Layout;
+
+const items = new Array(2).fill(null).map((_, index) => ({
+  label: index === 0 ? "login" : "register",
+}));
+
+export default function App() {
+  // const {
+  //   token: { colorBgContainer, borderRadiusLG },
+  // } = theme.useToken();
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <BrowserRouter>
+        <Layout>
+          <Header
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <div className='header' />
+            <Menu
+              theme='dark'
+              mode='horizontal'
+              defaultSelectedKeys={["2"]}
+              items={items}
+              style={{
+                flex: 1,
+                minWidth: 0,
+              }}
+            />
+          </Header>
+          <Routes>
+            {/* <Route path='/register' element={<Register />} />
+            <Route path='/login' element={<Login />} /> */}
+            <Content
+            // style={{
+            //   padding: "0 48px",
+            // }}
+            >
+              {/* <Breadcrumb
+                style={{
+                  margin: "16px 0",
+                }}
+              >
+                <Breadcrumb.Item>Home</Breadcrumb.Item>
+                <Breadcrumb.Item>List</Breadcrumb.Item>
+                <Breadcrumb.Item>App</Breadcrumb.Item>
+              </Breadcrumb> */}
+              <div
+                className='content'
+                // style={{
+                //   background: colorBgContainer,
+                //   minHeight: 280,
+                //   maxWidth: 1000,
+                //   padding: 24,
+                //   borderRadius: borderRadiusLG,
+                // }}
+              >
+                Content
+              </div>
+            </Content>
+          </Routes>
+          <Footer
+            style={{
+              textAlign: "center",
+            }}
+          >
+            Ant Design ©{new Date().getFullYear()} Created by Ant UED
+          </Footer>
+        </Layout>
+        {/* <Header /> */}
+        {/* <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/About' element={<About />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/profile' element={<Profile />} />
+        </Routes> */}
+      </BrowserRouter>
     </>
-  )
+  );
 }
-
-export default App
