@@ -1,4 +1,6 @@
 .header {
-    display: 'flex',
-    alignItems: 'center',
+    display: flex;
+    gap: 2rem;
+    padding: 1rem;
+    background-color: lightgray;
 }
