@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./Register.css";
 import { PlusOutlined } from "@ant-design/icons";
 import {
   Button,
@@ -30,14 +31,14 @@ const normFile = (e) => {
 const FormDisabledDemo = () => {
   const [componentDisabled, setComponentDisabled] = useState(true);
   return (
-    <>
-      <Checkbox
+    <div className="form-register">
+      {/* <Checkbox
         checked={componentDisabled}
         onChange={(e) => setComponentDisabled(e.target.checked)}
       >
         Form disabled
-      </Checkbox>
-      
+      </Checkbox> */}
+
       <Form
         labelCol={{
           span: 4,
@@ -45,38 +46,38 @@ const FormDisabledDemo = () => {
         wrapperCol={{
           span: 14,
         }}
-        layout='horizontal'
-        disabled={componentDisabled}
+        layout="horizontal"
+        // disabled={componentDisabled}
         style={{
           maxWidth: 600,
         }}
       >
-{/*         <Form.Item label='Checkbox' name='disabled' valuePropName='checked'>
+        {/*         <Form.Item label='Checkbox' name='disabled' valuePropName='checked'>
           <Checkbox>Checkbox</Checkbox>
         </Form.Item> */}
 
-{/*         <Form.Item label='Radio'>
+        {/*         <Form.Item label='Radio'>
           <Radio.Group>
             <Radio value='apple'> Apple </Radio>
             <Radio value='pear'> Pear </Radio>
           </Radio.Group>
         </Form.Item> */}
 
-        <Form.Item label='Name'>
+        <Form.Item label="Name">
           <Input />
         </Form.Item>
 
-        <Form.Item label='Last Name'>
+        <Form.Item label="Last Name">
           <Input />
         </Form.Item>
 
-        <Form.Item label='Select'>
+        <Form.Item label="Select">
           <Select>
-            <Select.Option value='demo'>Demo</Select.Option>
+            <Select.Option value="demo">Demo</Select.Option>
           </Select>
         </Form.Item>
 
-{/*         <Form.Item label='TreeSelect'>
+        {/*         <Form.Item label='TreeSelect'>
           <TreeSelect
             treeData={[
               {
@@ -93,7 +94,7 @@ const FormDisabledDemo = () => {
           />
         </Form.Item> */}
 
-{/*         <Form.Item label='Cascader'>
+        {/*         <Form.Item label='Cascader'>
           <Cascader
             options={[
               {
@@ -110,38 +111,38 @@ const FormDisabledDemo = () => {
           />
         </Form.Item> */}
 
-        <Form.Item label='Birthday'>
+        <Form.Item label="Birthday">
           <DatePicker />
         </Form.Item>
 
-{/*         <Form.Item label='RangePicker'>
+        {/*         <Form.Item label='RangePicker'>
           <RangePicker />
         </Form.Item> */}
 
-{/*         <Form.Item label='InputNumber'>
+        {/*         <Form.Item label='InputNumber'>
           <InputNumber />
         </Form.Item> */}
 
-        <Form.Item label='TextArea'>
+        <Form.Item label="TextArea">
           <TextArea rows={4} />
         </Form.Item>
 
-{/*         <Form.Item label='Switch' valuePropName='checked'>
+        {/*         <Form.Item label='Switch' valuePropName='checked'>
           <Switch />
         </Form.Item> */}
 
         <Form.Item
-          label='Upload'
-          valuePropName='fileList'
+          label="Upload"
+          valuePropName="fileList"
           getValueFromEvent={normFile}
         >
-          <Upload action='/upload.do' listType='picture-card'>
+          <Upload action="/upload.do" listType="picture-card">
             <button
               style={{
                 border: 0,
                 background: "none",
               }}
-              type='button'
+              type="button"
             >
               <PlusOutlined />
               <div
@@ -155,19 +156,19 @@ const FormDisabledDemo = () => {
           </Upload>
         </Form.Item>
 
-        <Form.Item label='Button'>
-          <Button>Create</Button>
+        <Form.Item className="button-register">
+          <Button>Register</Button>
         </Form.Item>
 
-{/*         <Form.Item label='Slider'>
+        {/*         <Form.Item label='Slider'>
           <Slider />
         </Form.Item> */}
 
-{/*         <Form.Item label='ColorPicker'>
+        {/*         <Form.Item label='ColorPicker'>
           <ColorPicker />
         </Form.Item> */}
       </Form>
-    </>
+    </div>
   );
 };
 export default () => <FormDisabledDemo />;
