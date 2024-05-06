@@ -16,14 +16,17 @@ import {
   TreeSelect,
   Upload,
 } from "antd";
+
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
+
 const normFile = (e) => {
   if (Array.isArray(e)) {
     return e;
   }
   return e?.fileList;
 };
+
 const FormDisabledDemo = () => {
   const [componentDisabled, setComponentDisabled] = useState(true);
   return (
@@ -34,6 +37,7 @@ const FormDisabledDemo = () => {
       >
         Form disabled
       </Checkbox>
+      
       <Form
         labelCol={{
           span: 4,
@@ -47,24 +51,32 @@ const FormDisabledDemo = () => {
           maxWidth: 600,
         }}
       >
-        <Form.Item label='Checkbox' name='disabled' valuePropName='checked'>
+{/*         <Form.Item label='Checkbox' name='disabled' valuePropName='checked'>
           <Checkbox>Checkbox</Checkbox>
-        </Form.Item>
-        <Form.Item label='Radio'>
+        </Form.Item> */}
+
+{/*         <Form.Item label='Radio'>
           <Radio.Group>
             <Radio value='apple'> Apple </Radio>
             <Radio value='pear'> Pear </Radio>
           </Radio.Group>
-        </Form.Item>
-        <Form.Item label='Input'>
+        </Form.Item> */}
+
+        <Form.Item label='Name'>
           <Input />
         </Form.Item>
+
+        <Form.Item label='Last Name'>
+          <Input />
+        </Form.Item>
+
         <Form.Item label='Select'>
           <Select>
             <Select.Option value='demo'>Demo</Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item label='TreeSelect'>
+
+{/*         <Form.Item label='TreeSelect'>
           <TreeSelect
             treeData={[
               {
@@ -79,8 +91,9 @@ const FormDisabledDemo = () => {
               },
             ]}
           />
-        </Form.Item>
-        <Form.Item label='Cascader'>
+        </Form.Item> */}
+
+{/*         <Form.Item label='Cascader'>
           <Cascader
             options={[
               {
@@ -95,22 +108,28 @@ const FormDisabledDemo = () => {
               },
             ]}
           />
-        </Form.Item>
-        <Form.Item label='DatePicker'>
+        </Form.Item> */}
+
+        <Form.Item label='Birthday'>
           <DatePicker />
         </Form.Item>
-        <Form.Item label='RangePicker'>
+
+{/*         <Form.Item label='RangePicker'>
           <RangePicker />
-        </Form.Item>
-        <Form.Item label='InputNumber'>
+        </Form.Item> */}
+
+{/*         <Form.Item label='InputNumber'>
           <InputNumber />
-        </Form.Item>
+        </Form.Item> */}
+
         <Form.Item label='TextArea'>
           <TextArea rows={4} />
         </Form.Item>
-        <Form.Item label='Switch' valuePropName='checked'>
+
+{/*         <Form.Item label='Switch' valuePropName='checked'>
           <Switch />
-        </Form.Item>
+        </Form.Item> */}
+
         <Form.Item
           label='Upload'
           valuePropName='fileList'
@@ -135,15 +154,18 @@ const FormDisabledDemo = () => {
             </button>
           </Upload>
         </Form.Item>
+
         <Form.Item label='Button'>
-          <Button>Button</Button>
+          <Button>Create</Button>
         </Form.Item>
-        <Form.Item label='Slider'>
+
+{/*         <Form.Item label='Slider'>
           <Slider />
-        </Form.Item>
-        <Form.Item label='ColorPicker'>
+        </Form.Item> */}
+
+{/*         <Form.Item label='ColorPicker'>
           <ColorPicker />
-        </Form.Item>
+        </Form.Item> */}
       </Form>
     </>
   );
