@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Register.css";
 import { PlusOutlined } from "@ant-design/icons";
+import { register } from "../apiService/userApi";
 import {
   Button,
   Cascader,
@@ -19,6 +20,15 @@ import {
 } from "antd";
 import "./Register.css";
 
+const handleRegister = async (...userData) => {
+  console.log("userData: ", userData);
+  const response = await register(userData);
+  if (response.error) {
+    console.error("Error al registrar usuario:", response.error);
+  } else {
+    console.log("Usuario registrado con exito:", response.data);
+  }
+};
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 
@@ -30,31 +40,38 @@ const normFile = (e) => {
 };
 
 const FormDisabledDemo = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [componentDisabled, setComponentDisabled] = useState(true);
   return (
 
-    <div className="form-register">
-      {/* <Checkbox
-        checked={componentDisabled}
-        onChange={(e) => setComponentDisabled(e.target.checked)}
-      >
-        Form disabled
-      </Checkbox> */}
+    <>
+      <div className="container">
+        <Checkbox
+          checked={componentDisabled}
+          onChange={(e) => setComponentDisabled(e.target.checked)}
+        >
+          Form disabled
+        </Checkbox>
 
-      <Form
-        labelCol={{
-          span: 4,
-        }}
-        wrapperCol={{
-          span: 14,
-        }}
-        layout="horizontal"
-        // disabled={componentDisabled}
-        style={{
-          maxWidth: 600,
-        }}
-      >
-        {/*         <Form.Item label='Checkbox' name='disabled' valuePropName='checked'>
+        <Form
+          name="form__container"
+          labelCol={{
+            span: 4,
+          }}
+          wrapperCol={{
+            span: 14,
+          }}
+          layout="horizontal"
+          disabled={componentDisabled}
+          style={{
+            maxWidth: 600,
+          }}
+        >
+          {/*         <Form.Item label='Checkbox' name='disabled' valuePropName='checked'>
+
           <Checkbox>Checkbox</Checkbox>
         </Form.Item> */}
 
@@ -66,22 +83,35 @@ const FormDisabledDemo = () => {
           </Radio.Group>
         </Form.Item> */}
 
- david-front
-        <Form.Item label="Name">
-          <Input />
-        </Form.Item>
 
-        <Form.Item label="Last Name">
-          <Input />
-        </Form.Item>
+          <Form.Item label="Name">
+            <Input value={name} onChange={(e) => setName(e.target.value)} />
+          </Form.Item>
 
-        <Form.Item label="Select">
-          <Select>
-            <Select.Option value="demo">Demo</Select.Option>
-          </Select>
-        </Form.Item>
+          <Form.Item label="Last Name">
+            <Input
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </Form.Item>
 
-        {/*         <Form.Item label='TreeSelect'>
+          <Form.Item label="Email">
+            <Input value={email} onChange={(e) => setEmail(e.target.value)} />
+          </Form.Item>
+
+          <Form.Item label="Password">
+            <Input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Form.Item>
+
+          <Form.Item label="Select">
+            <Select>
+              <Select.Option value="demo">Demo</Select.Option>
+            </Select>
+          </Form.Item>
+
 
           <TreeSelect
             treeData={[
@@ -130,9 +160,11 @@ const FormDisabledDemo = () => {
           <InputNumber />
         </Form.Item> */}
 
-        <Form.Item label="TextArea">
-          <TextArea rows={4} />
-        </Form.Item>
+
+          <Form.Item label="TextArea">
+            <TextArea rows={4} />
+          </Form.Item>
+
 
         {/*         <Form.Item label='Switch' valuePropName='checked'>
           <Switch />
@@ -154,24 +186,36 @@ const FormDisabledDemo = () => {
               <PlusOutlined />
               <div
 
+
                 style={{
                   border: 0,
                   background: "none",
                 }}
-                type='button'
+                type="button"
               >
 
-                Upload
-              </div>
-            </button>
-          </Upload>
-        </Form.Item>
+                <PlusOutlined />
+                <div
+                  style={{
+                    marginTop: 8,
+                  }}
+                >
+                  Upload
+                </div>
+              </button>
+            </Upload>
+          </Form.Item>
 
-        <Form.Item className="button-register">
-          <Button>Register</Button>
-        </Form.Item>
+          <Form.Item label="Button">
+            <Button
+              onClick={() => handleRegister(name, lastName, email, password)}
+            >
+              Create
+            </Button>
+          </Form.Item>
 
-        {/*         <Form.Item label='Slider'>
+          {/*         <Form.Item label='Slider'>
+
           <Slider />
         </Form.Item> */}
 
