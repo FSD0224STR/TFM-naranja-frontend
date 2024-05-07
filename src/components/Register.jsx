@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./Register.css";
 import { PlusOutlined } from "@ant-design/icons";
 import { register } from "../apiService/userApi";
 import {
@@ -45,6 +46,7 @@ const FormDisabledDemo = () => {
   const [lastName, setLastName] = useState("");
   const [componentDisabled, setComponentDisabled] = useState(true);
   return (
+
     <>
       <div className="container">
         <Checkbox
@@ -69,15 +71,18 @@ const FormDisabledDemo = () => {
           }}
         >
           {/*         <Form.Item label='Checkbox' name='disabled' valuePropName='checked'>
+
           <Checkbox>Checkbox</Checkbox>
         </Form.Item> */}
 
-          {/*         <Form.Item label='Radio'>
+        {/*         <Form.Item label='Radio'>
+
           <Radio.Group>
             <Radio value='apple'> Apple </Radio>
             <Radio value='pear'> Pear </Radio>
           </Radio.Group>
         </Form.Item> */}
+
 
           <Form.Item label="Name">
             <Input value={name} onChange={(e) => setName(e.target.value)} />
@@ -107,7 +112,7 @@ const FormDisabledDemo = () => {
             </Select>
           </Form.Item>
 
-          {/*         <Form.Item label='TreeSelect'>
+
           <TreeSelect
             treeData={[
               {
@@ -125,6 +130,7 @@ const FormDisabledDemo = () => {
         </Form.Item> */}
 
           {/*         <Form.Item label='Cascader'>
+
           <Cascader
             options={[
               {
@@ -141,40 +147,53 @@ const FormDisabledDemo = () => {
           />
         </Form.Item> */}
 
-          <Form.Item label="Birthday">
-            <DatePicker />
-          </Form.Item>
 
-          {/*         <Form.Item label='RangePicker'>
+        <Form.Item label="Birthday">
+          <DatePicker />
+        </Form.Item>
+
+        {/*         <Form.Item label='RangePicker'>
           <RangePicker />
         </Form.Item> */}
 
-          {/*         <Form.Item label='InputNumber'>
+        {/*         <Form.Item label='InputNumber'>
           <InputNumber />
         </Form.Item> */}
+
 
           <Form.Item label="TextArea">
             <TextArea rows={4} />
           </Form.Item>
 
-          {/*         <Form.Item label='Switch' valuePropName='checked'>
+
+        {/*         <Form.Item label='Switch' valuePropName='checked'>
           <Switch />
         </Form.Item> */}
 
-          <Form.Item
-            label="Upload"
-            valuePropName="fileList"
-            getValueFromEvent={normFile}
-          >
-            <Upload action="/upload.do" listType="picture-card">
-              <button
-                // onClick={handleRegister}
+        <Form.Item
+          label="Upload"
+          valuePropName="fileList"
+          getValueFromEvent={normFile}
+        >
+          <Upload action="/upload.do" listType="picture-card">
+            <button
+              style={{
+                border: 0,
+                background: "none",
+              }}
+              type="button"
+            >
+              <PlusOutlined />
+              <div
+
+
                 style={{
                   border: 0,
                   background: "none",
                 }}
                 type="button"
               >
+
                 <PlusOutlined />
                 <div
                   style={{
@@ -196,15 +215,16 @@ const FormDisabledDemo = () => {
           </Form.Item>
 
           {/*         <Form.Item label='Slider'>
+
           <Slider />
         </Form.Item> */}
 
-          {/*         <Form.Item label='ColorPicker'>
+        {/*         <Form.Item label='ColorPicker'>
           <ColorPicker />
         </Form.Item> */}
-        </Form>
-      </div>
-    </>
+      </Form>
+    </div>
+
   );
 };
 export default () => <FormDisabledDemo />;

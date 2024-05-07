@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import Profile from "./components/Profile";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import Footer from "./components/Footer";
 
 export default function App() {
   return (
@@ -57,6 +58,7 @@ export default function App() {
         <Route path="/login" element={<Login handleLogin={handleLogin} />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
+
     </>
   );
 }

@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Button, Checkbox, Form, Input } from "antd";
 import { login } from "../apiService/userApi";
@@ -56,10 +57,12 @@ const Login = () => {
 
       <Form.Item
         label="Password"
+
         name="password"
         rules={[
           {
             required: true,
+
             message: "Please input your password!",
           },
         ]}
@@ -94,6 +97,7 @@ const Login = () => {
         >
           Submit
         </Button>
+
       </Form.Item>
     </Form>
   );
