@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
+import { register } from "../apiService/userApi";
 import {
   Button,
   Cascader,
@@ -18,6 +19,15 @@ import {
 } from "antd";
 import "./Register.css";
 
+const handleRegister = async (...userData) => {
+  console.log("userData: ", userData);
+  const response = await register(userData);
+  if (response.error) {
+    console.error("Error al registrar usuario:", response.error);
+  } else {
+    console.log("Usuario registrado con exito:", response.data);
+  }
+};
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 
@@ -29,10 +39,14 @@ const normFile = (e) => {
 };
 
 const FormDisabledDemo = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [componentDisabled, setComponentDisabled] = useState(true);
   return (
     <>
-      <div className='container'>
+      <div className="container">
         <Checkbox
           checked={componentDisabled}
           onChange={(e) => setComponentDisabled(e.target.checked)}
@@ -41,14 +55,14 @@ const FormDisabledDemo = () => {
         </Checkbox>
 
         <Form
-          name='form__container'
+          name="form__container"
           labelCol={{
             span: 4,
           }}
           wrapperCol={{
             span: 14,
           }}
-          layout='horizontal'
+          layout="horizontal"
           disabled={componentDisabled}
           style={{
             maxWidth: 600,
@@ -65,17 +79,31 @@ const FormDisabledDemo = () => {
           </Radio.Group>
         </Form.Item> */}
 
-          <Form.Item label='Name'>
-            <Input />
+          <Form.Item label="Name">
+            <Input value={name} onChange={(e) => setName(e.target.value)} />
           </Form.Item>
 
-          <Form.Item label='Last Name'>
-            <Input />
+          <Form.Item label="Last Name">
+            <Input
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
           </Form.Item>
 
-          <Form.Item label='Select'>
+          <Form.Item label="Email">
+            <Input value={email} onChange={(e) => setEmail(e.target.value)} />
+          </Form.Item>
+
+          <Form.Item label="Password">
+            <Input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Form.Item>
+
+          <Form.Item label="Select">
             <Select>
-              <Select.Option value='demo'>Demo</Select.Option>
+              <Select.Option value="demo">Demo</Select.Option>
             </Select>
           </Form.Item>
 
@@ -113,7 +141,7 @@ const FormDisabledDemo = () => {
           />
         </Form.Item> */}
 
-          <Form.Item label='Birthday'>
+          <Form.Item label="Birthday">
             <DatePicker />
           </Form.Item>
 
@@ -125,7 +153,7 @@ const FormDisabledDemo = () => {
           <InputNumber />
         </Form.Item> */}
 
-          <Form.Item label='TextArea'>
+          <Form.Item label="TextArea">
             <TextArea rows={4} />
           </Form.Item>
 
@@ -134,17 +162,18 @@ const FormDisabledDemo = () => {
         </Form.Item> */}
 
           <Form.Item
-            label='Upload'
-            valuePropName='fileList'
+            label="Upload"
+            valuePropName="fileList"
             getValueFromEvent={normFile}
           >
-            <Upload action='/upload.do' listType='picture-card'>
+            <Upload action="/upload.do" listType="picture-card">
               <button
+                // onClick={handleRegister}
                 style={{
                   border: 0,
                   background: "none",
                 }}
-                type='button'
+                type="button"
               >
                 <PlusOutlined />
                 <div
@@ -158,8 +187,12 @@ const FormDisabledDemo = () => {
             </Upload>
           </Form.Item>
 
-          <Form.Item label='Button'>
-            <Button>Create</Button>
+          <Form.Item label="Button">
+            <Button
+              onClick={() => handleRegister(name, lastName, email, password)}
+            >
+              Create
+            </Button>
           </Form.Item>
 
           {/*         <Form.Item label='Slider'>
