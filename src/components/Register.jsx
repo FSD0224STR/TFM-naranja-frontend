@@ -17,6 +17,7 @@ import {
   TreeSelect,
   Upload,
 } from "antd";
+import "./Register.css";
 
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
@@ -31,6 +32,7 @@ const normFile = (e) => {
 const FormDisabledDemo = () => {
   const [componentDisabled, setComponentDisabled] = useState(true);
   return (
+
     <div className="form-register">
       {/* <Checkbox
         checked={componentDisabled}
@@ -57,12 +59,14 @@ const FormDisabledDemo = () => {
         </Form.Item> */}
 
         {/*         <Form.Item label='Radio'>
+
           <Radio.Group>
             <Radio value='apple'> Apple </Radio>
             <Radio value='pear'> Pear </Radio>
           </Radio.Group>
         </Form.Item> */}
 
+ david-front
         <Form.Item label="Name">
           <Input />
         </Form.Item>
@@ -78,6 +82,7 @@ const FormDisabledDemo = () => {
         </Form.Item>
 
         {/*         <Form.Item label='TreeSelect'>
+
           <TreeSelect
             treeData={[
               {
@@ -94,7 +99,8 @@ const FormDisabledDemo = () => {
           />
         </Form.Item> */}
 
-        {/*         <Form.Item label='Cascader'>
+          {/*         <Form.Item label='Cascader'>
+
           <Cascader
             options={[
               {
@@ -110,6 +116,7 @@ const FormDisabledDemo = () => {
             ]}
           />
         </Form.Item> */}
+
 
         <Form.Item label="Birthday">
           <DatePicker />
@@ -146,10 +153,14 @@ const FormDisabledDemo = () => {
             >
               <PlusOutlined />
               <div
+
                 style={{
-                  marginTop: 8,
+                  border: 0,
+                  background: "none",
                 }}
+                type='button'
               >
+
                 Upload
               </div>
             </button>
@@ -169,6 +180,7 @@ const FormDisabledDemo = () => {
         </Form.Item> */}
       </Form>
     </div>
+
   );
 };
 export default () => <FormDisabledDemo />;
