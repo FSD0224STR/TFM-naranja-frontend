@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./Register.css";
 import { PlusOutlined } from "@ant-design/icons";
 import {
   Button,
@@ -31,55 +32,57 @@ const normFile = (e) => {
 const FormDisabledDemo = () => {
   const [componentDisabled, setComponentDisabled] = useState(true);
   return (
-    <>
-      <div className='container'>
-        <Checkbox
-          checked={componentDisabled}
-          onChange={(e) => setComponentDisabled(e.target.checked)}
-        >
-          Form disabled
-        </Checkbox>
 
-        <Form
-          name='form__container'
-          labelCol={{
-            span: 4,
-          }}
-          wrapperCol={{
-            span: 14,
-          }}
-          layout='horizontal'
-          disabled={componentDisabled}
-          style={{
-            maxWidth: 600,
-          }}
-        >
-          {/*         <Form.Item label='Checkbox' name='disabled' valuePropName='checked'>
+    <div className="form-register">
+      {/* <Checkbox
+        checked={componentDisabled}
+        onChange={(e) => setComponentDisabled(e.target.checked)}
+      >
+        Form disabled
+      </Checkbox> */}
+
+      <Form
+        labelCol={{
+          span: 4,
+        }}
+        wrapperCol={{
+          span: 14,
+        }}
+        layout="horizontal"
+        // disabled={componentDisabled}
+        style={{
+          maxWidth: 600,
+        }}
+      >
+        {/*         <Form.Item label='Checkbox' name='disabled' valuePropName='checked'>
           <Checkbox>Checkbox</Checkbox>
         </Form.Item> */}
 
-          {/*         <Form.Item label='Radio'>
+        {/*         <Form.Item label='Radio'>
+
           <Radio.Group>
             <Radio value='apple'> Apple </Radio>
             <Radio value='pear'> Pear </Radio>
           </Radio.Group>
         </Form.Item> */}
 
-          <Form.Item label='Name'>
-            <Input />
-          </Form.Item>
+ david-front
+        <Form.Item label="Name">
+          <Input />
+        </Form.Item>
 
-          <Form.Item label='Last Name'>
-            <Input />
-          </Form.Item>
+        <Form.Item label="Last Name">
+          <Input />
+        </Form.Item>
 
-          <Form.Item label='Select'>
-            <Select>
-              <Select.Option value='demo'>Demo</Select.Option>
-            </Select>
-          </Form.Item>
+        <Form.Item label="Select">
+          <Select>
+            <Select.Option value="demo">Demo</Select.Option>
+          </Select>
+        </Form.Item>
 
-          {/*         <Form.Item label='TreeSelect'>
+        {/*         <Form.Item label='TreeSelect'>
+
           <TreeSelect
             treeData={[
               {
@@ -97,6 +100,7 @@ const FormDisabledDemo = () => {
         </Form.Item> */}
 
           {/*         <Form.Item label='Cascader'>
+
           <Cascader
             options={[
               {
@@ -113,65 +117,70 @@ const FormDisabledDemo = () => {
           />
         </Form.Item> */}
 
-          <Form.Item label='Birthday'>
-            <DatePicker />
-          </Form.Item>
 
-          {/*         <Form.Item label='RangePicker'>
+        <Form.Item label="Birthday">
+          <DatePicker />
+        </Form.Item>
+
+        {/*         <Form.Item label='RangePicker'>
           <RangePicker />
         </Form.Item> */}
 
-          {/*         <Form.Item label='InputNumber'>
+        {/*         <Form.Item label='InputNumber'>
           <InputNumber />
         </Form.Item> */}
 
-          <Form.Item label='TextArea'>
-            <TextArea rows={4} />
-          </Form.Item>
+        <Form.Item label="TextArea">
+          <TextArea rows={4} />
+        </Form.Item>
 
-          {/*         <Form.Item label='Switch' valuePropName='checked'>
+        {/*         <Form.Item label='Switch' valuePropName='checked'>
           <Switch />
         </Form.Item> */}
 
-          <Form.Item
-            label='Upload'
-            valuePropName='fileList'
-            getValueFromEvent={normFile}
-          >
-            <Upload action='/upload.do' listType='picture-card'>
-              <button
+        <Form.Item
+          label="Upload"
+          valuePropName="fileList"
+          getValueFromEvent={normFile}
+        >
+          <Upload action="/upload.do" listType="picture-card">
+            <button
+              style={{
+                border: 0,
+                background: "none",
+              }}
+              type="button"
+            >
+              <PlusOutlined />
+              <div
+
                 style={{
                   border: 0,
                   background: "none",
                 }}
                 type='button'
               >
-                <PlusOutlined />
-                <div
-                  style={{
-                    marginTop: 8,
-                  }}
-                >
-                  Upload
-                </div>
-              </button>
-            </Upload>
-          </Form.Item>
 
-          <Form.Item label='Button'>
-            <Button>Create</Button>
-          </Form.Item>
+                Upload
+              </div>
+            </button>
+          </Upload>
+        </Form.Item>
 
-          {/*         <Form.Item label='Slider'>
+        <Form.Item className="button-register">
+          <Button>Register</Button>
+        </Form.Item>
+
+        {/*         <Form.Item label='Slider'>
           <Slider />
         </Form.Item> */}
 
-          {/*         <Form.Item label='ColorPicker'>
+        {/*         <Form.Item label='ColorPicker'>
           <ColorPicker />
         </Form.Item> */}
-        </Form>
-      </div>
-    </>
+      </Form>
+    </div>
+
   );
 };
 export default () => <FormDisabledDemo />;
