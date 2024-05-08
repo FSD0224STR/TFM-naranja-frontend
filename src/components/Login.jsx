@@ -1,11 +1,13 @@
-
 import React, { useState } from "react";
+import "./Login.css";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
 import { login } from "../apiService/userApi";
 
 const onFinish = (values) => {
   console.log("Success:", values);
 };
+
 const handleLogin = async (email, password) => {
   console.log("email: ", email);
   console.log("password: ", password);
@@ -16,88 +18,84 @@ const handleLogin = async (email, password) => {
     console.log("Inicio de sesion exitoso:", response.data);
   }
 };
+
 const onFinishFailed = (errorInfo) => {
   console.log("Failed:", errorInfo);
 };
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
     <Form
-      name="basic"
-      labelCol={{
-        span: 8,
-      }}
-      wrapperCol={{
-        span: 16,
-      }}
-      style={{
-        maxWidth: 600,
-      }}
+      name="normal_login"
+      className="login-form"
       initialValues={{
         remember: true,
       }}
       onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
     >
       <Form.Item
-        label="Username"
-        name="email"
+        name="username"
         rules={[
           {
             required: true,
-            message: "Please input your email!",
+            message: "Please input your Username!",
           },
         ]}
       >
-        <Input value={email} onChange={(e) => setEmail(e.target.value)} />
+        <Input
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          placeholder="Username"
+          className="input-login"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
       </Form.Item>
 
       <Form.Item
-        label="Password"
-
         name="password"
         rules={[
           {
             required: true,
-
-            message: "Please input your password!",
+            message: "Please input your Password!",
           },
         ]}
       >
-        <Input.Password
+        <Input
+          prefix={<LockOutlined className="site-form-item-icon" />}
+          type="password"
+          placeholder="Password"
+          className="input-login"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
       </Form.Item>
 
-      <Form.Item
-        name="remember"
-        valuePropName="checked"
-        wrapperCol={{
-          offset: 8,
-          span: 16,
-        }}
-      >
-        <Checkbox>Remember me</Checkbox>
-      </Form.Item>
-
-      <Form.Item
-        wrapperCol={{
-          offset: 8,
-          span: 16,
-        }}
-      >
+      <Form.Item>
         <Button
           type="primary"
           htmlType="submit"
-          onClick={() => handleLogin(name, password)}
+          className="login-form-button"
+          onClick={() => handleLogin(email, password)}
         >
-          Submit
+          Log in
         </Button>
+        Or{" "}
+        <a className="register-form-button" href="">
+          register now!
+        </a>
+      </Form.Item>
 
+      <Form.Item>
+        {/* <Form.Item name="remember" valuePropName="checked" noStyle>
+    <Checkbox>Remember me</Checkbox>
+  </Form.Item> */}
+
+        <a className="login-form-forgot" href="">
+          Forgot password
+        </a>
       </Form.Item>
     </Form>
   );

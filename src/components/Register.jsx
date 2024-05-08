@@ -20,15 +20,6 @@ import {
 } from "antd";
 import "./Register.css";
 
-const handleRegister = async (...userData) => {
-  console.log("userData: ", userData);
-  const response = await register(userData);
-  if (response.error) {
-    console.error("Error al registrar usuario:", response.error);
-  } else {
-    console.log("Usuario registrado con exito:", response.data);
-  }
-};
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 
@@ -39,22 +30,32 @@ const normFile = (e) => {
   return e?.fileList;
 };
 
-const FormDisabledDemo = () => {
+const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [componentDisabled, setComponentDisabled] = useState(true);
-  return (
+  // const [componentDisabled, setComponentDisabled] = useState(true);
 
+  const handleRegister = async (...userData) => {
+    console.log("userData: ", userData);
+    const response = await register(userData);
+    if (response.error) {
+      console.error("Error al registrar usuario:", response.error);
+    } else {
+      console.log("Usuario registrado con exito:", response.data);
+    }
+  };
+
+  return (
     <>
       <div className="container">
-        <Checkbox
+        {/* <Checkbox
           checked={componentDisabled}
           onChange={(e) => setComponentDisabled(e.target.checked)}
         >
           Form disabled
-        </Checkbox>
+        </Checkbox> */}
 
         <Form
           name="form__container"
@@ -65,7 +66,7 @@ const FormDisabledDemo = () => {
             span: 14,
           }}
           layout="horizontal"
-          disabled={componentDisabled}
+          // disabled={componentDisabled}
           style={{
             maxWidth: 600,
           }}
@@ -75,14 +76,13 @@ const FormDisabledDemo = () => {
           <Checkbox>Checkbox</Checkbox>
         </Form.Item> */}
 
-        {/*         <Form.Item label='Radio'>
+          {/*         <Form.Item label='Radio'>
 
           <Radio.Group>
             <Radio value='apple'> Apple </Radio>
             <Radio value='pear'> Pear </Radio>
           </Radio.Group>
         </Form.Item> */}
-
 
           <Form.Item label="Name">
             <Input value={name} onChange={(e) => setName(e.target.value)} />
@@ -112,7 +112,7 @@ const FormDisabledDemo = () => {
             </Select>
           </Form.Item>
 
-
+          {/*         <Form.Item label='TreeSelect'>
           <TreeSelect
             treeData={[
               {
@@ -147,58 +147,46 @@ const FormDisabledDemo = () => {
           />
         </Form.Item> */}
 
+          <Form.Item label="Birthday">
+            <DatePicker />
+          </Form.Item>
 
-        <Form.Item label="Birthday">
-          <DatePicker />
-        </Form.Item>
-
-        {/*         <Form.Item label='RangePicker'>
+          {/*         <Form.Item label='RangePicker'>
           <RangePicker />
         </Form.Item> */}
 
-        {/*         <Form.Item label='InputNumber'>
+          {/*         <Form.Item label='InputNumber'>
           <InputNumber />
         </Form.Item> */}
-
 
           <Form.Item label="TextArea">
             <TextArea rows={4} />
           </Form.Item>
 
-
-        {/*         <Form.Item label='Switch' valuePropName='checked'>
+          {/*         <Form.Item label='Switch' valuePropName='checked'>
           <Switch />
         </Form.Item> */}
 
-        <Form.Item
-          label="Upload"
-          valuePropName="fileList"
-          getValueFromEvent={normFile}
-        >
-          <Upload action="/upload.do" listType="picture-card">
-            <button
-              style={{
-                border: 0,
-                background: "none",
-              }}
-              type="button"
-            >
-              <PlusOutlined />
-              <div
-
-
+          <Form.Item
+            label="Upload"
+            valuePropName="fileList"
+            getValueFromEvent={normFile}
+          >
+            <Upload action="/upload.do" listType="picture-card">
+              <button
                 style={{
                   border: 0,
                   background: "none",
                 }}
                 type="button"
               >
-
                 <PlusOutlined />
                 <div
                   style={{
-                    marginTop: 8,
+                    border: 0,
+                    background: "none",
                   }}
+                  type="button"
                 >
                   Upload
                 </div>
@@ -219,12 +207,13 @@ const FormDisabledDemo = () => {
           <Slider />
         </Form.Item> */}
 
-        {/*         <Form.Item label='ColorPicker'>
+          {/*         <Form.Item label='ColorPicker'>
           <ColorPicker />
         </Form.Item> */}
-      </Form>
-    </div>
-
+        </Form>
+      </div>
+    </>
   );
 };
-export default () => <FormDisabledDemo />;
+
+export default Register;
