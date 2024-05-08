@@ -20,16 +20,18 @@ export const register = async (...dataRegister) => {
 
 const URL = "http://localhost:3000";
 export const login = async (username, password) => {
-  const response = await fetch(`${URL}/Login`, {
+  const response = await fetch(`${URL}/login`, {
     method: "POST",
     body: JSON.stringify({ username, password }),
     headers: { "Content-Type": "application/json" },
   });
   if (!response.ok) return { error: response.statusText };
-  return await response.json();
+  const token = await response.json();
+  return { data: token };
 };
+
 export const register = async (userData) => {
-  const response = await fetch(`${URL}/Register`, {
+  const response = await fetch(`${URL}/register`, {
     method: "POST",
     body: JSON.stringify(userData),
     headers: { "Content-Type": "application/json" },
