@@ -3,12 +3,14 @@ import "./Login.css";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
 import { login } from "../apiService/userApi";
+import { useNavigate } from "react-router-dom";
 
 const onFinish = (values) => {
   console.log("Success:", values);
 };
 
 const handleLogin = async (email, password) => {
+  //const navigate = useNavigate();
   console.log("email: ", email);
   console.log("password: ", password);
   const response = await login(email, password);
@@ -16,6 +18,10 @@ const handleLogin = async (email, password) => {
     console.error("Error al iniciar sesión:", response.error);
   } else {
     console.log("Inicio de sesion exitoso:", response.data);
+    const token = response.data;
+    console.log("token-front: ", token);
+    localStorage.setItem("token", token);
+    navigate("/profile");
   }
 };
 

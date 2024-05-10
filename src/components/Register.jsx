@@ -37,9 +37,9 @@ const Register = () => {
   const [lastName, setLastName] = useState("");
   // const [componentDisabled, setComponentDisabled] = useState(true);
 
-  const handleRegister = async (...userData) => {
-    console.log("userData: ", userData);
-    const response = await register(userData);
+  const handleRegister = async (email, password, name, lastName) => {
+    console.log("userData: ", email, password, name, lastName);
+    const response = await register(email, password, name, lastName);
     if (response.error) {
       console.error("Error al registrar usuario:", response.error);
     } else {
