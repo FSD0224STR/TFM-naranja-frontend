@@ -112,6 +112,7 @@ const ingredientsData = [
 ];
 
 const AddProduct = () => {
+  const [form] = Form.useForm();
   const [product, setProduct] = useState("");
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
@@ -131,6 +132,14 @@ const AddProduct = () => {
       console.error("Error al añadir producto:", response.error);
     } else {
       console.log("Producto creado con exito:", response.data);
+      setProduct("");
+      setPrice(0);
+      setDescription("");
+      setBrand("");
+      setOrigin("");
+      setAllergens("");
+      setIngredients("");
+      form.resetFields();
     }
   };
 
@@ -144,6 +153,7 @@ const AddProduct = () => {
 
   return (
     <Form
+      form={form}
       {...formItemLayout}
       variant="filled"
       style={{
@@ -293,6 +303,9 @@ const AddProduct = () => {
         }}
       >
         <Button
+          style={{
+            marginRight: "0.5rem",
+          }}
           type="primary"
           htmlType="submit"
           onClick={() =>
@@ -308,6 +321,13 @@ const AddProduct = () => {
           }
         >
           Create Product
+        </Button>
+        <Button
+          type="primary"
+          htmlType="submit"
+          onClick={() => form.resetFields()}
+        >
+          Reset
         </Button>
       </Form.Item>
     </Form>

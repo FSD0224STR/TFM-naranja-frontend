@@ -1,0 +1,9 @@
+.list-products {
+  margin: 0.9rem;
+}
+
+.buttons-card {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.8rem;
+}

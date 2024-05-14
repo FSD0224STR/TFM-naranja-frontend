@@ -1,9 +1,15 @@
 import { Card, List, Button } from "antd";
-import { useState } from "react";
-import { findProducts } from "../apiService/productApi";
+import { useState, useEffect } from "react";
+import "./ListProducts.css";
+import {
+  findProducts,
+  editProduct,
+  deleteProduct,
+} from "../apiService/productApi";
 
 const ListProducts = () => {
   const [products, setProducts] = useState([]);
+  const [dummy, refresh] = useState(false);
 
   const handleLFindProducts = async () => {
     const response = await findProducts();
@@ -15,6 +21,32 @@ const ListProducts = () => {
       setProducts(response.data);
     }
   };
+
+  const handleLEditProduct = async (id) => {
+    const response = await editProduct(id);
+
+    if (response.error) {
+      console.error("Error al editar producto:", response.error);
+    } else {
+      console.log("Edicion correcta");
+      refresh(!dummy);
+    }
+  };
+
+  const handleLDeleteProduct = async (id) => {
+    const response = await deleteProduct(id);
+
+    if (response.error) {
+      console.error("Error al borrar producto:", response.error);
+    } else {
+      console.log("Borrado efectudado correctamente");
+      refresh(!dummy);
+    }
+  };
+
+  useEffect(() => {
+    handleLFindProducts();
+  }, [dummy]);
 
   return (
     <div>
@@ -29,6 +61,7 @@ const ListProducts = () => {
           xxl: 3,
         }}
         dataSource={products}
+        className="list-products"
         renderItem={(item) => (
           <List.Item>
             <Card key={item._id} title={item.product}>
@@ -38,6 +71,21 @@ const ListProducts = () => {
               <p>{`Origin: ${item.origin}`}</p>
               <p>{`Allergens: ${item.allergens.join(", ")}`}</p>
               <p>{`Ingredients: ${item.ingredients.join(", ")}`}</p>
+              <div className="buttons-card">
+                <Button
+                  type="primary"
+                  onClick={() => handleLEditProduct(item._id)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  type="primary"
+                  danger
+                  onClick={() => handleLDeleteProduct(item._id)}
+                >
+                  Delete
+                </Button>
+              </div>
             </Card>
           </List.Item>
         )}
