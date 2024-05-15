@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Register.css";
 import { PlusOutlined } from "@ant-design/icons";
 import { register } from "../apiService/userApi";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Cascader,
@@ -18,6 +19,7 @@ import {
   TreeSelect,
   Upload,
 } from "antd";
+import Captcha from "./Captcha";
 import "./Register.css";
 
 const { RangePicker } = DatePicker;
@@ -35,16 +37,30 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
+    const [isHuman, setIsHuman] = useState(false);
+  const navigate = useNavigate();
   // const [componentDisabled, setComponentDisabled] = useState(true);
 
   const handleRegister = async (email, password, name, lastName) => {
     console.log("userData: ", email, password, name, lastName);
     const response = await register(email, password, name, lastName);
+     if (!isHuman) {
+      console.error("Por favor, complete el CAPTCHA");
+      return;
+    }
     if (response.error) {
       console.error("Error al registrar usuario:", response.error);
     } else {
       console.log("Usuario registrado con exito:", response.data);
+      const token = response.data;
+      console.log("token-front: ", token);
+      localStorage.setItem("token", token);
+      navigate("/home");
     }
+  };
+
+  const handleCaptchaChange = (value) => {
+    setIsHuman(value);
   };
 
   return (
@@ -104,6 +120,10 @@ const Register = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+          </Form.Item>
+
+           <Form.Item label="Captcha">
+            <Captcha onChange={handleCaptchaChange} />
           </Form.Item>
 
           <Form.Item label="Select">

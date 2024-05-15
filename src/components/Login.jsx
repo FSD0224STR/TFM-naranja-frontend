@@ -4,34 +4,45 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
 import { login } from "../apiService/userApi";
 import { useNavigate } from "react-router-dom";
-
-const onFinish = (values) => {
-  console.log("Success:", values);
-};
-
-const handleLogin = async (email, password) => {
-  //const navigate = useNavigate();
-  console.log("email: ", email);
-  console.log("password: ", password);
-  const response = await login(email, password);
-  if (response.error) {
-    console.error("Error al iniciar sesión:", response.error);
-  } else {
-    console.log("Inicio de sesion exitoso:", response.data);
-    const token = response.data;
-    console.log("token-front: ", token);
-    localStorage.setItem("token", token);
-    navigate("/profile");
-  }
-};
-
-const onFinishFailed = (errorInfo) => {
-  console.log("Failed:", errorInfo);
-};
+import Captcha from "./Captcha";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isHuman, setIsHuman] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    console.log("email: ", email);
+    console.log("password: ", password);
+    if (!isHuman) {
+      console.error("Por favor, complete el CAPTCHA");
+      return;
+    }
+    const response = await login(email, password);
+    if (response.error) {
+      console.error("Error al iniciar sesión:", response.error);
+    } else {
+      console.log("Inicio de sesión exitoso:", response.data);
+      const token = response.data;
+      console.log("token-front: ", token);
+      localStorage.setItem("token", token);
+      navigate("/home");
+    }
+  };
+
+  const onFinish = (values) => {
+    console.log("Success:", values);
+    handleLogin();
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+
+  const handleCaptchaChange = (value) => {
+    setIsHuman(value);
+  };
 
   return (
     <Form
@@ -41,6 +52,7 @@ const Login = () => {
         remember: true,
       }}
       onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
     >
       <Form.Item
         name="username"
@@ -80,11 +92,14 @@ const Login = () => {
       </Form.Item>
 
       <Form.Item>
+        <Captcha onChange={handleCaptchaChange} />
+      </Form.Item>
+
+      <Form.Item>
         <Button
           type="primary"
           htmlType="submit"
           className="login-form-button"
-          onClick={() => handleLogin(email, password)}
         >
           Log in
         </Button>
@@ -95,10 +110,6 @@ const Login = () => {
       </Form.Item>
 
       <Form.Item>
-        {/* <Form.Item name="remember" valuePropName="checked" noStyle>
-    <Checkbox>Remember me</Checkbox>
-  </Form.Item> */}
-
         <a className="login-form-forgot" href="">
           Forgot password
         </a>
@@ -106,4 +117,5 @@ const Login = () => {
     </Form>
   );
 };
+
 export default Login;
