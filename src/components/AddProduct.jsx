@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { addProduct } from "../apiService/productApi";
 
 import { Button, Form, Input, InputNumber, Select, TreeSelect } from "antd";
+import ImgUpload from "./ImgUpload";
 
 const formItemLayout = {
   labelCol: {
@@ -273,6 +274,10 @@ const AddProduct = () => {
           onChange={onChangeIngredients}
           treeData={ingredientsData}
         />
+      </Form.Item>
+
+      <Form.Item>
+        <ImgUpload></ImgUpload>
       </Form.Item>
 
       <Form.Item

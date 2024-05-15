@@ -34,12 +34,6 @@ const ImgUpload = () => {
       url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
     },
     {
-      uid: "-4",
-      name: "image.png",
-      status: "done",
-      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    },
-    {
       uid: "-xxx",
       percent: 50,
       name: "image.png",
@@ -62,6 +56,7 @@ const ImgUpload = () => {
   };
 
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+
   const uploadButton = (
     <button
       style={{
@@ -80,6 +75,7 @@ const ImgUpload = () => {
       </div>
     </button>
   );
+
   return (
     <>
       <Upload

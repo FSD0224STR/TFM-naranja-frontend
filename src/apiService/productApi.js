@@ -76,8 +76,6 @@ export const deleteProduct = async (id) => {
 
 export const editProduct = async (id, productData) => {
   const token = localStorage.getItem("token");
-  console.log("productData: ", productData);
-  console.log("type: ", typeof productData);
 
   const response = await fetch(`${URL}/${id}`, {
     method: "PUT",
