@@ -1,22 +1,3 @@
-/*const URL = "http://localhost:3000";
-
-export const login = async (name, password) => {
-  const reponse = await fetch(`${URL}/login`, {
-    method: "POST",
-    body: JSON.stringify(dataTask),
-    headers: { "Content-Type": "application/json" },
-  });
-  return await reponse.json();
-};
-
-export const register = async (...dataRegister) => {
-  const reponse = await fetch(`${URL}/register`, {
-    method: "POST",
-    body: JSON.stringify(dataRegister),
-    headers: { "Content-Type": "application/json" },
-  });
-  return await reponse.json();
-};*/
 
 const URL = "http://localhost:3000/users";
 export const login = async (email, password) => {
@@ -45,3 +26,18 @@ export const register = async (name, lastName, email, password) => {
   const newlyCreatedUser = await response.json();
   return { data: newlyCreatedUser };
 };
+
+export const updateUser = async (userData) => {
+  try {
+    const response = await fetch (`${URL}/updateUser`, {
+      method: "PUT",
+      body: JSON.stringify(userData),
+      headers: { "Content-Type": "aplication/json" },
+    });
+    if (!response.ok) throw new Error(response.statusText);
+    return await response.json();
+  } 
+  catch (error) {
+    return { error : error.message };
+  }
+}
