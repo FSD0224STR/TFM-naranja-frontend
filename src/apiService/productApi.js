@@ -37,3 +37,60 @@ export const findProducts = async () => {
   const products = await response.json();
   return products;
 };
+
+export const findOneProduct = async (id) => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${URL}/${id}`, {
+    method: "GET",
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    return error;
+  }
+  const products = await response.json();
+  return products;
+};
+
+export const deleteProduct = async (id) => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${URL}/${id}`, {
+    method: "DELETE",
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    return error;
+  }
+  const data = await response.json();
+  return data;
+};
+
+export const editProduct = async (id, productData) => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${URL}/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(productData),
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    return error;
+  }
+
+  const data = await response.json();
+  return data;
+};

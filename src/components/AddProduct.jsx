@@ -1,22 +1,8 @@
 import React, { useState } from "react";
 import { addProduct } from "../apiService/productApi";
 
-import {
-  Button,
-  Cascader,
-  Checkbox,
-  ColorPicker,
-  DatePicker,
-  Form,
-  Input,
-  InputNumber,
-  Radio,
-  Select,
-  Slider,
-  Switch,
-  TreeSelect,
-  Upload,
-} from "antd";
+import { Button, Form, Input, InputNumber, Select, TreeSelect } from "antd";
+import ImgUpload from "./ImgUpload";
 
 const formItemLayout = {
   labelCol: {
@@ -112,6 +98,7 @@ const ingredientsData = [
 ];
 
 const AddProduct = () => {
+  const [form] = Form.useForm();
   const [product, setProduct] = useState("");
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
@@ -131,6 +118,7 @@ const AddProduct = () => {
       console.error("Error al añadir producto:", response.error);
     } else {
       console.log("Producto creado con exito:", response.data);
+      form.resetFields();
     }
   };
 
@@ -144,10 +132,12 @@ const AddProduct = () => {
 
   return (
     <Form
+      form={form}
       {...formItemLayout}
       variant="filled"
       style={{
         maxWidth: 600,
+        margin: "3rem",
       }}
     >
       <Form.Item
@@ -286,6 +276,10 @@ const AddProduct = () => {
         />
       </Form.Item>
 
+      <Form.Item>
+        <ImgUpload></ImgUpload>
+      </Form.Item>
+
       <Form.Item
         wrapperCol={{
           offset: 6,
@@ -293,6 +287,9 @@ const AddProduct = () => {
         }}
       >
         <Button
+          style={{
+            marginRight: "0.5rem",
+          }}
           type="primary"
           htmlType="submit"
           onClick={() =>
@@ -308,6 +305,14 @@ const AddProduct = () => {
           }
         >
           Create Product
+        </Button>
+        <Button
+          type="primary"
+          htmlType="submit"
+          danger
+          onClick={() => form.resetFields()}
+        >
+          Reset
         </Button>
       </Form.Item>
     </Form>
