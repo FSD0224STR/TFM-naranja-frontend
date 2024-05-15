@@ -38,6 +38,24 @@ export const findProducts = async () => {
   return products;
 };
 
+export const findOneProduct = async (id) => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${URL}/${id}`, {
+    method: "GET",
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    return error;
+  }
+  const products = await response.json();
+  return products;
+};
+
 export const deleteProduct = async (id) => {
   const token = localStorage.getItem("token");
 
@@ -58,6 +76,8 @@ export const deleteProduct = async (id) => {
 
 export const editProduct = async (id, productData) => {
   const token = localStorage.getItem("token");
+  console.log("productData: ", productData);
+  console.log("type: ", typeof productData);
 
   const response = await fetch(`${URL}/${id}`, {
     method: "PUT",

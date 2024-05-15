@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import Footer from "./components/Footer";
 import AddProduct from "./components/AddProduct";
 import ListProducts from "./components/ListProducts";
+import Product from "./components/Product";
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/addProduct" element={<AddProduct />} />
         <Route path="/listProducts" element={<ListProducts />} />
+        <Route path="/product/:id" element={<Product />} />
       </Routes>
       <Footer />
     </>

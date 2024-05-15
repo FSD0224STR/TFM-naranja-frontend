@@ -1,22 +1,7 @@
 import React, { useState } from "react";
 import { addProduct } from "../apiService/productApi";
 
-import {
-  Button,
-  Cascader,
-  Checkbox,
-  ColorPicker,
-  DatePicker,
-  Form,
-  Input,
-  InputNumber,
-  Radio,
-  Select,
-  Slider,
-  Switch,
-  TreeSelect,
-  Upload,
-} from "antd";
+import { Button, Form, Input, InputNumber, Select, TreeSelect } from "antd";
 
 const formItemLayout = {
   labelCol: {
@@ -132,13 +117,6 @@ const AddProduct = () => {
       console.error("Error al añadir producto:", response.error);
     } else {
       console.log("Producto creado con exito:", response.data);
-      setProduct("");
-      setPrice(0);
-      setDescription("");
-      setBrand("");
-      setOrigin("");
-      setAllergens("");
-      setIngredients("");
       form.resetFields();
     }
   };
@@ -158,6 +136,7 @@ const AddProduct = () => {
       variant="filled"
       style={{
         maxWidth: 600,
+        margin: "3rem",
       }}
     >
       <Form.Item
@@ -325,6 +304,7 @@ const AddProduct = () => {
         <Button
           type="primary"
           htmlType="submit"
+          danger
           onClick={() => form.resetFields()}
         >
           Reset
