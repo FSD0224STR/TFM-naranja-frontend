@@ -1,16 +1,22 @@
 import React, { useState } from "react";
 import "./Login.css";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import { login } from "../apiService/userApi";
 import { useNavigate } from "react-router-dom";
 import Captcha from "./Captcha";
+import { useAuth } from "../context/LogContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isHuman, setIsHuman] = useState(false);
   const navigate = useNavigate();
+  const { login: loginContext } = useAuth();
+
+  const onFinish = (values) => {
+    console.log("Success:", values);
+  };
 
   const handleLogin = async () => {
     console.log("email: ", email);
@@ -27,13 +33,9 @@ const Login = () => {
       const token = response.data;
       console.log("token-front: ", token);
       localStorage.setItem("token", token);
+      loginContext(token);
       navigate("/home");
     }
-  };
-
-  const onFinish = (values) => {
-    console.log("Success:", values);
-    handleLogin();
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -91,7 +93,7 @@ const Login = () => {
         />
       </Form.Item>
 
-      <Form.Item>
+       <Form.Item>
         <Captcha onChange={handleCaptchaChange} />
       </Form.Item>
 
@@ -100,6 +102,7 @@ const Login = () => {
           type="primary"
           htmlType="submit"
           className="login-form-button"
+          onClick={handleLogin}
         >
           Log in
         </Button>
