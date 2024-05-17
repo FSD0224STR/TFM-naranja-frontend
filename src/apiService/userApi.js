@@ -29,12 +29,12 @@ export const register = async (name, lastName, email, password) => {
 
 export const updateUser = async (id, userData) => {
   try {
-    const response = await fetch (`${URL}/user/${id}`, {
+    const response = await fetch (`${URL}/${id}`, {
       method: "PUT",
       body: JSON.stringify(userData),
       headers: { 
         "Content-Type": "aplication/json",
-        'Authorization': `Bearer ${localStorage.getItem('token')}` //Esto incluye el token en los encabezados para la autenticación
+        'Authorization': `Bearer ${localStorage.getItem('token')}` 
        },
     });
     return await response.json();
