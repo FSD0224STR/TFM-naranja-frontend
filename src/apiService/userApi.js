@@ -27,14 +27,16 @@ export const register = async (name, lastName, email, password) => {
   return { data: newlyCreatedUser };
 };
 
-export const updateUser = async (userData) => {
+export const updateUser = async (id, userData) => {
   try {
-    const response = await fetch (`${URL}/updateUser`, {
+    const response = await fetch (`${URL}/user/${id}`, {
       method: "PUT",
       body: JSON.stringify(userData),
-      headers: { "Content-Type": "aplication/json" },
+      headers: { 
+        "Content-Type": "aplication/json",
+        'Authorization': `Bearer ${localStorage.getItem('token')}` //Esto incluye el token en los encabezados para la autenticación
+       },
     });
-    if (!response.ok) throw new Error(response.statusText);
     return await response.json();
   } 
   catch (error) {
