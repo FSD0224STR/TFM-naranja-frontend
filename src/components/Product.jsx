@@ -5,11 +5,12 @@ import {
   findOneProduct,
   editProduct,
   deleteProduct,
+  findAllergens,
+  findIngredients,
 } from "../apiService/productApi";
 
 import {
   Button,
-  Checkbox,
   Form,
   Input,
   InputNumber,
@@ -37,80 +38,6 @@ const formItemLayout = {
   },
 };
 
-const allergensData = [
-  {
-    title: "Gluten",
-    value: "gluten",
-  },
-  {
-    title: "Crustaceos",
-    value: "crustaceos",
-  },
-  {
-    title: "Huevos",
-    value: "huevos",
-  },
-  {
-    title: "Pescado",
-    value: "pescado",
-  },
-  {
-    title: "Frutos secos",
-    value: "frutos secos",
-  },
-  {
-    title: "Soja",
-    value: "soja",
-  },
-  {
-    title: "Lacteos",
-    value: "lacteos",
-  },
-  {
-    title: "Frutos con cascara",
-    value: "frutos con cascara",
-  },
-  {
-    title: "Apio",
-    value: "apio",
-  },
-  {
-    title: "Mostaza",
-    value: "mostaza",
-  },
-  {
-    title: "Sésamo",
-    value: "sesamo",
-  },
-  {
-    title: "Sulfitos",
-    value: "sulfitos",
-  },
-  {
-    title: "Altramuces",
-    value: "altramuces",
-  },
-  {
-    title: "Moluscos",
-    value: "moluscos",
-  },
-];
-
-const ingredientsData = [
-  {
-    title: "Huevos",
-    value: "huevos",
-  },
-  {
-    title: "Azúcar",
-    value: "azucar",
-  },
-  {
-    title: "Sal",
-    value: "sal",
-  },
-];
-
 const Product = () => {
   const navigate = useNavigate();
 
@@ -123,10 +50,43 @@ const Product = () => {
   const [origin, setOrigin] = useState("");
   const [allergens, setAllergens] = useState("");
   const [ingredients, setIngredients] = useState("");
+  const [allergensData, setAllergensData] = useState("");
+  const [ingredientsData, setIngredientsData] = useState("");
   const [detailsProduct, setDetailsProduct] = useState({});
   const [dummy, refresh] = useState(false);
 
   const [isDisabled, setIsDisabled] = useState(true);
+
+  const handleLFindAllergens = async () => {
+    try {
+      const response = await findAllergens();
+
+      if (response.error) {
+        console.error("Error al listar alergenos:", response.error);
+        setError(response.error);
+      } else {
+        console.log("Listado de alergenos correcto");
+        setAllergensData(response.data);
+      }
+    } catch (error) {
+      console.error("Error al ejecutar findAllergens:");
+    }
+  };
+
+  const handleLFindIngredients = async () => {
+    try {
+      const response = await findIngredients();
+
+      if (response.error) {
+        console.error("Error al listar ingredientes:", response.error);
+      } else {
+        console.log("Listado de ingredientes correcto");
+        setIngredientsData(response.data);
+      }
+    } catch (error) {
+      console.error("Error al ejecutar findIngredients:");
+    }
+  };
 
   const handleGetProduct = async () => {
     const response = await findOneProduct(id);
@@ -162,7 +122,6 @@ const Product = () => {
       ingredients,
     });
 
-    console.log("productData: ", productData);
     const response = await editProduct(id, productData);
 
     if (response.error) {
@@ -195,19 +154,9 @@ const Product = () => {
 
   useEffect(() => {
     handleGetProduct();
+    handleLFindAllergens();
+    handleLFindIngredients();
   }, [id, dummy, form]);
-
-  // useEffect(() => {
-  //   return () => {
-  //     setProduct("");
-  //     setDescription("");
-  //     setPrice(0);
-  //     setBrand("");
-  //     setOrigin("");
-  //     setAllergens([]);
-  //     setIngredients([]);
-  //   };
-  // }, []);
 
   return (
     <>

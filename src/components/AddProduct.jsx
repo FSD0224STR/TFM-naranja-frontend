@@ -1,5 +1,9 @@
-import React, { useState } from "react";
-import { addProduct } from "../apiService/productApi";
+import React, { useState, useEffect } from "react";
+import {
+  addProduct,
+  findAllergens,
+  findIngredients,
+} from "../apiService/productApi";
 
 import { Button, Form, Input, InputNumber, Select, TreeSelect } from "antd";
 import ImgUpload from "./ImgUpload";
@@ -23,80 +27,6 @@ const formItemLayout = {
   },
 };
 
-const allergensData = [
-  {
-    title: "Gluten",
-    value: "gluten",
-  },
-  {
-    title: "Crustaceos",
-    value: "crustaceos",
-  },
-  {
-    title: "Huevos",
-    value: "huevos",
-  },
-  {
-    title: "Pescado",
-    value: "pescado",
-  },
-  {
-    title: "Frutos secos",
-    value: "frutos secos",
-  },
-  {
-    title: "Soja",
-    value: "soja",
-  },
-  {
-    title: "Lacteos",
-    value: "lacteos",
-  },
-  {
-    title: "Frutos con cascara",
-    value: "frutos con cascara",
-  },
-  {
-    title: "Apio",
-    value: "apio",
-  },
-  {
-    title: "Mostaza",
-    value: "mostaza",
-  },
-  {
-    title: "Sésamo",
-    value: "sesamo",
-  },
-  {
-    title: "Sulfitos",
-    value: "sulfitos",
-  },
-  {
-    title: "Altramuces",
-    value: "altramuces",
-  },
-  {
-    title: "Moluscos",
-    value: "moluscos",
-  },
-];
-
-const ingredientsData = [
-  {
-    title: "Huevos",
-    value: "huevos",
-  },
-  {
-    title: "Azúcar",
-    value: "azucar",
-  },
-  {
-    title: "Sal",
-    value: "sal",
-  },
-];
-
 const AddProduct = () => {
   const [form] = Form.useForm();
   const [product, setProduct] = useState("");
@@ -106,6 +36,9 @@ const AddProduct = () => {
   const [origin, setOrigin] = useState("");
   const [allergens, setAllergens] = useState("");
   const [ingredients, setIngredients] = useState("");
+
+  const [allergensData, setAllergensData] = useState("");
+  const [ingredientsData, setIngredientsData] = useState("");
 
   const handleLAddProduct = async (productData) => {
     const newProduct = {
@@ -122,6 +55,37 @@ const AddProduct = () => {
     }
   };
 
+  const handleLFindAllergens = async () => {
+    try {
+      const response = await findAllergens();
+
+      if (response.error) {
+        console.error("Error al listar alergenos:", response.error);
+        setError(response.error);
+      } else {
+        console.log("Listado de alergenos correcto");
+        setAllergensData(response.data);
+      }
+    } catch (error) {
+      console.error("Error al ejecutar findAllergens:");
+    }
+  };
+
+  const handleLFindIngredients = async () => {
+    try {
+      const response = await findIngredients();
+
+      if (response.error) {
+        console.error("Error al listar ingredientes:", response.error);
+      } else {
+        console.log("Listado de ingredientes correcto");
+        setIngredientsData(response.data);
+      }
+    } catch (error) {
+      console.error("Error al ejecutar findIngredients:");
+    }
+  };
+
   const onChangeAllergens = (newValue) => {
     setAllergens(newValue);
   };
@@ -129,6 +93,11 @@ const AddProduct = () => {
   const onChangeIngredients = (newValue) => {
     setIngredients(newValue);
   };
+
+  useEffect(() => {
+    handleLFindAllergens();
+    handleLFindIngredients();
+  }, [form]);
 
   return (
     <Form
@@ -146,7 +115,7 @@ const AddProduct = () => {
         rules={[
           {
             required: true,
-            message: "Please input!",
+            message: "Introduce name!",
           },
         ]}
       >
@@ -159,7 +128,7 @@ const AddProduct = () => {
         rules={[
           {
             required: true,
-            message: "Please input!",
+            message: "Introduce description!",
           },
         ]}
       >
@@ -175,7 +144,7 @@ const AddProduct = () => {
         rules={[
           {
             required: true,
-            message: "Please input!",
+            message: "Introduce Price!",
           },
         ]}
       >
@@ -194,7 +163,7 @@ const AddProduct = () => {
         rules={[
           {
             required: true,
-            message: "Please input!",
+            message: "Introduce brand!",
           },
         ]}
       >
@@ -207,7 +176,7 @@ const AddProduct = () => {
         rules={[
           {
             required: true,
-            message: "Please input!",
+            message: "Introduce origin!",
           },
         ]}
       >
@@ -224,7 +193,7 @@ const AddProduct = () => {
         rules={[
           {
             required: true,
-            message: "Please input!",
+            message: "Introduce allergens!",
           },
         ]}
       >
@@ -238,7 +207,7 @@ const AddProduct = () => {
             maxHeight: 400,
             overflow: "auto",
           }}
-          placeholder="Please select"
+          placeholder="Please select allergens"
           allowClear
           multiple
           treeDefaultExpandAll
@@ -253,7 +222,7 @@ const AddProduct = () => {
         rules={[
           {
             required: true,
-            message: "Please input!",
+            message: "Introduce ingredients!",
           },
         ]}
       >
@@ -267,7 +236,7 @@ const AddProduct = () => {
             maxHeight: 400,
             overflow: "auto",
           }}
-          placeholder="Please select"
+          placeholder="Please select ingredients"
           allowClear
           multiple
           treeDefaultExpandAll

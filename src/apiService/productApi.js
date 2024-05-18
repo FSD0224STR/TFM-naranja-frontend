@@ -94,3 +94,39 @@ export const editProduct = async (id, productData) => {
   const data = await response.json();
   return data;
 };
+
+export const findAllergens = async () => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${URL}/allergens`, {
+    method: "GET",
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    return error;
+  }
+  const allergens = await response.json();
+  return allergens;
+};
+
+export const findIngredients = async () => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${URL}/ingredients`, {
+    method: "GET",
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    return error;
+  }
+  const ingredients = await response.json();
+  return ingredients;
+};
