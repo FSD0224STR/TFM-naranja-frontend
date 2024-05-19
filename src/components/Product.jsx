@@ -5,6 +5,7 @@ import {
   findOneProduct,
   editProduct,
   deleteProduct,
+  findOrigin,
   findAllergens,
   findIngredients,
 } from "../apiService/productApi";
@@ -43,6 +44,7 @@ const Product = () => {
 
   const [form] = Form.useForm();
   const { id } = useParams();
+
   const [product, setProduct] = useState("");
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
@@ -50,12 +52,29 @@ const Product = () => {
   const [origin, setOrigin] = useState("");
   const [allergens, setAllergens] = useState("");
   const [ingredients, setIngredients] = useState("");
+  const [originOptions, setOriginOptions] = useState([]);
   const [allergensData, setAllergensData] = useState("");
   const [ingredientsData, setIngredientsData] = useState("");
   const [detailsProduct, setDetailsProduct] = useState({});
+
   const [dummy, refresh] = useState(false);
 
   const [isDisabled, setIsDisabled] = useState(true);
+
+  const handleLFindOrigin = async () => {
+    try {
+      const response = await findOrigin();
+
+      if (response.error) {
+        console.error("Error al listar origen del producto:", response.error);
+      } else {
+        const data = Array.isArray(response.data) ? response.data : [];
+        setOriginOptions(data);
+      }
+    } catch (error) {
+      console.error("Error al ejecutar findOrigin:");
+    }
+  };
 
   const handleLFindAllergens = async () => {
     try {
@@ -63,9 +82,7 @@ const Product = () => {
 
       if (response.error) {
         console.error("Error al listar alergenos:", response.error);
-        setError(response.error);
       } else {
-        console.log("Listado de alergenos correcto");
         setAllergensData(response.data);
       }
     } catch (error) {
@@ -80,7 +97,6 @@ const Product = () => {
       if (response.error) {
         console.error("Error al listar ingredientes:", response.error);
       } else {
-        console.log("Listado de ingredientes correcto");
         setIngredientsData(response.data);
       }
     } catch (error) {
@@ -89,21 +105,25 @@ const Product = () => {
   };
 
   const handleGetProduct = async () => {
-    const response = await findOneProduct(id);
+    try {
+      const response = await findOneProduct(id);
 
-    if (response.error) {
-      console.error("Error al obtener producto:", response.error);
-    } else {
-      console.log("Obteniendo detalles producto");
-      form.setFieldsValue({
-        product: response.data.product,
-        description: response.data.description,
-        price: response.data.price,
-        brand: response.data.brand,
-        origin: response.data.origin,
-        allergens: response.data.allergens,
-        ingredients: response.data.ingredients,
-      });
+      if (response.error) {
+        console.error("Error al obtener producto:", response.error);
+      } else {
+        console.log("Obteniendo detalles producto");
+        form.setFieldsValue({
+          product: response.data.product,
+          description: response.data.description,
+          price: response.data.price,
+          brand: response.data.brand,
+          origin: response.data.origin,
+          allergens: response.data.allergens,
+          ingredients: response.data.ingredients,
+        });
+      }
+    } catch (error) {
+      console.error("Error al ejecutar findOneProduct:");
     }
   };
 
@@ -122,25 +142,33 @@ const Product = () => {
       ingredients,
     });
 
-    const response = await editProduct(id, productData);
+    try {
+      const response = await editProduct(id, productData);
 
-    if (response.error) {
-      console.error("Error al editar producto:", response.error);
-    } else {
-      console.log("Edicion correcta");
-      refresh(!dummy);
-      setIsDisabled(!isDisabled);
+      if (response.error) {
+        console.error("Error al editar producto:", response.error);
+      } else {
+        console.log("Edicion correcta");
+        refresh(!dummy);
+        setIsDisabled(!isDisabled);
+      }
+    } catch (error) {
+      console.error("Error al ejecutar editProduct:");
     }
   };
 
   const handleLDeleteProduct = async (id) => {
-    const response = await deleteProduct(id);
+    try {
+      const response = await deleteProduct(id);
 
-    if (response.error) {
-      console.error("Error al borrar producto:", response.error);
-    } else {
-      console.log("Borrado efectudado correctamente");
-      navigate("/listProducts");
+      if (response.error) {
+        console.error("Error al borrar producto:", response.error);
+      } else {
+        console.log("Borrado efectudado correctamente");
+        navigate("/listProducts");
+      }
+    } catch (error) {
+      console.error("Error al ejecutar editProduct:");
     }
   };
 
@@ -154,6 +182,7 @@ const Product = () => {
 
   useEffect(() => {
     handleGetProduct();
+    handleLFindOrigin();
     handleLFindAllergens();
     handleLFindIngredients();
   }, [id, dummy, form]);
@@ -241,10 +270,16 @@ const Product = () => {
             },
           ]}
         >
-          <Select value={origin} onChange={(value) => setOrigin(value)}>
-            <Select.Option value="España">España</Select.Option>
-            <Select.Option value="Portugal">Portugal</Select.Option>
-            <Select.Option value="Alemania">Alemania</Select.Option>
+          <Select
+            value={origin}
+            onChange={(value) => setOrigin(value)}
+            placeholder="Please select origin"
+          >
+            {originOptions.map((orig) => (
+              <Select.Option key={orig._id} value={orig.value}>
+                {orig.label}
+              </Select.Option>
+            ))}
           </Select>
         </Form.Item>
 

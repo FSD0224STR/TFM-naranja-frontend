@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   addProduct,
+  findOrigin,
   findAllergens,
   findIngredients,
 } from "../apiService/productApi";
@@ -37,6 +38,7 @@ const AddProduct = () => {
   const [allergens, setAllergens] = useState("");
   const [ingredients, setIngredients] = useState("");
 
+  const [originOptions, setOriginOptions] = useState([]);
   const [allergensData, setAllergensData] = useState("");
   const [ingredientsData, setIngredientsData] = useState("");
 
@@ -55,6 +57,21 @@ const AddProduct = () => {
     }
   };
 
+  const handleLFindOrigin = async () => {
+    try {
+      const response = await findOrigin();
+
+      if (response.error) {
+        console.error("Error al listar origen del producto:", response.error);
+      } else {
+        const data = Array.isArray(response.data) ? response.data : [];
+        setOriginOptions(data);
+      }
+    } catch (error) {
+      console.error("Error al ejecutar findOrigin:");
+    }
+  };
+
   const handleLFindAllergens = async () => {
     try {
       const response = await findAllergens();
@@ -63,7 +80,6 @@ const AddProduct = () => {
         console.error("Error al listar alergenos:", response.error);
         setError(response.error);
       } else {
-        console.log("Listado de alergenos correcto");
         setAllergensData(response.data);
       }
     } catch (error) {
@@ -78,7 +94,6 @@ const AddProduct = () => {
       if (response.error) {
         console.error("Error al listar ingredientes:", response.error);
       } else {
-        console.log("Listado de ingredientes correcto");
         setIngredientsData(response.data);
       }
     } catch (error) {
@@ -95,6 +110,7 @@ const AddProduct = () => {
   };
 
   useEffect(() => {
+    handleLFindOrigin();
     handleLFindAllergens();
     handleLFindIngredients();
   }, [form]);
@@ -180,10 +196,16 @@ const AddProduct = () => {
           },
         ]}
       >
-        <Select value={origin} onChange={(value) => setOrigin(value)}>
-          <Select.Option value="España">España</Select.Option>
-          <Select.Option value="Portugal">Portugal</Select.Option>
-          <Select.Option value="Alemania">Alemania</Select.Option>
+        <Select
+          value={origin}
+          onChange={(value) => setOrigin(value)}
+          placeholder="Please select origin"
+        >
+          {originOptions.map((orig) => (
+            <Select.Option key={orig._id} value={orig.value}>
+              {orig.label}
+            </Select.Option>
+          ))}
         </Select>
       </Form.Item>
 
