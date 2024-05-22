@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import AddProduct from "./components/AddProduct";
 import ListProducts from "./components/ListProducts";
 import Product from "./components/Product";
+import ComparadorInputs from "./components/ComparadorInputs";
 
 export default function App() {
   return (
@@ -22,6 +23,8 @@ export default function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/addProduct" element={<AddProduct />} />
           <Route path="/listProducts" element={<ListProducts />} />
+          <Route path="/comparador" element={<ComparadorInputs />} />
+
           <Route path="/product/:id" element={<Product />} />
         </Routes>
         <Footer />
