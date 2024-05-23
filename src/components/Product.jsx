@@ -49,63 +49,29 @@ const Product = () => {
   const [product, setProduct] = useState("");
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
   const [brand, setBrand] = useState("");
   const [origin, setOrigin] = useState("");
   const [allergens, setAllergens] = useState("");
   const [ingredients, setIngredients] = useState("");
-  const [originOptions, setOriginOptions] = useState([]);
-  const [allergensData, setAllergensData] = useState("");
-  const [ingredientsData, setIngredientsData] = useState("");
   const [detailsProduct, setDetailsProduct] = useState({});
 
-  const { brandOptions, handleLFindBrand } = useContext(ProductContext);
+  const {
+    brandOptions,
+    handleLFindBrand,
+    categoryOptions,
+    handleLFindCategories,
+    originOptions,
+    handleLFindOrigin,
+    allergensData,
+    handleLFindAllergens,
+    ingredientsData,
+    handleLFindIngredients,
+  } = useContext(ProductContext);
 
   const [dummy, refresh] = useState(false);
 
   const [isDisabled, setIsDisabled] = useState(true);
-
-  const handleLFindOrigin = async () => {
-    try {
-      const response = await findOrigin();
-
-      if (response.error) {
-        console.error("Error al listar origen del producto:", response.error);
-      } else {
-        const data = Array.isArray(response.data) ? response.data : [];
-        setOriginOptions(data);
-      }
-    } catch (error) {
-      console.error("Error al ejecutar findOrigin:");
-    }
-  };
-
-  const handleLFindAllergens = async () => {
-    try {
-      const response = await findAllergens();
-
-      if (response.error) {
-        console.error("Error al listar alergenos:", response.error);
-      } else {
-        setAllergensData(response.data);
-      }
-    } catch (error) {
-      console.error("Error al ejecutar findAllergens:");
-    }
-  };
-
-  const handleLFindIngredients = async () => {
-    try {
-      const response = await findIngredients();
-
-      if (response.error) {
-        console.error("Error al listar ingredientes:", response.error);
-      } else {
-        setIngredientsData(response.data);
-      }
-    } catch (error) {
-      console.error("Error al ejecutar findIngredients:");
-    }
-  };
 
   const handleGetProduct = async () => {
     try {
@@ -185,6 +151,7 @@ const Product = () => {
 
   useEffect(() => {
     handleGetProduct();
+    handleLFindCategories();
     handleLFindBrand();
     handleLFindOrigin();
     handleLFindAllergens();
@@ -249,6 +216,29 @@ const Product = () => {
             value={price}
             onChange={(value) => setPrice(value)}
           />
+        </Form.Item>
+
+        <Form.Item
+          label="Category"
+          name="category"
+          rules={[
+            {
+              required: true,
+              message: "Introduce category!",
+            },
+          ]}
+        >
+          <Select
+            value={category}
+            onChange={(value) => setCategory(value)}
+            placeholder="Please select brand"
+          >
+            {categoryOptions.map((categ) => (
+              <Select.Option key={categ._id} value={categ.category}>
+                {categ.category}
+              </Select.Option>
+            ))}
+          </Select>
         </Form.Item>
 
         <Form.Item
