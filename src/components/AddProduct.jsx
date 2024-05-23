@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   addProduct,
   findOrigin,
@@ -8,6 +8,7 @@ import {
 
 import { Button, Form, Input, InputNumber, Select, TreeSelect } from "antd";
 import ImgUpload from "./ImgUpload";
+import { ProductContext } from "../context/ProductContext";
 
 const formItemLayout = {
   labelCol: {
@@ -37,6 +38,8 @@ const AddProduct = () => {
   const [origin, setOrigin] = useState("");
   const [allergens, setAllergens] = useState("");
   const [ingredients, setIngredients] = useState("");
+
+  const { brandOptions, handleLFindBrand } = useContext(ProductContext);
 
   const [originOptions, setOriginOptions] = useState([]);
   const [allergensData, setAllergensData] = useState("");
@@ -110,6 +113,7 @@ const AddProduct = () => {
   };
 
   useEffect(() => {
+    handleLFindBrand();
     handleLFindOrigin();
     handleLFindAllergens();
     handleLFindIngredients();
@@ -183,7 +187,17 @@ const AddProduct = () => {
           },
         ]}
       >
-        <Input value={brand} onChange={(e) => setBrand(e.target.value)} />
+        <Select
+          value={brand}
+          onChange={(value) => setBrand(value)}
+          placeholder="Please select brand"
+        >
+          {brandOptions.map((brand) => (
+            <Select.Option key={brand._id} value={brand.value}>
+              {brand.label}
+            </Select.Option>
+          ))}
+        </Select>
       </Form.Item>
 
       <Form.Item
@@ -279,6 +293,7 @@ const AddProduct = () => {
       >
         <Button
           style={{
+            padding: "0.6rem",
             marginRight: "0.5rem",
           }}
           type="primary"
@@ -298,6 +313,10 @@ const AddProduct = () => {
           Create Product
         </Button>
         <Button
+          style={{
+            padding: "0.6rem",
+            marginLeft: "0.5rem",
+          }}
           type="primary"
           htmlType="submit"
           danger

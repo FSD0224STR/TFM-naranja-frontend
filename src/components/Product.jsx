@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import {
@@ -19,6 +19,7 @@ import {
   TreeSelect,
   Upload,
 } from "antd";
+import { ProductContext } from "../context/ProductContext";
 
 const formItemLayout = {
   labelCol: {
@@ -56,6 +57,8 @@ const Product = () => {
   const [allergensData, setAllergensData] = useState("");
   const [ingredientsData, setIngredientsData] = useState("");
   const [detailsProduct, setDetailsProduct] = useState({});
+
+  const { brandOptions, handleLFindBrand } = useContext(ProductContext);
 
   const [dummy, refresh] = useState(false);
 
@@ -182,6 +185,7 @@ const Product = () => {
 
   useEffect(() => {
     handleGetProduct();
+    handleLFindBrand();
     handleLFindOrigin();
     handleLFindAllergens();
     handleLFindIngredients();
@@ -257,7 +261,17 @@ const Product = () => {
             },
           ]}
         >
-          <Input value={brand} onChange={(e) => setBrand(e.target.value)} />
+          <Select
+            value={brand}
+            onChange={(value) => setBrand(value)}
+            placeholder="Please select origin"
+          >
+            {brandOptions.map((brand) => (
+              <Select.Option key={brand._id} value={brand.value}>
+                {brand.label}
+              </Select.Option>
+            ))}
+          </Select>
         </Form.Item>
 
         <Form.Item
