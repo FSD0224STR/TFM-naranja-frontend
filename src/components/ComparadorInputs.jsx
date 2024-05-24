@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 
-const ComparadorInputs = () => {
+const ComparadorInputs = ({ onInputChange }) => {
   const [inputs, setInputs] = useState([{ id: 1, value: '' }]);
 
   const handleInputChange = (index, event) => {
     const newInputs = [...inputs];
     newInputs[index].value = event.target.value;
     setInputs(newInputs);
+
+    const inputValues = newInputs.map(input => input.value);
+    onInputChange(inputValues);
+
+     console.log("Input Values:", inputValues);
 
     if (event.target.value !== '' && index === inputs.length - 1) {
       setInputs([...inputs, { id: inputs.length + 1, value: '' }]);
