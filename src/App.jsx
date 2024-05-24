@@ -9,11 +9,13 @@ import Footer from "./components/Footer";
 import AddProduct from "./components/AddProduct";
 import ListProducts from "./components/ListProducts";
 import Product from "./components/Product";
+
 import { ProductContextProvider } from "./context/ProductContext";
 
 export default function App() {
   return (
     <AuthProvider>
+
       <ProductContextProvider>
         <>
           <Header />
