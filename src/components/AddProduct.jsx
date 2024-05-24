@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   addProduct,
   findOrigin,
@@ -8,6 +8,7 @@ import {
 
 import { Button, Form, Input, InputNumber, Select, TreeSelect } from "antd";
 import ImgUpload from "./ImgUpload";
+import { ProductContext } from "../context/ProductContext";
 
 const formItemLayout = {
   labelCol: {
@@ -33,14 +34,24 @@ const AddProduct = () => {
   const [product, setProduct] = useState("");
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
   const [brand, setBrand] = useState("");
   const [origin, setOrigin] = useState("");
   const [allergens, setAllergens] = useState("");
   const [ingredients, setIngredients] = useState("");
 
-  const [originOptions, setOriginOptions] = useState([]);
-  const [allergensData, setAllergensData] = useState("");
-  const [ingredientsData, setIngredientsData] = useState("");
+  const {
+    brandOptions,
+    handleLFindBrand,
+    categoryOptions,
+    handleLFindCategories,
+    originOptions,
+    handleLFindOrigin,
+    allergensData,
+    handleLFindAllergens,
+    ingredientsData,
+    handleLFindIngredients,
+  } = useContext(ProductContext);
 
   const handleLAddProduct = async (productData) => {
     const newProduct = {
@@ -57,50 +68,6 @@ const AddProduct = () => {
     }
   };
 
-  const handleLFindOrigin = async () => {
-    try {
-      const response = await findOrigin();
-
-      if (response.error) {
-        console.error("Error al listar origen del producto:", response.error);
-      } else {
-        const data = Array.isArray(response.data) ? response.data : [];
-        setOriginOptions(data);
-      }
-    } catch (error) {
-      console.error("Error al ejecutar findOrigin:");
-    }
-  };
-
-  const handleLFindAllergens = async () => {
-    try {
-      const response = await findAllergens();
-
-      if (response.error) {
-        console.error("Error al listar alergenos:", response.error);
-        setError(response.error);
-      } else {
-        setAllergensData(response.data);
-      }
-    } catch (error) {
-      console.error("Error al ejecutar findAllergens:");
-    }
-  };
-
-  const handleLFindIngredients = async () => {
-    try {
-      const response = await findIngredients();
-
-      if (response.error) {
-        console.error("Error al listar ingredientes:", response.error);
-      } else {
-        setIngredientsData(response.data);
-      }
-    } catch (error) {
-      console.error("Error al ejecutar findIngredients:");
-    }
-  };
-
   const onChangeAllergens = (newValue) => {
     setAllergens(newValue);
   };
@@ -110,6 +77,8 @@ const AddProduct = () => {
   };
 
   useEffect(() => {
+    handleLFindCategories();
+    handleLFindBrand();
     handleLFindOrigin();
     handleLFindAllergens();
     handleLFindIngredients();
@@ -174,6 +143,29 @@ const AddProduct = () => {
       </Form.Item>
 
       <Form.Item
+        label="Category"
+        name="category"
+        rules={[
+          {
+            required: true,
+            message: "Introduce category!",
+          },
+        ]}
+      >
+        <Select
+          value={category}
+          onChange={(value) => setCategory(value)}
+          placeholder="Please select brand"
+        >
+          {categoryOptions.map((categ) => (
+            <Select.Option key={categ._id} value={categ.category}>
+              {categ.category}
+            </Select.Option>
+          ))}
+        </Select>
+      </Form.Item>
+
+      <Form.Item
         label="Brand"
         name="brand"
         rules={[
@@ -183,7 +175,17 @@ const AddProduct = () => {
           },
         ]}
       >
-        <Input value={brand} onChange={(e) => setBrand(e.target.value)} />
+        <Select
+          value={brand}
+          onChange={(value) => setBrand(value)}
+          placeholder="Please select brand"
+        >
+          {brandOptions.map((brand) => (
+            <Select.Option key={brand._id} value={brand.value}>
+              {brand.label}
+            </Select.Option>
+          ))}
+        </Select>
       </Form.Item>
 
       <Form.Item
@@ -279,6 +281,7 @@ const AddProduct = () => {
       >
         <Button
           style={{
+            padding: "0.6rem",
             marginRight: "0.5rem",
           }}
           type="primary"
@@ -298,6 +301,10 @@ const AddProduct = () => {
           Create Product
         </Button>
         <Button
+          style={{
+            padding: "0.6rem",
+            marginLeft: "0.5rem",
+          }}
           type="primary"
           htmlType="submit"
           danger
