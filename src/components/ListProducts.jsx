@@ -1,11 +1,21 @@
-import { Card, List, Button } from "antd";
+import { Card, List, Button, Pagination } from "antd";
 import { useState, useEffect } from "react";
+import "./ListProducts.css";
 import { useNavigate } from "react-router-dom";
 import { findProducts } from "../apiService/productApi";
+import Paginate from "./Pagination";
 
 const ListProducts = () => {
   const [products, setProducts] = useState([]);
+  const [totalProducts, setTotalProducts] = useState(0);
   const navigate = useNavigate();
+
+  // Variables para controlar el paginado
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const currentProducts = products.slice(startIndex, endIndex);
 
   const handleLFindProducts = async () => {
     const response = await findProducts();
@@ -26,8 +36,12 @@ const ListProducts = () => {
     handleLFindProducts();
   }, []);
 
+  useEffect(() => {
+    setTotalProducts(products.length);
+  }, [products]);
+
   return (
-    <div>
+    <div className="list-products">
       <List
         grid={{
           gutter: 16,
@@ -38,20 +52,11 @@ const ListProducts = () => {
           xl: 6,
           xxl: 3,
         }}
-        dataSource={products}
-        style={{
-          margin: "2rem",
-        }}
+        dataSource={currentProducts}
         renderItem={(item) => (
           <List.Item>
             <Card key={item._id} title={item.product}>
               <p>{item.description}</p>
-              {/* <p>{`Price: ${item.price}`}</p>
-              <p>{`Brand: ${item.brand}`}</p>
-              <p>{`Origin: ${item.origin}`}</p>
-              <p>{`Allergens: ${item.allergens.join(", ")}`}</p>
-              <p>{`Ingredients: ${item.ingredients.join(", ")}`}</p> */}
-
               <Button type="link" onClick={() => handleLViewProduct(item._id)}>
                 View Details
               </Button>
@@ -59,6 +64,16 @@ const ListProducts = () => {
           </List.Item>
         )}
       />
+
+      <Paginate
+        current={currentPage}
+        total={totalProducts}
+        pageSize={pageSize}
+        onChange={(page, size) => {
+          setCurrentPage(page);
+          setPageSize(size);
+        }}
+      ></Paginate>
     </div>
   );
 };
