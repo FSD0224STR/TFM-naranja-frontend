@@ -1,0 +1,12 @@
+.list-products {
+  margin: 1rem;
+}
+
+.ant-list {
+  margin: 2rem;
+  min-height: 75vh;
+}
+
+.ant-btn {
+  margin-top: 0.5rem;
+}
