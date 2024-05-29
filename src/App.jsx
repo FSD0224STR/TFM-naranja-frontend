@@ -15,7 +15,6 @@ import { ProductContextProvider } from "./context/ProductContext";
 export default function App() {
   return (
     <AuthProvider>
-
       <ProductContextProvider>
         <>
           <Header />

@@ -4,6 +4,7 @@ import "./ListProducts.css";
 import { useNavigate } from "react-router-dom";
 import { findProducts } from "../apiService/productApi";
 import Paginate from "./Pagination";
+import { AiFillPlusCircle } from "react-icons/ai";
 
 const ListProducts = () => {
   const [products, setProducts] = useState([]);
@@ -30,6 +31,17 @@ const ListProducts = () => {
 
   const handleLViewProduct = (id) => {
     navigate(`/product/${id}`);
+  };
+
+  const handleLAddProductCart = (dataProduct) => {
+    const storedCartItems = localStorage.getItem("cartData");
+    if (storedCartItems) {
+      let cartItems = JSON.parse(storedCartItems);
+      cartItems.push(dataProduct);
+      localStorage.setItem("cartData", JSON.stringify(cartItems));
+    } else {
+      localStorage.setItem("cartData", JSON.stringify(dataProduct));
+    }
   };
 
   useEffect(() => {
@@ -59,6 +71,9 @@ const ListProducts = () => {
               <p>{item.description}</p>
               <Button type="link" onClick={() => handleLViewProduct(item._id)}>
                 View Details
+              </Button>
+              <Button type="link" onClick={() => handleLAddProductCart(item)}>
+                <AiFillPlusCircle size={25} color="lightblue" />
               </Button>
             </Card>
           </List.Item>
