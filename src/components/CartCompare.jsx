@@ -1,10 +1,12 @@
 import { Drawer, List, Button, Badge, Table, Modal } from "antd";
 import { ShoppingCartOutlined, CloseOutlined } from "@ant-design/icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { CartContext } from "../context/CartContext";
 
 const CartCompare = () => {
-  const [cartItems, setCartItems] = useState([]);
   const [open, setOpen] = useState(false);
+
+  const { cartItems, getCartItems, removeCartItem } = useContext(CartContext);
 
   const columns = [
     {
@@ -34,28 +36,14 @@ const CartCompare = () => {
         <Button
           type="text"
           icon={<CloseOutlined />}
-          onClick={() => removeItem(record.id)}
-        />
+          onClick={() => removeCartItem(record._id)}
+        ></Button>
       ),
     },
   ];
 
   useEffect(() => {
-    const storedCartItems = localStorage.getItem("cartData");
-    console.log("storedCartItems Cart: ", storedCartItems);
-    console.log("type Cart", typeof storedCartItems);
-    if (storedCartItems) {
-      try {
-        const parsedCartItems = JSON.parse(storedCartItems);
-        if (Array.isArray(parsedCartItems)) {
-          setCartItems(parsedCartItems);
-        } else {
-          console.error("cartData is not an array");
-        }
-      } catch (error) {
-        console.error("Error parsing cartData from localStorage", error);
-      }
-    }
+    getCartItems();
   }, []);
 
   const showDrawer = () => {
@@ -63,12 +51,6 @@ const CartCompare = () => {
   };
   const onClose = () => {
     setOpen(false);
-  };
-
-  const removeItem = (id) => {
-    const updatedCartItems = cartItems.filter((item) => item.id !== id);
-    setCartItems(updatedCartItems);
-    localStorage.setItem("cartData", JSON.stringify(updatedCartItems));
   };
 
   return (
@@ -88,8 +70,15 @@ const CartCompare = () => {
         open={open}
         width={720}
       >
-        <Table dataSource={cartItems} columns={columns} rowKey="id" />
+        <Table dataSource={cartItems} columns={columns} rowKey="_id" />
+
+        {cartItems.length > 1 ? (
+          <Button disabled={false}>Compare</Button>
+        ) : (
+          <Button disabled={true}>Compare</Button>
+        )}
       </Modal>
+
       {/* <Drawer
         title="Compare Products"
         placement="right"
