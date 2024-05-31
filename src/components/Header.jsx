@@ -2,6 +2,7 @@ import React from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/LogContext";
+import CartCompare from "./CartCompare";
 
 const Header = () => {
   const { isLoggedIn, logout } = useAuth();
@@ -15,7 +16,10 @@ const Header = () => {
             <Link to="/profile">Profile</Link>
             <Link to="/addProduct">Add Product</Link>
             <Link to="/listProducts">List Products</Link>
-            <Link onClick={logout} to="/login" >Logout</Link>
+            <Link onClick={logout} to="/login">
+              Logout
+            </Link>
+            <CartCompare></CartCompare>
           </>
         ) : (
           <>
