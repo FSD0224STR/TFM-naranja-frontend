@@ -12,7 +12,6 @@ const ListProducts = () => {
   const [totalProducts, setTotalProducts] = useState(0);
   const navigate = useNavigate();
 
-
   const { handleLAddProductCart } = useContext(CartContext);
 
   // Variables para controlar el paginado
@@ -22,7 +21,7 @@ const ListProducts = () => {
   const endIndex = startIndex + pageSize;
   const currentProducts = products.slice(startIndex, endIndex);
 
-  const handleLFindProducts = async () => {
+  const handleLFindAllProducts = async () => {
     const response = await findProducts();
 
     if (response.error) {
