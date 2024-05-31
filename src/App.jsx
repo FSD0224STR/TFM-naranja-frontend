@@ -13,9 +13,11 @@ import Product from "./components/Product";
 import { ProductContextProvider } from "./context/ProductContext";
 import { CartContextProvider } from "./context/CartContext";
 
+
 export default function App() {
   return (
     <AuthProvider>
+
       <CartContextProvider>
         <ProductContextProvider>
           <>

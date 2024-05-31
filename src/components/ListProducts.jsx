@@ -2,7 +2,7 @@ import { Card, List, Button } from "antd";
 import { useState, useEffect, useContext } from "react";
 import "./ListProducts.css";
 import { useNavigate } from "react-router-dom";
-import { findProducts } from "../apiService/productApi";
+import { findProducts, findAllProducts } from "../apiService/productApi";
 import Paginate from "./Pagination";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { CartContext } from "../context/CartContext";
@@ -11,6 +11,7 @@ const ListProducts = () => {
   const [products, setProducts] = useState([]);
   const [totalProducts, setTotalProducts] = useState(0);
   const navigate = useNavigate();
+
 
   const { handleLAddProductCart } = useContext(CartContext);
 
@@ -37,7 +38,7 @@ const ListProducts = () => {
   };
 
   useEffect(() => {
-    handleLFindProducts();
+    handleLFindAllProducts();
   }, []);
 
   useEffect(() => {
