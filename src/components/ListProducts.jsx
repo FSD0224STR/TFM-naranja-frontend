@@ -1,14 +1,14 @@
 import { Card, List, Button } from "antd";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { findProducts } from "../apiService/productApi";
+import { findAllProducts } from "../apiService/productApi";
 
 const ListProducts = () => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 
-  const handleLFindProducts = async () => {
-    const response = await findProducts();
+  const handleLFindAllProducts = async () => {
+    const response = await findAllProducts();
 
     if (response.error) {
       console.error("Error al listar productos:", response.error);
@@ -23,7 +23,7 @@ const ListProducts = () => {
   };
 
   useEffect(() => {
-    handleLFindProducts();
+    handleLFindAllProducts();
   }, []);
 
   return (
