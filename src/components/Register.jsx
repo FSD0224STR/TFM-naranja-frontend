@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "./Register.css";
+import { Link } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
 import { register } from "../apiService/userApi";
 import { useNavigate } from "react-router-dom";
 import {
-  Button,
   Cascader,
   Checkbox,
   ColorPicker,
@@ -19,6 +19,7 @@ import {
   TreeSelect,
   Upload,
 } from "antd";
+import Button from "./Button";
 import Captcha from "./Captcha";
 import "./Register.css";
 
@@ -37,14 +38,14 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
-    const [isHuman, setIsHuman] = useState(false);
+  const [isHuman, setIsHuman] = useState(false);
   const navigate = useNavigate();
   // const [componentDisabled, setComponentDisabled] = useState(true);
 
   const handleRegister = async (email, password, name, lastName) => {
     console.log("userData: ", email, password, name, lastName);
     const response = await register(email, password, name, lastName);
-     if (!isHuman) {
+    if (!isHuman) {
       console.error("Por favor, complete el CAPTCHA");
       return;
     }
@@ -65,171 +66,84 @@ const Register = () => {
 
   return (
     <>
-      <div className="container">
-        {/* <Checkbox
-          checked={componentDisabled}
-          onChange={(e) => setComponentDisabled(e.target.checked)}
-        >
-          Form disabled
-        </Checkbox> */}
-
+      <div className='container'>
         <Form
-          name="form__container"
+          name='form__container'
           labelCol={{
             span: 4,
           }}
           wrapperCol={{
             span: 14,
           }}
-          layout="horizontal"
+          layout='horizontal'
           // disabled={componentDisabled}
-          style={{
-            maxWidth: 600,
-          }}
+          // style={{
+          //   maxWidth: 600,
+          // }}
         >
-          {/*         <Form.Item label='Checkbox' name='disabled' valuePropName='checked'>
-
-          <Checkbox>Checkbox</Checkbox>
-        </Form.Item> */}
-
-          {/*         <Form.Item label='Radio'>
-
-          <Radio.Group>
-            <Radio value='apple'> Apple </Radio>
-            <Radio value='pear'> Pear </Radio>
-          </Radio.Group>
-        </Form.Item> */}
-
-          <Form.Item label="Name">
-            <Input value={name} onChange={(e) => setName(e.target.value)} />
+          <h1>Create a user account</h1>
+          <br />
+          <Form.Item label=''>
+            <Input
+              value={name}
+              placeholder='First Name'
+              onChange={(e) => setName(e.target.value)}
+            />
           </Form.Item>
 
-          <Form.Item label="Last Name">
+          <Form.Item label=''>
             <Input
+              placeholder='Last Name'
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
           </Form.Item>
 
-          <Form.Item label="Email">
-            <Input value={email} onChange={(e) => setEmail(e.target.value)} />
+          <Form.Item label=''>
+            <Input
+              placeholder='Email'
+              value={email}
+              type='email'
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </Form.Item>
 
-          <Form.Item label="Password">
+          <Form.Item label=''>
             <Input
+              placeholder='Password'
+              type='password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Item>
 
-           <Form.Item label="Captcha">
+          <Form.Item label=''>
             <Captcha onChange={handleCaptchaChange} />
           </Form.Item>
 
-          <Form.Item label="Select">
-            <Select>
-              <Select.Option value="demo">Demo</Select.Option>
+          <Form.Item label=''>
+            <Select placeholder='User Type'>
+              <Select.Option value=''>User</Select.Option>
+              <Select.Option value=''>Producer</Select.Option>
             </Select>
           </Form.Item>
 
-          {/*         <Form.Item label='TreeSelect'>
-          <TreeSelect
-            treeData={[
-              {
-                title: "Light",
-                value: "light",
-                children: [
-                  {
-                    title: "Bamboo",
-                    value: "bamboo",
-                  },
-                ],
-              },
-            ]}
-          />
-        </Form.Item> */}
-
-          {/*         <Form.Item label='Cascader'>
-
-          <Cascader
-            options={[
-              {
-                value: "zhejiang",
-                label: "Zhejiang",
-                children: [
-                  {
-                    value: "hangzhou",
-                    label: "Hangzhou",
-                  },
-                ],
-              },
-            ]}
-          />
-        </Form.Item> */}
-
-          <Form.Item label="Birthday">
-            <DatePicker />
-          </Form.Item>
-
-          {/*         <Form.Item label='RangePicker'>
-          <RangePicker />
-        </Form.Item> */}
-
-          {/*         <Form.Item label='InputNumber'>
-          <InputNumber />
-        </Form.Item> */}
-
-          <Form.Item label="TextArea">
-            <TextArea rows={4} />
-          </Form.Item>
-
-          {/*         <Form.Item label='Switch' valuePropName='checked'>
-          <Switch />
-        </Form.Item> */}
-
-          <Form.Item
-            label="Upload"
-            valuePropName="fileList"
-            getValueFromEvent={normFile}
-          >
-            <Upload action="/upload.do" listType="picture-card">
-              <button
-                style={{
-                  border: 0,
-                  background: "none",
-                }}
-                type="button"
-              >
-                <PlusOutlined />
-                <div
-                  style={{
-                    border: 0,
-                    background: "none",
-                  }}
-                  type="button"
-                >
-                  Upload
-                </div>
-              </button>
-            </Upload>
-          </Form.Item>
-
-          <Form.Item label="Button">
+          <Form.Item label=''>
             <Button
+              id='Register_btn'
               onClick={() => handleRegister(name, lastName, email, password)}
             >
-              Create
+              Register now!
             </Button>
           </Form.Item>
 
-          {/*         <Form.Item label='Slider'>
-
-          <Slider />
-        </Form.Item> */}
-
-          {/*         <Form.Item label='ColorPicker'>
-          <ColorPicker />
-        </Form.Item> */}
+          <p>
+            Do you already have an account ID?{" "}
+            <Link to='/login' className='forget-password'>
+              Login
+            </Link>{" "}
+          </p>
+          <br />
         </Form>
       </div>
     </>

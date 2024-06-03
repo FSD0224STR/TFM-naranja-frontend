@@ -12,27 +12,29 @@ import Product from "./components/Product";
 
 
 import { ProductContextProvider } from "./context/ProductContext";
+import { CartContextProvider } from "./context/CartContext";
+
 
 export default function App() {
   return (
     <AuthProvider>
-
-      <ProductContextProvider>
-        <>
-          <Header />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/home" element={<HomePage />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/addProduct" element={<AddProduct />} />
-            <Route path="/listProducts" element={<ListProducts />} />
-            <Route path="/product/:id" element={<Product />} />
-          </Routes>
-          <Footer />
-        </>
-      </ProductContextProvider>
+      <CartContextProvider>
+        <ProductContextProvider>
+          <>
+            <Header />
+            <Routes>
+              <Route path="/home" element={<Home />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/addProduct" element={<AddProduct />} />
+              <Route path="/listProducts" element={<ListProducts />} />
+              <Route path="/product/:id" element={<Product />} />
+            </Routes>
+            <Footer />
+          </>
+        </ProductContextProvider>
+      </CartContextProvider>
     </AuthProvider>
   );
 }
