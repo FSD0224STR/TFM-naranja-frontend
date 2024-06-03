@@ -20,7 +20,26 @@ export const addProduct = async (productData) => {
   return newProduct;
 };
 
-export const findProducts = async () => {
+export const findProducts = async (searchTerm) => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${URL}?searchTerm=${encodeURIComponent(searchTerm)}`, {
+    method: "GET",
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message); // Lanza un error si la respuesta no es exitosa
+  }
+
+  const products = await response.json();
+  return products;
+};
+
+export const findAllProducts = async () => {
   const token = localStorage.getItem("token");
 
   const response = await fetch(`${URL}`, {
@@ -40,6 +59,8 @@ export const findProducts = async () => {
 
 export const findOneProduct = async (id) => {
   const token = localStorage.getItem("token");
+
+  const queryString = productNames.map(name => `product=${encodeURIComponent(name)}`).join('&');
 
   const response = await fetch(`${URL}/${id}`, {
     method: "GET",
