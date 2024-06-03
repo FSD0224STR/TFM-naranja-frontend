@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "./Login.css";
+import Button from "./Button";
+import { Link } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Form, Input } from "antd";
+import { Form, Input } from "antd";
 import { login } from "../apiService/userApi";
 import { useNavigate } from "react-router-dom";
 import Captcha from "./Captcha";
@@ -48,16 +50,18 @@ const Login = () => {
 
   return (
     <Form
-      name="normal_login"
-      className="login-form"
+      name='normal_login'
+      className='login-form'
       initialValues={{
         remember: true,
       }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
+      <h1>Login</h1>
+      <br />
       <Form.Item
-        name="username"
+        name='username'
         rules={[
           {
             required: true,
@@ -66,16 +70,15 @@ const Login = () => {
         ]}
       >
         <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="Username"
-          className="input-login"
+          prefix={<UserOutlined className='site-form-item-icon' />}
+          placeholder='Username'
+          className='input-login'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
       </Form.Item>
-
       <Form.Item
-        name="password"
+        name='password'
         rules={[
           {
             required: true,
@@ -84,39 +87,33 @@ const Login = () => {
         ]}
       >
         <Input
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
-          placeholder="Password"
-          className="input-login"
+          prefix={<LockOutlined className='site-form-item-icon' />}
+          type='password'
+          placeholder='Password'
+          className='input-login'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
       </Form.Item>
-
-       <Form.Item>
+      <Form.Item>
         <Captcha onChange={handleCaptchaChange} />
       </Form.Item>
-
-      <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          className="login-form-button"
-          onClick={handleLogin}
-        >
-          Log in
-        </Button>
-        Or{" "}
-        <a className="register-form-button" href="">
-          register now!
-        </a>
-      </Form.Item>
-
-      <Form.Item>
-        <a className="login-form-forgot" href="">
-          Forgot password
-        </a>
-      </Form.Item>
+      <div className='forget-link'>
+        <Link to='/forgot-password' className='forget-password'>
+          Forgot password?
+        </Link>
+      </div>
+      <Button
+        type='primary'
+        htmlType='submit'
+        className='login-form-button'
+        onClick={handleLogin}
+      >
+        Log in
+      </Button>{" "}
+      <Link className='register' to='/register'>
+        <Button>register now!</Button>
+      </Link>
     </Form>
   );
 };
