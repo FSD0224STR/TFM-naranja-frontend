@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/LogContext";
 import Header from "./components/Header";
-import Home from "./components/Home";
+import HomePage from "./components/Home";
 import Profile from "./components/Profile";
 import Register from "./components/Register";
 import Login from "./components/Login";
@@ -10,6 +10,7 @@ import AddProduct from "./components/AddProduct";
 import ListProducts from "./components/ListProducts";
 import Product from "./components/Product";
 
+
 import { ProductContextProvider } from "./context/ProductContext";
 import { CartContextProvider } from "./context/CartContext";
 
@@ -17,7 +18,6 @@ import { CartContextProvider } from "./context/CartContext";
 export default function App() {
   return (
     <AuthProvider>
-
       <CartContextProvider>
         <ProductContextProvider>
           <>
