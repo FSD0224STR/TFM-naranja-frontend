@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import Comparador from "./Comparador";
-import { findCategories } from '../apiService/categoryApi'
-import CategoryCard from './CategoryCard';
+import { findCategories } from "../apiService/categoryApi";
+import CategoryCard from "./CategoryCard";
 
-const HomePage = () => {
+const Home = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,9 +25,17 @@ const HomePage = () => {
     return <div>Cargando...</div>;
   }
 
-return (
-    <div style={{ padding: '2rem' }}>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', borderRadius: 10 }}>
+  return (
+    <div style={{ padding: "2rem" }}>
+      <Comparador />
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "16px",
+          borderRadius: 10,
+        }}
+      >
         {categories.map((category) => (
           <CategoryCard key={category._id} category={category} />
         ))}
@@ -36,4 +44,4 @@ return (
   );
 };
 
-export default HomePage;
+export default Home;

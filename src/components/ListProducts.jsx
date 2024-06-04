@@ -27,7 +27,6 @@ const ListProducts = () => {
     if (response.error) {
       console.error("Error al listar productos:", response.error);
     } else {
-      console.log("Listado de productos correcto");
       setProducts(response.data);
     }
   };
