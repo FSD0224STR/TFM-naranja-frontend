@@ -33,7 +33,7 @@ a {
   border: 1px #424242;
   outline: 0;
   cursor: pointer;
-  /* transition: border-color 0.25s; */
+  transition: border-color 0.25s;
 }
 
 /* :root {
@@ -103,4 +103,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-} */
+}*/

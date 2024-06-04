@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import "./App.css";
 import { AuthProvider } from "./context/LogContext";
 import Header from "./components/Header";
 import HomePage from "./components/Home";
