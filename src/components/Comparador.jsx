@@ -1,35 +1,45 @@
+
 import React, { useState } from "react";
 import { findProducts } from "../apiService/productApi";
 import ComparadorInputs from "./ComparadorInputs";
 import "./Comparador.css";
 import Button from "./Button";
 
+
 function Comparador() {
   const [productNames, setProductNames] = useState([]);
-  const [comparisonResult, setComparisonResult] = useState([]);
+  const [comparisonResults, setComparisonResults] = useState([]);
   const [error, setError] = useState(null);
 
   const handleCompare = async () => {
+
     if (
       productNames.length === 0 ||
       productNames.every((name) => name.trim() === "")
     ) {
       setComparisonResult([]);
+
       return;
     }
 
     try {
-      const data = await findProducts(productNames);
-      setComparisonResult(data.data);
+      const results = await Promise.all(
+        productNames
+          .filter(name => name.trim() !== '')
+          .map(name => findProducts(name.trim()))
+      );
+      setComparisonResults(results.map(result => result.data));
       setError(null);
     } catch (error) {
-      setError("Error fetching products. Please try again.");
+
+      setError("Error getting products. Please try again.");
       setComparisonResult([]);
     }
   };
 
   return (
     <>
+
       <div className='comparador'>
         <h1>Comparador de Productos</h1>
         <ComparadorInputs onInputChange={setProductNames} />
