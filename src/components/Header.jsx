@@ -3,6 +3,8 @@ import "./Header.css";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/LogContext";
 import logo from "../assets/Comparador-logo.png";
+import CartCompare from "./CartCompare";
+
 
 const Header = () => {
   const { isLoggedIn, logout } = useAuth();
@@ -64,6 +66,7 @@ const Header = () => {
               />
               <span className='toggle-switch-slider'></span>
             </label>
+            <CartCompare></CartCompare>
           </>
         ) : (
           <>
