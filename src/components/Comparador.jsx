@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
-import { findProducts } from "../apiService/productApi"; // Asegúrate de que esta función esté bien definida
-import ComparadorInputs from './ComparadorInputs';
+
+import React, { useState } from "react";
+import { findProducts } from "../apiService/productApi";
+import ComparadorInputs from "./ComparadorInputs";
+import "./Comparador.css";
+import Button from "./Button";
+
 
 function Comparador() {
   const [productNames, setProductNames] = useState([]);
@@ -8,9 +12,13 @@ function Comparador() {
   const [error, setError] = useState(null);
 
   const handleCompare = async () => {
-    if (productNames.length === 0 || productNames.every(name => name.trim() === '')) {
-      setComparisonResults([]);
-      setError('No se han proporcionado nombres de productos.');
+
+    if (
+      productNames.length === 0 ||
+      productNames.every((name) => name.trim() === "")
+    ) {
+      setComparisonResult([]);
+
       return;
     }
 
@@ -23,41 +31,38 @@ function Comparador() {
       setComparisonResults(results.map(result => result.data));
       setError(null);
     } catch (error) {
-      setError('Error fetching products. Please try again.');
-      setComparisonResults([]);
+
+      setError("Error getting products. Please try again.");
+      setComparisonResult([]);
     }
   };
 
   return (
     <>
-      <h1>Comparador de Productos</h1>
-      <ComparadorInputs onInputChange={setProductNames} />
-      <button onClick={handleCompare}>Comparar</button>
-      <div>
-        {error ? (
-          <p>{error}</p>
-        ) : (
-          comparisonResults.map((result, index) => (
-            <div key={index}>
-              {result.length === 0 ? (
-                <p>No se encontraron productos para "{productNames[index]}"</p>
-              ) : (
-                result.map(product => (
-                  <div key={product._id}>
-                    <h3>{product.product}</h3>
-                    <p>Precio: {product.price}</p>
-                    <p>Categoria: {product.category}</p>
-                    <p>Origen: {product.origin}</p>
-                    <p>Marca: {product.brand}</p>
-                    <p>Alérgenos: {product.allergens}</p>
-                    <p>Ingredientes: {product.ingredients}</p>
-                    <p>Descripción: {product.description}</p>
-                  </div>
-                ))
-              )}
+
+      <div className='comparador'>
+        <h1>Comparador de Productos</h1>
+        <ComparadorInputs onInputChange={setProductNames} />
+        <Button className='comparadorButton' onClick={handleCompare}>
+          Comparar
+        </Button>
+        <div className='comparadorResult'>
+          {!comparisonResult ? (
+            <p>
+              {error ? error : "No se encontraron productos para comparar."}
+            </p>
+          ) : (
+            <div>
+              {comparisonResult.map((product) => (
+                <div className='comparadorProduct' key={product._id}>
+                  <h3>{product.product}</h3>
+                  <p>Precio: {product.price}</p>
+                  <p>Descripción: {product.description}</p>
+                </div>
+              ))}
             </div>
-          ))
-        )}
+          )}
+        </div>
       </div>
     </>
   );

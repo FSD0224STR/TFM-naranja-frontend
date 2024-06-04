@@ -1,0 +1,62 @@
+body {
+  background-color: white;
+}
+.comparador {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  border-radius: 25px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  /* background-color: var(--dark-131921); */
+}
+
+.comparador h1 {
+  text-align: center;
+  margin-bottom: 40px;
+  color: var(--dark-131921);
+}
+
+.comparador-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  border-radius: 25px !important;
+}
+
+.comparador-input {
+  margin-right: 10px;
+  border-radius: 25px !important;
+  margin-bottom: 10px;
+  flex-basis: calc(33.33% - 10px);
+}
+
+.comparador .comparadorButton {
+  display: end;
+  height: 40px;
+  width: 100%;
+  border-radius: 4px;
+  background-color: #1890ff;
+  color: #fff;
+  font-size: 16px;
+  margin-top: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.comparadorResult {
+  margin-top: 40px;
+}
+
+.comparador-product {
+  margin-bottom: 20px;
+}
+
+.comparador-product h3 {
+  margin-top: 0;
+}
+
+.comparador-error {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
