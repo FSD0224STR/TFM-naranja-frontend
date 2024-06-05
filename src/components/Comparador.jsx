@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { findProducts } from "../apiService/productApi"; // Asegúrate de que esta función esté bien definida
+import { findProducts } from "../apiService/productApi";
 import ComparadorInputs from './ComparadorInputs';
 
 function Comparador() {

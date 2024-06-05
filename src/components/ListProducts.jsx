@@ -2,7 +2,7 @@ import { Card, List, Button } from "antd";
 import { useState, useEffect, useContext } from "react";
 import "./ListProducts.css";
 import { useNavigate } from "react-router-dom";
-import { findProducts, findAllProducts } from "../apiService/productApi";
+import { findAllProducts } from "../apiService/productApi";
 import Paginate from "./Pagination";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { CartContext } from "../context/CartContext";
@@ -22,7 +22,7 @@ const ListProducts = () => {
   const currentProducts = products.slice(startIndex, endIndex);
 
   const handleLFindAllProducts = async () => {
-    const response = await findProducts();
+    const response = await findAllProducts();
 
     if (response.error) {
       console.error("Error al listar productos:", response.error);
