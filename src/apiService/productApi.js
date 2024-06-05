@@ -56,6 +56,23 @@ export const findAllProducts = async () => {
   return products;
 };
 
+export const findOneProduct = async (id) => {
+  const token = localStorage.getItem("token");
+  const response = await fetch(`${URL}/${id}`, {
+    method: "GET",
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    return error;
+  }
+  const products = await response.json();
+  return products;
+};
+
 
 export const deleteProduct = async (id) => {
   const token = localStorage.getItem("token");
