@@ -23,7 +23,7 @@ export const addProduct = async (productData) => {
 export const findProducts = async (searchTerm) => {
   const token = localStorage.getItem("token");
 
-  const response = await fetch(`${URL}?searchTerm=${encodeURIComponent(searchTerm)}`, {
+  const response = await fetch(`${URL}/search?searchTerm=${encodeURIComponent(searchTerm)}`, {
     method: "GET",
     headers: {
       authorization: `Bearer ${token}`,
@@ -32,7 +32,7 @@ export const findProducts = async (searchTerm) => {
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.message); // Lanza un error si la respuesta no es exitosa
+    throw new Error(error.message);
   }
 
   const products = await response.json();
@@ -48,7 +48,6 @@ export const findAllProducts = async () => {
       authorization: `Bearer ${token}`,
     },
   });
-
   if (!response.ok) {
     const error = await response.json();
     return error;
