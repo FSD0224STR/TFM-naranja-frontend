@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
 import {
   findOneProduct,
   editProduct,
   deleteProduct,
-  findOrigin,
-  findAllergens,
-  findIngredients,
 } from "../apiService/productApi";
 
 import {
@@ -40,7 +37,7 @@ const formItemLayout = {
   },
 };
 
-const Product = () => {
+const EditProduct = () => {
   const navigate = useNavigate();
 
   const [form] = Form.useForm();
@@ -80,7 +77,6 @@ const Product = () => {
       if (response.error) {
         console.error("Error al obtener producto:", response.error);
       } else {
-        console.log("Obteniendo detalles producto");
         form.setFieldsValue({
           product: response.data.product,
           description: response.data.description,
@@ -117,7 +113,6 @@ const Product = () => {
       if (response.error) {
         console.error("Error al editar producto:", response.error);
       } else {
-        console.log("Edicion correcta");
         refresh(!dummy);
         setIsDisabled(!isDisabled);
       }
@@ -133,7 +128,6 @@ const Product = () => {
       if (response.error) {
         console.error("Error al borrar producto:", response.error);
       } else {
-        console.log("Borrado efectudado correctamente");
         navigate("/listProducts");
       }
     } catch (error) {
@@ -381,4 +375,4 @@ const Product = () => {
     </>
   );
 };
-export default Product;
+export default EditProduct;

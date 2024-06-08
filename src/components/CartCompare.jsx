@@ -1,5 +1,6 @@
 import { Drawer, List, Button, Badge, Table, Modal } from "antd";
-import { ShoppingCartOutlined, CloseOutlined } from "@ant-design/icons";
+import { CloseOutlined } from "@ant-design/icons";
+import { AiFillCopyrightCircle } from "react-icons/ai";
 import { useState, useEffect, useContext } from "react";
 import { CartContext } from "../context/CartContext";
 
@@ -59,7 +60,7 @@ const CartCompare = () => {
         <Button
           type="primary"
           shape="square"
-          icon={<ShoppingCartOutlined />}
+          icon={<AiFillCopyrightCircle />}
           onClick={showDrawer}
         />
       </Badge>

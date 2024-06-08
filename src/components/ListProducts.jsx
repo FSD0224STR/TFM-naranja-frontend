@@ -32,7 +32,7 @@ const ListProducts = () => {
   };
 
   const handleLViewProduct = (id) => {
-    navigate(`/product/${id}`);
+    navigate(`/detailsProduct/${id}`);
   };
 
   useEffect(() => {

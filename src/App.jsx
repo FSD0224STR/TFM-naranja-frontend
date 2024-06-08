@@ -9,7 +9,8 @@ import Login from "./components/Login";
 import Footer from "./components/Footer";
 import AddProduct from "./components/AddProduct";
 import ListProducts from "./components/ListProducts";
-import Product from "./components/Product";
+import EditProduct from "./components/EditProduct";
+import DetailsProduct from "./components/DetailsProduct";
 
 import { ProductContextProvider } from "./context/ProductContext";
 import { CartContextProvider } from "./context/CartContext";
@@ -28,7 +29,8 @@ export default function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/addProduct" element={<AddProduct />} />
               <Route path="/listProducts" element={<ListProducts />} />
-              <Route path="/product/:id" element={<Product />} />
+              <Route path="/editProduct/:id" element={<EditProduct />} />
+              <Route path="/detailsProduct/:id" element={<DetailsProduct />} />
             </Routes>
             <Footer />
           </>
