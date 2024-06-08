@@ -14,6 +14,8 @@ import {
   InputNumber,
   Select,
   TreeSelect,
+  message,
+  Popconfirm,
   Upload,
 } from "antd";
 import { ProductContext } from "../context/ProductContext";
@@ -119,6 +121,14 @@ const EditProduct = () => {
     } catch (error) {
       console.error("Error al ejecutar editProduct:");
     }
+  };
+
+  const confirm = () => {
+    handleLDeleteProduct(id);
+    message.success("Producto Borrado con exito");
+  };
+  const cancel = () => {
+    message.error("Operación de eliminación cancelada");
   };
 
   const handleLDeleteProduct = async (id) => {
@@ -362,13 +372,19 @@ const EditProduct = () => {
             <Button type="primary" onClick={() => onActiveEdit()}>
               Active Edit
             </Button>
-            <Button
-              type="primary"
-              danger
-              onClick={() => handleLDeleteProduct(id)}
+
+            <Popconfirm
+              title="Delete Prodcut"
+              description="Are you sure to delete this product?"
+              onConfirm={confirm}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
             >
-              Delete
-            </Button>
+              <Button type="primary" danger>
+                Delete
+              </Button>
+            </Popconfirm>
           </div>
         )}
       </Form.Item>

@@ -9,6 +9,8 @@ import {
   Select,
   TreeSelect,
   notification,
+  message,
+  Popconfirm,
 } from "antd";
 import ImgUpload from "./ImgUpload";
 import { ProductContext } from "../context/ProductContext";
@@ -42,6 +44,13 @@ const AddProduct = () => {
   const [origin, setOrigin] = useState("");
   const [allergens, setAllergens] = useState("");
   const [ingredients, setIngredients] = useState("");
+
+  const confirm = () => {
+    form.resetFields();
+  };
+  const cancel = () => {
+    message.error("Operación de reseteo cancelada");
+  };
 
   const {
     brandOptions,
@@ -312,18 +321,27 @@ const AddProduct = () => {
           >
             Create Product
           </Button>
-          <Button
-            style={{
-              padding: "0.6rem",
-              marginLeft: "0.5rem",
-            }}
-            type="primary"
-            htmlType="submit"
-            danger
-            onClick={() => form.resetFields()}
+
+          <Popconfirm
+            title="Delete Prodcut"
+            description="Are you sure to reset this form?"
+            onConfirm={confirm}
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
           >
-            Reset
-          </Button>
+            <Button
+              style={{
+                padding: "0.6rem",
+                marginLeft: "0.5rem",
+              }}
+              type="primary"
+              htmlType="submit"
+              danger
+            >
+              Reset
+            </Button>
+          </Popconfirm>
         </Form.Item>
       </Form>
     </div>
