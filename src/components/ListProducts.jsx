@@ -1,4 +1,4 @@
-import { Card, List, Button } from "antd";
+import { Card, List, Button, Tooltip } from "antd";
 import { useState, useEffect, useContext } from "react";
 import "./ListProducts.css";
 import { useNavigate } from "react-router-dom";
@@ -58,16 +58,36 @@ const ListProducts = () => {
         dataSource={currentProducts}
         renderItem={(item) => (
           <List.Item>
-            <Card key={item._id} title={item.product}>
-              <p>{item.description}</p>
+            <Card
+              hoverable
+              key={item._id}
+              title={item.product}
+              cover={
+                <img
+                  alt="example"
+                  src="http://blog.cjo.pl/wp-content/uploads/2020/03/comidas-t%C3%ADpicas.jpg"
+                />
+              }
+            >
+              <div style={{ display: "flex" }}>
+                <Button
+                  type="link"
+                  onClick={() => handleLViewProduct(item._id)}
+                >
+                  View Details
+                </Button>
 
-              <Button type="link" onClick={() => handleLViewProduct(item._id)}>
-                View Details
-              </Button>
-
-              <Button type="link" onClick={() => handleLAddProductCart(item)}>
-                <AiFillPlusCircle size={25} color="lightblue" />
-              </Button>
+                <Tooltip title="Add Product to Cart">
+                  <span>
+                    <Button
+                      type="link"
+                      onClick={() => handleLAddProductCart(item)}
+                    >
+                      <AiFillPlusCircle size={32} color="lightblue" />
+                    </Button>
+                  </span>
+                </Tooltip>
+              </div>
             </Card>
           </List.Item>
         )}

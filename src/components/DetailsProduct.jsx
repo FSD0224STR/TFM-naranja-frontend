@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, Card, Descriptions, Tag } from "antd";
-
+import { Tag, Tooltip, Button } from "antd";
+import { AiFillEdit } from "react-icons/ai";
+import { AiFillPlusCircle } from "react-icons/ai";
+import { CartContext } from "../context/CartContext";
 import { findOneProduct } from "../apiService/productApi";
+import ImgCarousel from "./ImgCarousel";
+import "./DetailsProduct.css";
 
 const DetailsProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
+
+  const { handleLAddProductCart } = useContext(CartContext);
 
   const handleGetProduct = async () => {
     try {
@@ -32,48 +38,80 @@ const DetailsProduct = () => {
   }
 
   return (
-    <Card title={product.product} style={{ margin: "20px" }}>
-      <Descriptions bordered>
-        <Descriptions.Item label="Nombre">{product.product}</Descriptions.Item>
+    <div className="product-details">
+      <div className="initial-details">
+        <h1 className="product">{product.product}</h1>
+        <h4 className="price">{product.price} €</h4>
+      </div>
 
-        <Descriptions.Item label="Descripción">
-          {product.description}
-        </Descriptions.Item>
+      <div className="carousel-container">
+        <ImgCarousel />
+      </div>
 
-        <Descriptions.Item label="Precio">{product.price}</Descriptions.Item>
+      <div className="detail-item">
+        <label htmlFor="description">Description</label>
+        <p className="description">{product.description}</p>
+      </div>
 
-        <Descriptions.Item label="Categoría">
-          {product.category}
-        </Descriptions.Item>
+      <div className="detail-item">
+        <label htmlFor="category">Category</label>
+        <p className="category">{product.category}</p>
+      </div>
 
-        <Descriptions.Item label="Brand">{product.brand}</Descriptions.Item>
+      <div className="detail-item">
+        <label htmlFor="brand">Brand</label>
+        <p className="brand">{product.brand}</p>
+      </div>
 
-        <Descriptions.Item label="Origin">{product.origin}</Descriptions.Item>
+      <div className="detail-item">
+        <label htmlFor="origin">Origin</label>
+        <p className="origin">{product.origin}</p>
+      </div>
 
-        <Descriptions.Item label="Allergens">
+      <div className="detail-item">
+        <label htmlFor="allergens">Allergens</label>
+        <div className="allergens">
           {product.allergens.map((allergen, index) => (
             <Tag color="red" key={index}>
               {allergen}
             </Tag>
           ))}
-        </Descriptions.Item>
+        </div>
+      </div>
 
-        <Descriptions.Item label="Ingredients">
+      <div className="detail-item">
+        <label htmlFor="ingredients">Ingredients</label>
+        <div className="ingredients">
           {product.ingredients.map((ingredient, index) => (
             <Tag color="blue" key={index}>
               {ingredient}
             </Tag>
           ))}
-        </Descriptions.Item>
-      </Descriptions>
-      <Button
-        type="primary"
-        onClick={() => navigate(`/editProduct/${id}`)}
-        style={{ marginTop: "20px" }}
-      >
-        Edit Producto
-      </Button>
-    </Card>
+        </div>
+      </div>
+
+      <div>
+        <Tooltip title="Edit Product">
+          <span>
+            <Button
+              type="primary"
+              onClick={() => navigate(`/editProduct/${id}`)}
+            >
+              <AiFillEdit className="icon-edit" />
+            </Button>
+          </span>
+        </Tooltip>
+      </div>
+      <div>
+        <Tooltip title="Add Product to Cart">
+          <span>
+            <Button type="link" onClick={() => handleLAddProductCart(item)}>
+              <AiFillPlusCircle size={35} color="lightblue" />
+            </Button>
+          </span>
+        </Tooltip>
+      </div>
+    </div>
   );
 };
 

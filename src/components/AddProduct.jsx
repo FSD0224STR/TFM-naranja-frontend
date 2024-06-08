@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { addProduct } from "../apiService/productApi";
+import Button from "./Button";
 
 import {
-  Button,
   Form,
   Input,
   InputNumber,
@@ -301,11 +301,6 @@ const AddProduct = () => {
           }}
         >
           <Button
-            style={{
-              padding: "0.6rem",
-              marginRight: "0.5rem",
-            }}
-            type="primary"
             htmlType="submit"
             onClick={() =>
               handleLAddProduct({
@@ -330,17 +325,7 @@ const AddProduct = () => {
             okText="Yes"
             cancelText="No"
           >
-            <Button
-              style={{
-                padding: "0.6rem",
-                marginLeft: "0.5rem",
-              }}
-              type="primary"
-              htmlType="submit"
-              danger
-            >
-              Reset
-            </Button>
+            <Button htmlType="submit">Reset</Button>
           </Popconfirm>
         </Form.Item>
       </Form>
