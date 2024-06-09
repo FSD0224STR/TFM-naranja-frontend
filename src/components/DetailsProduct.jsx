@@ -105,7 +105,7 @@ const DetailsProduct = () => {
       <div>
         <Tooltip title="Add Product to Cart">
           <span>
-            <Button type="link" onClick={() => handleLAddProductCart(item)}>
+            <Button type="link" onClick={() => handleLAddProductCart(product)}>
               <AiFillPlusCircle size={35} color="lightblue" />
             </Button>
           </span>

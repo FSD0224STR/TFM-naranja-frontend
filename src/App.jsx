@@ -11,6 +11,7 @@ import AddProduct from "./components/AddProduct";
 import ListProducts from "./components/ListProducts";
 import EditProduct from "./components/EditProduct";
 import DetailsProduct from "./components/DetailsProduct";
+import CartCompare from "../src/components/CartCompare";
 
 import { ProductContextProvider } from "./context/ProductContext";
 import { CartContextProvider } from "./context/CartContext";
@@ -32,6 +33,7 @@ export default function App() {
               <Route path="/editProduct/:id" element={<EditProduct />} />
               <Route path="/detailsProduct/:id" element={<DetailsProduct />} />
             </Routes>
+            <CartCompare />
             <Footer />
           </>
         </ProductContextProvider>

@@ -3,8 +3,6 @@ import "./Header.css";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/LogContext";
 import logo from "../assets/Comparador-logo.png";
-import CartCompare from "./CartCompare";
-
 
 const Header = () => {
   const { isLoggedIn, logout } = useAuth();
@@ -35,49 +33,48 @@ const Header = () => {
   };
 
   return (
-    <header className='header'>
-      <div className='logo'>
-        <img src={logo} alt='Cpmparador' />
+    <header className="header">
+      <div className="logo">
+        <img src={logo} alt="Cpmparador" />
         {/* <h1>Comparador</h1> */}
       </div>
       <br />
-      <div className='search-container'>
+      <div className="search-container">
         <input
-          type='text'
+          type="text"
           value={searchTerm}
           onChange={handleSearch}
-          className='search-input'
-          placeholder='Search...'
+          className="search-input"
+          placeholder="Search..."
         />
-        <button className='search-button'>&#x1F50E;&#xFE0E;</button>
+        <button className="search-button">&#x1F50E;&#xFE0E;</button>
       </div>
-      <div className='header-links'>
-        <Link to='/home'>Home</Link>
+      <div className="header-links">
+        <Link to="/home">Home</Link>
         {isLoggedIn ? (
           <>
-            <Link to='/profile'>Profile</Link>
-            <Link to='/addProduct'>Add Product</Link>
-            <Link to='/listProducts'>List Products</Link>
-            <label className='toggle-switch'>
+            <Link to="/profile">Profile</Link>
+            <Link to="/addProduct">Add Product</Link>
+            <Link to="/listProducts">List Products</Link>
+            <label className="toggle-switch">
               <input
-                type='checkbox'
+                type="checkbox"
                 checked={isChecked}
                 onChange={handleToggle}
               />
-              <span className='toggle-switch-slider'></span>
+              <span className="toggle-switch-slider"></span>
             </label>
-            <CartCompare></CartCompare>
           </>
         ) : (
           <>
-            <Link to='/register'>Register</Link>
-            <Link to='/login'>Login</Link>
+            <Link to="/register">Register</Link>
+            <Link to="/login">Login</Link>
           </>
         )}
       </div>
       {showConfirm && (
-        <div className='confirm-box'>
-          <div className='confirm-content'>
+        <div className="confirm-box">
+          <div className="confirm-content">
             <h2>Confirm Logout</h2>
             <p>
               <small>
