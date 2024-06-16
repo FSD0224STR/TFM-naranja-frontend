@@ -4,11 +4,11 @@ const ComparadorInputs = ({ onInputChange }) => {
   const [inputs, setInputs] = useState([{ id: 1, value: '' }]);
 
   const handleInputChange = (index, { target: { value } }) => {
-    const newInputs = inputs.map((input, i) => 
+    const newInputs = inputs.map((input, i) =>
       i === index ? { ...input, value } : input
     );
 
-    if (index === inputs.length - 1 && value.trim() !== '') {
+    if (index === inputs.length - 1 && value.trim() !== '' && inputs.length < 3) {
       newInputs.push({ id: inputs.length + 1, value: '' });
     }
 
