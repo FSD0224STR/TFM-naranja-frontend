@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { notification } from "antd";
 
 export const CartContext = React.createContext();
 
 export const CartContextProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
+
+  const [api, contextHolder] = notification.useNotification();
+  const openNotification = (type) => {
+    api[type]({
+      message: "Producto ya añadido en carrito",
+    });
+  };
 
   const handleLAddProductCart = (dataProduct) => {
     const storedCartItems = localStorage.getItem("cartData");
@@ -13,9 +21,18 @@ export const CartContextProvider = ({ children }) => {
       try {
         cartItems = JSON.parse(storedCartItems);
         if (Array.isArray(cartItems)) {
-          cartItems.push(dataProduct);
-          localStorage.setItem("cartData", JSON.stringify(cartItems));
-          setCartItems(cartItems);
+          const flatCartItems = cartItems.flat();
+
+          const existsProduct = flatCartItems.some(
+            (element) => element._id === dataProduct._id
+          );
+          if (existsProduct) {
+            openNotification("error");
+          } else {
+            cartItems.push(dataProduct);
+            localStorage.setItem("cartData", JSON.stringify(cartItems));
+            setCartItems(cartItems);
+          }
         }
       } catch (error) {
         console.error("Error parsing cartData from localStorage", error);
@@ -63,6 +80,7 @@ export const CartContextProvider = ({ children }) => {
     setCartItems,
     getCartItems,
     removeCartItem,
+    contextHolder,
   };
 
   return (
