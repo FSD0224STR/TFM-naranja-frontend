@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { findProducts } from "../apiService/productApi";
 import ComparadorInputs from './ComparadorInputs';
+import { Card, Descriptions, Row, Col, Button, message } from 'antd';
 
 function Comparador() {
   const [productNames, setProductNames] = useState([]);
@@ -14,14 +15,23 @@ function Comparador() {
       return;
     }
 
-    try {
+try {
       const results = await Promise.all(
         productNames
           .filter(name => name.trim() !== '')
           .map(name => findProducts(name.trim()))
       );
-      setComparisonResults(results.map(result => result.data));
+
+      const dataResults = results.map(result => result.data);
+      setComparisonResults(dataResults);
       setError(null);
+      
+      dataResults.forEach((result, index) => {
+        if (result.length === 0) {
+          setError(`No se encontraron productos para "${productNames[index]}"`);
+        }
+      });
+
     } catch (error) {
       setError('Error fetching products. Please try again.');
       setComparisonResults([]);
@@ -30,34 +40,40 @@ function Comparador() {
 
   return (
     <>
-      <h1>Comparador de Productos</h1>
+      <h1 style={{ textAlign: 'center' }}>Comparador de Productos</h1>
       <ComparadorInputs onInputChange={setProductNames} />
-      <button onClick={handleCompare}>Comparar</button>
-      <div>
-        {error ? (
-          <p>{error}</p>
-        ) : (
-          comparisonResults.map((result, index) => (
-            <div key={index}>
-              {result.length === 0 ? (
-                <p>No se encontraron productos para "{productNames[index]}"</p>
-              ) : (
-                result.map(product => (
-                  <div key={product._id}>
-                    <h3>{product.product}</h3>
-                    <p>Precio: {product.price}</p>
-                    <p>Categoria: {product.category}</p>
-                    <p>Origen: {product.origin}</p>
-                    <p>Marca: {product.brand}</p>
-                    <p>Alérgenos: {product.allergens}</p>
-                    <p>Ingredientes: {product.ingredients}</p>
-                    <p>Descripción: {product.description}</p>
-                  </div>
-                ))
+      <Button type="primary" onClick={handleCompare}>Comparar</Button>
+      <div style={{ marginTop: '16px', textAlign: 'center' }}>
+        <Row gutter={16} justify="center">
+          {comparisonResults.map((result, index) => (
+            <Col span={8} key={index}>
+              {result.length > 0 && (
+                <Card>
+                  <h2>{productNames[index]}</h2>
+                  {result.map(product => (
+                    <Card
+                      key={product._id}
+                      title={product.product}
+                      bordered={false}
+                      style={{ marginBottom: '16px' }}
+                    >
+                      <Descriptions column={1}>
+                        <Descriptions.Item label="Precio">{product.price}</Descriptions.Item>
+                        <Descriptions.Item label="Categoría">{product.category}</Descriptions.Item>
+                        <Descriptions.Item label="Origen">{product.origin}</Descriptions.Item>
+                        <Descriptions.Item label="Marca">{product.brand}</Descriptions.Item>
+                        <Descriptions.Item label="Alérgenos">{product.allergens}</Descriptions.Item>
+                        <Descriptions.Item label="Ingredientes">{product.ingredients}</Descriptions.Item>
+                        <Descriptions.Item label="Descripción">{product.description}</Descriptions.Item>
+                      </Descriptions>
+                    </Card>
+                  ))}
+                </Card>
               )}
-            </div>
-          ))
-        )}
+            </Col>
+          ))}
+        </Row>
+        {error && <p>{error}</p>}
       </div>
     </>
   );
