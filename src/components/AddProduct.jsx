@@ -6,9 +6,11 @@ import {
   findIngredients,
 } from "../apiService/productApi";
 
-import { Button, Form, Input, InputNumber, Select, TreeSelect } from "antd";
+import { Form, Input, InputNumber, Select, TreeSelect } from "antd";
 import ImgUpload from "./ImgUpload";
 import { ProductContext } from "../context/ProductContext";
+import Button from "./Button";
+import "./AddProduct.css";
 
 const formItemLayout = {
   labelCol: {
@@ -85,77 +87,69 @@ const AddProduct = () => {
   }, [form]);
 
   return (
-    <Form
-      form={form}
-      {...formItemLayout}
-      variant="filled"
-      style={{
-        maxWidth: 600,
-        margin: "3rem",
-      }}
-    >
-      <Form.Item
-        label="Name Product"
-        name="product"
-        rules={[
-          {
-            required: true,
-            message: "Introduce name!",
-          },
-        ]}
+    <div className='add-product-form'>
+      <h2>Add Product</h2>
+      <Form
+        form={form}
+        {...formItemLayout}
+        variant='filled'
+        style={{
+          maxWidth: 600,
+          margin: "3rem",
+        }}
       >
-        <Input value={product} onChange={(e) => setProduct(e.target.value)} />
-      </Form.Item>
-
-      <Form.Item
-        label="Description"
-        name="description"
-        rules={[
-          {
-            required: true,
-            message: "Introduce description!",
-          },
-        ]}
-      >
+        <label>Name Product:</label>
+        <Input
+          value={product}
+          onChange={(e) => setProduct(e.target.value)}
+          rules={[
+            {
+              required: true,
+              message: "Introduce name!",
+            },
+          ]}
+        />
+        <label>Description:</label>
         <Input.TextArea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          rules={[
+            {
+              required: true,
+              message: "Introduce description!",
+            },
+          ]}
         />
-      </Form.Item>
-
-      <Form.Item
-        label="Price"
-        name="price"
-        rules={[
-          {
-            required: true,
-            message: "Introduce Price!",
-          },
-        ]}
-      >
+        <label>Price:</label>
         <InputNumber
           style={{
             width: "100%",
+            borderRadius: 25,
           }}
           value={price}
           onChange={(value) => setPrice(value)}
+          rules={[
+            {
+              required: true,
+              message: "Introduce Price!",
+            },
+          ]}
         />
-      </Form.Item>
-
-      <Form.Item
-        label="Category"
-        name="category"
-        rules={[
-          {
-            required: true,
-            message: "Introduce category!",
-          },
-        ]}
-      >
+        <label>Select category:</label>
         <Select
+          style={{
+            width: "100%",
+            borderRadius: 25,
+          }}
           value={category}
           onChange={(value) => setCategory(value)}
-          placeholder="Please select brand"
+          placeholder='Please select category'
+          rules={[
+            {
+              required: true,
+              message: "Introduce category!",
+            },
+          ]}
         >
           {categoryOptions.map((categ) => (
             <Select.Option key={categ._id} value={categ.category}>
@@ -163,22 +157,16 @@ const AddProduct = () => {
             </Select.Option>
           ))}
         </Select>
-      </Form.Item>
-
-      <Form.Item
-        label="Brand"
-        name="brand"
-        rules={[
-          {
-            required: true,
-            message: "Introduce brand!",
-          },
-        ]}
-      >
+        <label>Brand:</label>
         <Select
           value={brand}
           onChange={(value) => setBrand(value)}
-          placeholder="Please select brand"
+          rules={[
+            {
+              required: true,
+              message: "Introduce brand!",
+            },
+          ]}
         >
           {brandOptions.map((brand) => (
             <Select.Option key={brand._id} value={brand.value}>
@@ -186,22 +174,16 @@ const AddProduct = () => {
             </Select.Option>
           ))}
         </Select>
-      </Form.Item>
-
-      <Form.Item
-        label="Origin"
-        name="origin"
-        rules={[
-          {
-            required: true,
-            message: "Introduce origin!",
-          },
-        ]}
-      >
+        <label>Origin:</label>
         <Select
           value={origin}
           onChange={(value) => setOrigin(value)}
-          placeholder="Please select origin"
+          rules={[
+            {
+              required: true,
+              message: "Introduce origin!",
+            },
+          ]}
         >
           {originOptions.map((orig) => (
             <Select.Option key={orig._id} value={orig.value}>
@@ -209,111 +191,88 @@ const AddProduct = () => {
             </Select.Option>
           ))}
         </Select>
-      </Form.Item>
-
-      <Form.Item
-        label="Allergens"
-        name="allergens"
-        rules={[
-          {
-            required: true,
-            message: "Introduce allergens!",
-          },
-        ]}
-      >
+        <label>Allergies:</label>
         <TreeSelect
           showSearch
           style={{
             width: "100%",
+            borderRadius: 25,
           }}
           value={allergens}
           dropdownStyle={{
-            maxHeight: 400,
+            maxHeight: 800,
+            width: 200,
             overflow: "auto",
           }}
-          placeholder="Please select allergens"
           allowClear
           multiple
           treeDefaultExpandAll
           onChange={onChangeAllergens}
           treeData={allergensData}
+          rules={[
+            {
+              required: true,
+              message: "Introduce allergens!",
+            },
+          ]}
         />
-      </Form.Item>
+        <label>Ingredients:</label>
 
-      <Form.Item
-        label="Ingredients"
-        name="ingredients"
-        rules={[
-          {
-            required: true,
-            message: "Introduce ingredients!",
-          },
-        ]}
-      >
         <TreeSelect
           showSearch
           style={{
             width: "100%",
+            borderRadius: 25,
           }}
           value={ingredients}
           dropdownStyle={{
-            maxHeight: 400,
+            maxHeight: 800,
+            width: 200,
             overflow: "auto",
           }}
-          placeholder="Please select ingredients"
           allowClear
           multiple
           treeDefaultExpandAll
           onChange={onChangeIngredients}
           treeData={ingredientsData}
+          rules={[
+            {
+              required: true,
+              message: "Introduce ingredients!",
+            },
+          ]}
         />
-      </Form.Item>
-
-      <Form.Item>
         <ImgUpload></ImgUpload>
-      </Form.Item>
+        <div className='centered-buttons'>
+          <Button
+            color='primary'
+            onClick={() =>
+              handleLAddProduct({
+                product,
+                description,
+                price,
+                brand,
+                origin,
+                allergens,
+                ingredients,
+              })
+            }
+          >
+            {" Create Product"}
+          </Button>
 
-      <Form.Item
-        wrapperCol={{
-          offset: 6,
-          span: 16,
-        }}
-      >
-        <Button
-          style={{
-            padding: "0.6rem",
-            marginRight: "0.5rem",
-          }}
-          type="primary"
-          htmlType="submit"
-          onClick={() =>
-            handleLAddProduct({
-              product,
-              description,
-              price,
-              brand,
-              origin,
-              allergens,
-              ingredients,
-            })
-          }
-        >
-          Create Product
-        </Button>
-        <Button
-          style={{
-            padding: "0.6rem",
-            marginLeft: "0.5rem",
-          }}
-          type="primary"
-          htmlType="submit"
-          danger
-          onClick={() => form.resetFields()}
-        >
-          Reset
-        </Button>
-      </Form.Item>
-    </Form>
+          <Button
+            color='red'
+            type='primary'
+            htmlType='submit'
+            danger
+            onClick={() => form.resetFields()}
+          >
+            Reset
+          </Button>
+        </div>
+      </Form>
+    </div>
   );
 };
 

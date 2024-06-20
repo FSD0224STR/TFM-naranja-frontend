@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import "./Profile.css";
 import Button from "./Button";
 import { updateUser } from "../apiService/userApi";
-import ImageUploader from "./ImageUploader";
+// import ImageUploader from "./ImageUploader";
 
 export default function Profile() {
   const [userData, setUserData] = useState({
@@ -75,10 +75,10 @@ export default function Profile() {
       </div>
       <form className='styleBox' onSubmit={handleSubmit}>
         <div className='styleImg'>
-          <ImageUploader
+          {/* <input
             onUpload={(file) => handleImageUpload(file)}
             label='Upload your image'
-          />
+          /> */}
           {userData.imageFileUrl && (
             <img
               src={userData.imageFileUrl}

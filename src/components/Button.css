@@ -19,7 +19,54 @@
   border: none;
   transition: background-color 0.3s ease;
 }
-.button:hover {
+/* .button:hover {
   background-color: var(--lightblue-feb569);
   color: #131921;
+} */
+
+.button.primary {
+  background-color: var(--darkBlue-febd69);
+  color: white;
+}
+
+.button.primary:hover {
+  background-color: var(--lightblue-feb569);
+  color: #131921;
+}
+
+.button.lightblue {
+  background-color: var(--lightblue-feb569);
+  color: #131921;
+}
+
+.button.lightblue:hover {
+  background-color: #87ceeb;
+  color: #131921;
+}
+
+.button.white {
+  background-color: #ffffff;
+  color: #131921;
+  border: 1px solid #cccccc;
+}
+
+.button.white:hover {
+  background-color: var(--lightblue-feb569);
+  color: #131921;
+  border: 1px solid #aaaaaa;
+}
+.button.red {
+  background-color: #ffffff;
+  color: #131921;
+  border: 1px solid #cccccc;
+}
+
+.button.red:hover {
+  background-color: red;
+  color: hwb(0 100% 0%);
+  border: 1px solid #aaaaaa;
+}
+.button.button--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

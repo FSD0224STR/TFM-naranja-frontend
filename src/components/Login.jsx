@@ -104,7 +104,7 @@ const Login = () => {
         </Link>
       </div>
       <Button
-        type='primary'
+        color='primary'
         htmlType='submit'
         className='login-form-button'
         onClick={handleLogin}
@@ -112,7 +112,7 @@ const Login = () => {
         Log in
       </Button>{" "}
       <Link className='register' to='/register'>
-        <Button>register now!</Button>
+        <Button color='white'>register now!</Button>
       </Link>
     </Form>
   );
