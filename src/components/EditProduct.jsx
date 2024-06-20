@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavi
+gate, useParams } from "react-router-dom";
 import {
   findOneProduct,
   editProduct,
   deleteProduct,
-  findOrigin,
-  findAllergens,
-  findIngredients,
 } from "../apiService/productApi";
 import Button from "./Button";
 // import "./Product.css";
@@ -16,12 +14,13 @@ import {
   InputNumber,
   Select,
   TreeSelect,
+  message,
+  Popconfirm,
   Upload,
   Modal,
 } from "antd";
 import { ProductContext } from "../context/ProductContext";
 // import { } from "antd";
-
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -41,7 +40,7 @@ const formItemLayout = {
   },
 };
 
-const Product = () => {
+const EditProduct = () => {
   const navigate = useNavigate();
 
   const [form] = Form.useForm();
@@ -83,7 +82,6 @@ const Product = () => {
       if (response.error) {
         console.error("Error al obtener producto:", response.error);
       } else {
-        console.log("Obteniendo detalles producto");
         form.setFieldsValue({
           product: response.data.product,
           description: response.data.description,
@@ -120,13 +118,20 @@ const Product = () => {
       if (response.error) {
         console.error("Error al editar producto:", response.error);
       } else {
-        console.log("Edicion correcta");
         refresh(!dummy);
         setIsDisabled(!isDisabled);
       }
     } catch (error) {
       console.error("Error al ejecutar editProduct:");
     }
+  };
+
+  const confirm = () => {
+    handleLDeleteProduct(id);
+    message.success("Producto Borrado con exito");
+  };
+  const cancel = () => {
+    message.error("Operación de eliminación cancelada");
   };
 
   const handleLDeleteProduct = async (id) => {
@@ -140,7 +145,6 @@ const Product = () => {
       if (response.error) {
         console.error("Error al borrar producto:", response.error);
       } else {
-        console.log("Borrado efectudado correctamente");
         navigate("/listProducts");
       }
     } catch (error) {
