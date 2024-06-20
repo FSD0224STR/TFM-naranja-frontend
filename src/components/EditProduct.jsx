@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavi
-gate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   findOneProduct,
   editProduct,
@@ -20,7 +19,7 @@ import {
   Modal,
 } from "antd";
 import { ProductContext } from "../context/ProductContext";
-// import { } from "antd";
+
 const formItemLayout = {
   labelCol: {
     xs: {
