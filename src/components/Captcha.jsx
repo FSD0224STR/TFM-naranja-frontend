@@ -10,10 +10,18 @@ const Captcha = ({ onChange }) => {
 
   return (
     <ReCAPTCHA
-      sitekey="6Leys90pAAAAAPkiL_lmRG70wtkmTO5lwNOuLWsL"
+      sitekey="6Lelgf4pAAAAAK5JC3Ihag_ca8stfLRxjnRuwxXU"
       onChange={handleCaptchaChange}
     />
   );
 };
 
 export default Captcha;
+
+
+
+
+// 6Lelgf4pAAAAAK5JC3Ihag_ca8stfLRxjnRuwxXU CLAVE WEB
+
+
+// 6Lelgf4pAAAAAI60WioxReT7EydWWJ-4jUKkGDXH CLAVE SECRETA
