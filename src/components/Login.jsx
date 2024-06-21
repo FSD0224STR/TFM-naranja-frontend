@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "./Login.css";
+import Button from "./Button";
+import { Link } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Form, Input } from "antd";
+import { Form, Input } from "antd";
 import { login } from "../apiService/userApi";
 import { useNavigate } from "react-router-dom";
 import Captcha from "./Captcha";
@@ -11,35 +13,27 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isHuman, setIsHuman] = useState(false);
+  const [error, setError] = useState("");
+
   const navigate = useNavigate();
   const { login: loginContext } = useAuth();
 
-  const onFinish = (values) => {
-    console.log("Success:", values);
-  };
-
   const handleLogin = async () => {
-    console.log("email: ", email);
-    console.log("password: ", password);
     if (!isHuman) {
       console.error("Por favor, complete el CAPTCHA");
       return;
     }
     const response = await login(email, password);
     if (response.error) {
-      console.error("Error al iniciar sesión:", response.error);
+      if (response.error === "Unauthorized");
+      setError("Usuario o contraseña incorrecta");
     } else {
-      console.log("Inicio de sesión exitoso:", response.data);
       const token = response.data;
-      console.log("token-front: ", token);
       localStorage.setItem("token", token);
       loginContext(token);
+      setError("");
       navigate("/home");
     }
-  };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
   };
 
   const handleCaptchaChange = (value) => {
@@ -53,9 +47,9 @@ const Login = () => {
       initialValues={{
         remember: true,
       }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
     >
+      <h1>Login</h1>
+      <br />
       <Form.Item
         name="username"
         rules={[
@@ -73,7 +67,7 @@ const Login = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
       </Form.Item>
-
+      {error && <div className="error">{error}</div>}
       <Form.Item
         name="password"
         rules={[
@@ -92,31 +86,26 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </Form.Item>
-
-       <Form.Item>
+      {error && <div className="error">{error}</div>}
+      <Form.Item>
         <Captcha onChange={handleCaptchaChange} />
       </Form.Item>
-
-      <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          className="login-form-button"
-          onClick={handleLogin}
-        >
-          Log in
-        </Button>
-        Or{" "}
-        <a className="register-form-button" href="">
-          register now!
-        </a>
-      </Form.Item>
-
-      <Form.Item>
-        <a className="login-form-forgot" href="">
-          Forgot password
-        </a>
-      </Form.Item>
+      <div className="forget-link">
+        <Link to="/forgot-password" className="forget-password">
+          Forgot password?
+        </Link>
+      </div>
+      <Button
+        type="primary"
+        htmlType="submit"
+        className="login-form-button"
+        onClick={handleLogin}
+      >
+        Log in
+      </Button>{" "}
+      <Link className="register" to="/register">
+        <Button>register now!</Button>
+      </Link>
     </Form>
   );
 };

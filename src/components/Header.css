@@ -1,6 +1,240 @@
+/* .header {
+  display: flex;
+  gap: 2rem;
+  padding: 1rem;
+  background-color: lightgray;
+  bottom: 10px;
+}
+.logo {
+  display: flex;
+  top: 10px;
+  gap: 2rem;
+  padding: 1rem;
+  background-color: lightgray;
+  cursor: pointer;
+} */
+
+/* New */
+
 .header {
-    display: flex;
-    gap: 2rem;
-    padding: 1rem;
-    background-color: lightgray;
+  background-color: var(--darkBlue-febd69);
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+}
+
+.logo img {
+  height: 45px;
+  width: auto;
+  margin-right: 10px;
+  margin-left: 20px;
+}
+
+/* .logo {
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.logo h1 {
+  margin: 0;
+} */
+
+.header-links {
+  display: flex;
+  align-items: center;
+}
+
+.header-links a {
+  color: #fff;
+  text-decoration: none;
+  margin-right: 20px;
+}
+
+.header-links a:hover {
+  color: #ccc;
+}
+
+.logout-link {
+  cursor: pointer;
+}
+
+.logout-link:hover {
+  color: rgb(255, 120, 120) !important;
+  text-decoration: underline;
+}
+
+.search-input {
+  padding: 10px;
+  border: none;
+  /* background-color: var(--lightblue-feb569), rgb(4, 212, 212), lightblue; */
+  color: var(--darkBlue-febd69);
+  border-radius: 25px !important;
+  width: 500px;
+  height: 35px;
+  margin: 0 20px;
+}
+.search-input:focus {
+  outline: var(--lightblue-feb569);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.search-container {
+  position: relative;
+  display: inline-block;
+  /* border: 1px solid #ccc; */
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+.search-input {
+  padding: 10px;
+  font-size: 16px;
+  width: 300px;
+  border: none;
+  border-radius: 10px;
+}
+
+.search-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: var(--lightblue-feb569);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 25px;
+  outline: none;
+}
+
+.search-button:hover {
+  background-color: var(--darkBlue-febd69);
+  border: 1px solid #013472;
+}
+
+.search-input,
+.search-button {
+  vertical-align: middle;
+  height: 40px;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.toggle-switch input {
+  display: none;
+}
+
+.toggle-switch-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ccc;
+  border-radius: 34px;
+  transition: 0.4s;
+}
+
+.toggle-switch-slider:before {
+  position: absolute;
+  content: "";
+  top: 4px;
+  left: 4px;
+  width: 26px;
+  height: 26px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+input:checked + .toggle-switch-slider {
+  background-color: #4caf50;
+}
+
+input:checked + .toggle-switch-slider:before {
+  transform: translateX(26px);
+}
+
+.toggle-switch-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 34px;
+}
+
+.toggle-switch-label:before {
+  position: absolute;
+  content: "";
+  top: 4px;
+  left: 4px;
+  width: 26px;
+  height: 26px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+.confirm-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirm-content {
+  background-color: #fff;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  color: var(--darkBlue-febd69);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.confirm-content h2 {
+  margin-top: 0;
+  justify-content: center;
+  color: var(--darkBlue-febd69);
+}
+
+.confirm-content button {
+  background-color: #2d83a6;
+  color: #fff;
+  border: none;
+  margin-top: 20px;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.confirm-content button:hover {
+  background-color: var(--darkBlue-febd69);
+}
+
+.confirm-content button + button {
+  margin-left: 10px;
 }

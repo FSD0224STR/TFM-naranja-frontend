@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
 import {
   findOneProduct,
   editProduct,
   deleteProduct,
-  findOrigin,
-  findAllergens,
-  findIngredients,
 } from "../apiService/productApi";
 
 import {
@@ -17,6 +14,8 @@ import {
   InputNumber,
   Select,
   TreeSelect,
+  message,
+  Popconfirm,
   Upload,
 } from "antd";
 import { ProductContext } from "../context/ProductContext";
@@ -40,7 +39,7 @@ const formItemLayout = {
   },
 };
 
-const Product = () => {
+const EditProduct = () => {
   const navigate = useNavigate();
 
   const [form] = Form.useForm();
@@ -80,7 +79,6 @@ const Product = () => {
       if (response.error) {
         console.error("Error al obtener producto:", response.error);
       } else {
-        console.log("Obteniendo detalles producto");
         form.setFieldsValue({
           product: response.data.product,
           description: response.data.description,
@@ -117,13 +115,20 @@ const Product = () => {
       if (response.error) {
         console.error("Error al editar producto:", response.error);
       } else {
-        console.log("Edicion correcta");
         refresh(!dummy);
         setIsDisabled(!isDisabled);
       }
     } catch (error) {
       console.error("Error al ejecutar editProduct:");
     }
+  };
+
+  const confirm = () => {
+    handleLDeleteProduct(id);
+    message.success("Producto Borrado con exito");
+  };
+  const cancel = () => {
+    message.error("Operación de eliminación cancelada");
   };
 
   const handleLDeleteProduct = async (id) => {
@@ -133,7 +138,6 @@ const Product = () => {
       if (response.error) {
         console.error("Error al borrar producto:", response.error);
       } else {
-        console.log("Borrado efectudado correctamente");
         navigate("/listProducts");
       }
     } catch (error) {
@@ -368,17 +372,23 @@ const Product = () => {
             <Button type="primary" onClick={() => onActiveEdit()}>
               Active Edit
             </Button>
-            <Button
-              type="primary"
-              danger
-              onClick={() => handleLDeleteProduct(id)}
+
+            <Popconfirm
+              title="Delete Prodcut"
+              description="Are you sure to delete this product?"
+              onConfirm={confirm}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
             >
-              Delete
-            </Button>
+              <Button type="primary" danger>
+                Delete
+              </Button>
+            </Popconfirm>
           </div>
         )}
       </Form.Item>
     </>
   );
 };
-export default Product;
+export default EditProduct;
