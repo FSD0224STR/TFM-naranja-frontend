@@ -422,4 +422,4 @@ const EditProduct = () => {
   );
 };
 
-export default Product;
+export default EditProduct;
