@@ -130,6 +130,7 @@ const Register = () => {
 
           <Form.Item label=''>
             <Button
+              color='primary'
               id='Register_btn'
               onClick={() => handleRegister(name, lastName, email, password)}
             >

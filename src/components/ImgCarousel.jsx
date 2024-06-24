@@ -1,35 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { Carousel } from "antd";
 
 const contentStyle = {
   margin: 0,
-  height: "160px",
-  color: "#fff",
+  height: "800px",
+  color: "#000000",
   lineHeight: "160px",
   textAlign: "center",
   background: "#364d79",
 };
 
-const ImgCarousel = () => {
-  //   const onChange = (currentSlide) => {
-  //     console.log(currentSlide);
-  //   };
+const ImgCarousel = ({ imageUrls }) => {
+  const onChange = (currentSlide) => {
+    console.log(currentSlide);
+  };
 
+  if (!imageUrls || imageUrls.length === 0) {
+    return <div>No images to display</div>;
+  }
   return (
-    // <Carousel afterChange={onChange}>
-    <Carousel>
-      <div>
-        <h3 style={contentStyle}>1</h3>
-      </div>
-      <div>
-        <h3 style={contentStyle}>2</h3>
-      </div>
-      <div>
-        <h3 style={contentStyle}>3</h3>
-      </div>
-      <div>
-        <h3 style={contentStyle}>4</h3>
-      </div>
+    <Carousel afterChange={onChange}>
+      {imageUrls.map((url, index) => (
+        <div key={index}>
+          <img src={url} alt={`Image ${index + 1}`} style={contentStyle} />
+        </div>
+      ))}
     </Carousel>
   );
 };

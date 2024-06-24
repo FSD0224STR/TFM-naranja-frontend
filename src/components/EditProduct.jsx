@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
 import {
   findOneProduct,
   editProduct,
   deleteProduct,
 } from "../apiService/productApi";
-
+import Button from "./Button";
+// import "./Product.css";
 import {
-  Button,
   Form,
   Input,
   InputNumber,
@@ -17,6 +16,7 @@ import {
   message,
   Popconfirm,
   Upload,
+  Modal,
 } from "antd";
 import { ProductContext } from "../context/ProductContext";
 
@@ -71,6 +71,8 @@ const EditProduct = () => {
   const [dummy, refresh] = useState(false);
 
   const [isDisabled, setIsDisabled] = useState(true);
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleGetProduct = async () => {
     try {
@@ -132,6 +134,10 @@ const EditProduct = () => {
   };
 
   const handleLDeleteProduct = async (id) => {
+    setIsModalVisible(true);
+  };
+
+  const handleModalOk = async () => {
     try {
       const response = await deleteProduct(id);
 
@@ -143,6 +149,11 @@ const EditProduct = () => {
     } catch (error) {
       console.error("Error al ejecutar editProduct:");
     }
+    setIsModalVisible(false);
+  };
+
+  const handleModalCancel = () => {
+    setIsModalVisible(false);
   };
 
   const onChangeAllergens = (newValue) => {
@@ -164,231 +175,251 @@ const EditProduct = () => {
 
   return (
     <>
-      <Form
-        form={form}
-        {...formItemLayout}
-        disabled={isDisabled}
-        variant="filled"
+      <div
         style={{
-          maxWidth: 600,
+          maxWidth: 1500,
           margin: "2rem",
+          display: "flex",
+          // justifyContent: "center",
         }}
       >
-        <Form.Item
-          label="Name Product"
-          name="product"
-          rules={[
-            {
-              required: true,
-              message: "Introduce name!",
-            },
-          ]}
+        <Form
+          form={form}
+          {...formItemLayout}
+          disabled={isDisabled}
+          variant='filled'
+          style={{
+            maxWidth: 1000,
+            width: 800,
+            margin: "2rem",
+            // justifyContent: "center",
+            // justifyItems: "center",
+            // textAlign: "center", // add this
+          }}
         >
-          <Input value={product} onChange={(e) => setProduct(e.target.value)} />
-        </Form.Item>
-
-        <Form.Item
-          label="Description"
-          name="description"
-          rules={[
-            {
-              required: true,
-              message: "Introduce description!",
-            },
-          ]}
-        >
-          <Input.TextArea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Price"
-          name="price"
-          rules={[
-            {
-              required: true,
-              message: "Introduce Price!",
-            },
-          ]}
-        >
-          <InputNumber
-            style={{
-              width: "100%",
-            }}
-            value={price}
-            onChange={(value) => setPrice(value)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Category"
-          name="category"
-          rules={[
-            {
-              required: true,
-              message: "Introduce category!",
-            },
-          ]}
-        >
-          <Select
-            value={category}
-            onChange={(value) => setCategory(value)}
-            placeholder="Please select brand"
+          <Form.Item
+            label='Name Product'
+            name='product'
+            rules={[
+              {
+                required: true,
+                message: "Introduce name!",
+              },
+            ]}
           >
-            {categoryOptions.map((categ) => (
-              <Select.Option key={categ._id} value={categ.category}>
-                {categ.category}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
+            <Input
+              value={product}
+              onChange={(e) => setProduct(e.target.value)}
+            />
+          </Form.Item>
 
-        <Form.Item
-          label="Brand"
-          name="brand"
-          rules={[
-            {
-              required: true,
-              message: "Introduce brand!",
-            },
-          ]}
-        >
-          <Select
-            value={brand}
-            onChange={(value) => setBrand(value)}
-            placeholder="Please select origin"
+          <Form.Item
+            label='Description'
+            name='description'
+            rules={[
+              {
+                required: true,
+                message: "Introduce description!",
+              },
+            ]}
           >
-            {brandOptions.map((brand) => (
-              <Select.Option key={brand._id} value={brand.value}>
-                {brand.label}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
+            <Input.TextArea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </Form.Item>
 
-        <Form.Item
-          label="Origin"
-          name="origin"
-          rules={[
-            {
-              required: true,
-              message: "Introduce origin!",
-            },
-          ]}
-        >
-          <Select
-            value={origin}
-            onChange={(value) => setOrigin(value)}
-            placeholder="Please select origin"
+          <Form.Item
+            label='Price'
+            name='price'
+            rules={[
+              {
+                required: true,
+                message: "Introduce Price!",
+              },
+            ]}
           >
-            {originOptions.map((orig) => (
-              <Select.Option key={orig._id} value={orig.value}>
-                {orig.label}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
+            <InputNumber
+              style={{
+                width: "100%",
+              }}
+              value={price}
+              onChange={(value) => setPrice(value)}
+            />
+          </Form.Item>
 
-        <Form.Item
-          label="Allergens"
-          name="allergens"
-          rules={[
-            {
-              required: true,
-              message: "Introduce allergens!",
-            },
-          ]}
-        >
-          <TreeSelect
-            showSearch
-            style={{
-              width: "100%",
-            }}
-            value={allergens}
-            dropdownStyle={{
-              maxHeight: 400,
-              overflow: "auto",
-            }}
-            placeholder="Please select allergens"
-            allowClear
-            multiple
-            treeDefaultExpandAll
-            onChange={onChangeAllergens}
-            treeData={allergensData}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Ingredients"
-          name="ingredients"
-          rules={[
-            {
-              required: true,
-              message: "Introduce ingredients!",
-            },
-          ]}
-        >
-          <TreeSelect
-            showSearch
-            style={{
-              width: "100%",
-            }}
-            value={ingredients}
-            dropdownStyle={{
-              maxHeight: 400,
-              overflow: "auto",
-            }}
-            placeholder="Please select ingredients"
-            allowClear
-            multiple
-            treeDefaultExpandAll
-            onChange={onChangeIngredients}
-            treeData={ingredientsData}
-          />
-        </Form.Item>
-      </Form>
-      <Form.Item
-        wrapperCol={{
-          offset: 6,
-          span: 16,
-        }}
-      >
-        {!isDisabled ? (
-          <Button
-            type="primary"
-            onClick={() => handleLEditProduct(id, detailsProduct)}
+          <Form.Item
+            label='Category'
+            name='category'
+            rules={[
+              {
+                required: true,
+                message: "Introduce category!",
+              },
+            ]}
           >
-            Save Changes
-          </Button>
-        ) : (
-          <div
-            style={{
-              display: "flex",
-              gap: "4rem",
-            }}
-          >
-            <Button type="primary" onClick={() => onActiveEdit()}>
-              Active Edit
-            </Button>
-
-            <Popconfirm
-              title="Delete Prodcut"
-              description="Are you sure to delete this product?"
-              onConfirm={confirm}
-              onCancel={cancel}
-              okText="Yes"
-              cancelText="No"
+            <Select
+              value={category}
+              onChange={(value) => setCategory(value)}
+              placeholder='Please select brand'
             >
-              <Button type="primary" danger>
-                Delete
+              {categoryOptions.map((categ) => (
+                <Select.Option key={categ._id} value={categ.category}>
+                  {categ.category}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            label='Brand'
+            name='brand'
+            rules={[
+              {
+                required: true,
+                message: "Introduce brand!",
+              },
+            ]}
+          >
+            <Select
+              value={brand}
+              onChange={(value) => setBrand(value)}
+              placeholder='Please select origin'
+            >
+              {brandOptions.map((brand) => (
+                <Select.Option key={brand._id} value={brand.value}>
+                  {brand.label}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            label='Origin'
+            name='origin'
+            rules={[
+              {
+                required: true,
+                message: "Introduce origin!",
+              },
+            ]}
+          >
+            <Select
+              value={origin}
+              onChange={(value) => setOrigin(value)}
+              placeholder='Please select origin'
+            >
+              {originOptions.map((orig) => (
+                <Select.Option key={orig._id} value={orig.value}>
+                  {orig.label}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            label='Allergies'
+            name='allergens'
+            rules={[
+              {
+                required: true,
+                message: "Introduce allergies!",
+              },
+            ]}
+          >
+            <TreeSelect
+              showSearch
+              style={{
+                width: "100%",
+              }}
+              value={allergens}
+              dropdownStyle={{
+                maxHeight: 400,
+                overflow: "auto",
+              }}
+              placeholder='Please select allergens'
+              allowClear
+              multiple
+              treeDefaultExpandAll
+              onChange={onChangeAllergens}
+              treeData={allergensData}
+            />
+          </Form.Item>
+
+          <Form.Item
+            label='Ingredients'
+            name='ingredients'
+            rules={[
+              {
+                required: true,
+                message: "Introduce ingredients!",
+              },
+            ]}
+          >
+            <TreeSelect
+              showSearch
+              style={{
+                width: "100%",
+              }}
+              value={ingredients}
+              dropdownStyle={{
+                maxHeight: 400,
+                overflow: "auto",
+              }}
+              placeholder='Please select ingredients'
+              allowClear
+              multiple
+              treeDefaultExpandAll
+              onChange={onChangeIngredients}
+              treeData={ingredientsData}
+            />
+          </Form.Item>
+          <Form.Item
+          // wrapperCol={{
+          //   offset: 2,
+          //   span: 10,
+          // }}
+          >
+            {!isDisabled ? (
+              <Button
+                color='primary'
+                onClick={() => handleLEditProduct(id, detailsProduct)}
+              >
+                Save Changes
               </Button>
-            </Popconfirm>
-          </div>
-        )}
-      </Form.Item>
+            ) : (
+              <div
+                style={{
+                  display: "flex",
+                  gap: "1rem",
+                  marginTop: "1.5rem",
+                }}
+              >
+                <Button color='primary' onClick={() => onActiveEdit()}>
+                  Active Edit
+                </Button>
+                <Button
+                  color='white'
+                  danger
+                  onClick={() => handleLDeleteProduct(id)}
+                >
+                  Delete
+                </Button>
+              </div>
+            )}
+          </Form.Item>
+        </Form>
+        <Modal
+          title='Confirm Delete'
+          visible={isModalVisible}
+          onOk={handleModalOk}
+          onCancel={handleModalCancel}
+        >
+          <p>Are you sure you want to delete this product?</p>
+        </Modal>
+      </div>
     </>
   );
 };
+
 export default EditProduct;
