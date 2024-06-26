@@ -6,19 +6,21 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Form, Input } from "antd";
 import { login } from "../apiService/userApi";
 import { useNavigate } from "react-router-dom";
-import Captcha from "./Captcha";
+// Importación del componente CAPTCHA (comentado)
+// import Captcha from "./Captcha";
 import { useAuth } from "../context/LogContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isHuman, setIsHuman] = useState(false);
+  const [isHuman, setIsHuman] = useState(false); // Estado para verificar si se ha completado el CAPTCHA
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
   const { login: loginContext } = useAuth();
 
   const handleLogin = async () => {
+    // Verificación del CAPTCHA antes de permitir el login
     if (!isHuman) {
       console.error("Por favor, complete el CAPTCHA");
       return;
@@ -36,9 +38,10 @@ const Login = () => {
     }
   };
 
-  const handleCaptchaChange = (value) => {
-    setIsHuman(value);
-  };
+  // Función para manejar el cambio del estado del CAPTCHA (comentado)
+  // const handleCaptchaChange = (value) => {
+  //   setIsHuman(value);
+  // };
 
   return (
     <Form
@@ -88,6 +91,7 @@ const Login = () => {
       </Form.Item>
       {error && <div className='error'>{error}</div>}
       <Form.Item>
+        {/* Integración del componente CAPTCHA (comentado) */}
         <Captcha onChange={handleCaptchaChange} />
       </Form.Item>
       <div className='forget-link'>

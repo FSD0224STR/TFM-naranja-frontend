@@ -20,7 +20,7 @@ import {
   Upload,
 } from "antd";
 import Button from "./Button";
-import Captcha from "./Captcha";
+//import Captcha from "./Captcha";
 import "./Register.css";
 
 const { RangePicker } = DatePicker;
@@ -60,9 +60,9 @@ const Register = () => {
     }
   };
 
-  const handleCaptchaChange = (value) => {
+  /*const handleCaptchaChange = (value) => {
     setIsHuman(value);
-  };
+  };*/
 
   return (
     <>

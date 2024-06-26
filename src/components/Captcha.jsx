@@ -1,4 +1,4 @@
-import React from "react";
+/*import React from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 
 const Captcha = ({ onChange }) => {
@@ -16,7 +16,7 @@ const Captcha = ({ onChange }) => {
   );
 };
 
-export default Captcha;
+export default Captcha; */
 
 
 
