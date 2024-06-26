@@ -24,14 +24,15 @@ export default function App() {
           <>
             <Header />
             <Routes>
-              <Route path="/home" element={<Home />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/addProduct" element={<AddProduct />} />
-              <Route path="/listProducts" element={<ListProducts />} />
-              <Route path="/editProduct/:id" element={<EditProduct />} />
-              <Route path="/detailsProduct/:id" element={<DetailsProduct />} />
+              <Route path='/home' element={<Home />} />
+              <Route path='/register' element={<Register />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/profile' element={<Profile />} />
+              <Route path='/addProduct' element={<AddProduct />} />
+              <Route path='/listProducts' element={<ListProducts />} />
+              <Route path='/editProduct/:id' element={<EditProduct />} />
+              <Route path='/detailsProduct/:id' element={<DetailsProduct />} />
+              {/* <Route path='/categories/:categoryId' component={CategoryPage} /> */}
             </Routes>
             <CartCompare />
             <Footer />
