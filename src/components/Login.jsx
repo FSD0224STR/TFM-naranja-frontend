@@ -6,25 +6,27 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Form, Input } from "antd";
 import { login } from "../apiService/userApi";
 import { useNavigate } from "react-router-dom";
-// Importación del componente CAPTCHA (comentado)
+
 // import Captcha from "./Captcha";
 import { useAuth } from "../context/LogContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isHuman, setIsHuman] = useState(false); // Estado para verificar si se ha completado el CAPTCHA
+
+  // const [isHuman, setIsHuman] = useState(false);
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
   const { login: loginContext } = useAuth();
 
   const handleLogin = async () => {
-    // Verificación del CAPTCHA antes de permitir el login
-    if (!isHuman) {
-      console.error("Por favor, complete el CAPTCHA");
-      return;
-    }
+
+    // if (!isHuman) {
+    //   console.error("Por favor, complete el CAPTCHA");
+    //   return;
+    // }
+
     const response = await login(email, password);
     if (response.error) {
       if (response.error === "Unauthorized");
@@ -89,11 +91,11 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </Form.Item>
-      {error && <div className='error'>{error}</div>}
-      <Form.Item>
-        {/* Integración del componente CAPTCHA (comentado) */}
+      {error && <div className='error'>{error}</div>}}
+      {/* <Form.Item>
+>>>>>>> 58540b85e943e5c0c675ab0f82fe128fde931173
         <Captcha onChange={handleCaptchaChange} />
-      </Form.Item>
+      </Form.Item> */}
       <div className='forget-link'>
         <Link to='/forgot-password' className='forget-password'>
           Forgot password?

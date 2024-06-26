@@ -23,12 +23,15 @@ export const addProduct = async (productData) => {
 export const findProducts = async (searchTerm) => {
   const token = localStorage.getItem("token");
 
-  const response = await fetch(`${URL}/search?searchTerm=${encodeURIComponent(searchTerm)}`, {
-    method: "GET",
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await fetch(
+    `${URL}/search?searchTerm=${encodeURIComponent(searchTerm)}`,
+    {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   if (!response.ok) {
     const error = await response.json();
@@ -72,7 +75,6 @@ export const findOneProduct = async (id) => {
   const products = await response.json();
   return products;
 };
-
 
 export const deleteProduct = async (id) => {
   const token = localStorage.getItem("token");
@@ -183,4 +185,21 @@ export const findBrand = async () => {
   }
   const brands = await response.json();
   return brands;
+};
+
+export const findProductsByCategory = async (category) => {
+  const token = localStorage.getItem("token");
+  const response = await fetch(`${URL}/category/${category}`, {
+    method: "GET",
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message);
+  }
+  const products = await response.json();
+  return products;
 };

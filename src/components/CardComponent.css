@@ -1,0 +1,6 @@
+.ant-card {
+  height: 600px; /* Adjust the height to your liking */
+  width: 100%; /* Make the cards take up the full width */
+  margin-bottom: 32px; /* Add some margin between cards */
+  gap: 20px;
+}
