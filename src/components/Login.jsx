@@ -36,7 +36,7 @@ const Login = () => {
       localStorage.setItem("token", token);
       loginContext(token);
       setError("");
-      navigate("/home");
+      navigate("/");
     }
   };
 

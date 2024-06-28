@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Comparador from "./Comparador";
 import { findCategories } from "../apiService/categoryApi";
 import CategoryCard from "./CategoryCard";
 import { Link } from "react-router-dom";
@@ -28,7 +27,6 @@ const Home = () => {
 
   return (
     <div style={{ padding: "2rem" }}>
-      <Comparador />
       <div
         style={{
           display: "flex",

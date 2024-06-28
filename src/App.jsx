@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import Profile from "./components/Profile";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import Comparador from "./components/Comparador";
 import Footer from "./components/Footer";
 import AddProduct from "./components/AddProduct";
 import ListProducts from "./components/ListProducts";
@@ -24,7 +25,8 @@ export default function App() {
           <>
             <Header />
             <Routes>
-              <Route path='/home' element={<Home />} />
+              <Route path='/' element={<Home />} />
+              <Route path='/comparador' element={<Comparador />} />
               <Route path='/register' element={<Register />} />
               <Route path='/login' element={<Login />} />
               <Route path='/profile' element={<Profile />} />
