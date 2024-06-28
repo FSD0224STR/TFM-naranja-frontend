@@ -118,7 +118,7 @@ const Register = () => {
           </Form.Item>
 
           <Form.Item label=''>
-            <Captcha onChange={handleCaptchaChange} />
+            {/* <Captcha onChange={handleCaptchaChange} /> */}
           </Form.Item>
 
           <Form.Item label=''>

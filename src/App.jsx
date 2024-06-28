@@ -32,7 +32,10 @@ export default function App() {
               <Route path='/listProducts' element={<ListProducts />} />
               <Route path='/editProduct/:id' element={<EditProduct />} />
               <Route path='/detailsProduct/:id' element={<DetailsProduct />} />
-              {/* <Route path='/categories/:categoryId' component={CategoryPage} /> */}
+              <Route
+                path='/listProducts/:categoryId'
+                element={<ListProducts />}
+              />
             </Routes>
             <CartCompare />
             <Footer />
