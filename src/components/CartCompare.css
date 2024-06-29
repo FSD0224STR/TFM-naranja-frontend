@@ -1,12 +1,12 @@
 .affix-cart {
   position: fixed;
-  right: 20px;
+  left: 20px;
   bottom: 10px;
 }
 
 .persistent-cart {
   width: 15rem;
-  background-color: var(--darkblue);
+  background-color: aliceblue;
   border: 1px solid #3a3a3c;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
@@ -43,6 +43,7 @@
 .cart-list-container {
   max-height: 12rem;
   overflow-y: auto;
+  background-color: aliceblue;
 }
 
 .cart-list-item {
