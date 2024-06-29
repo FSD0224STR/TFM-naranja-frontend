@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { verifyAdmin } from "../apiService/userApi";
 
 const AuthContext = createContext();
 
@@ -9,7 +10,18 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
+
+  const getVerifyAdmin = async (email) => {
+    const response = await verifyAdmin(email);
+
+    if (response.error) {
+      console.error("No puedo verificar el administrador");
+    } else {
+      return response.data;
+    }
+  };
 
   const login = (token) => {
     localStorage.setItem("token", token);
@@ -24,7 +36,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn, login, logout, isAdmin, getVerifyAdmin }}
+    >
       {children}
     </AuthContext.Provider>
   );

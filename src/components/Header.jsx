@@ -3,12 +3,15 @@ import "./Header.css";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/LogContext";
 import logo from "../assets/Comparador-logo.png";
+import { useContext } from "react";
+import { SocketContext } from "../context/SocketContext";
 
 const Header = () => {
   const { isLoggedIn, logout } = useAuth();
   const [searchTerm, setSearchTerm] = React.useState("");
   const [isChecked, setIsChecked] = React.useState(false);
   const [showConfirm, setShowConfirm] = React.useState(false);
+  const { socket } = useContext(SocketContext);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -18,6 +21,7 @@ const Header = () => {
     logout();
     setIsChecked(false);
     setShowConfirm(false);
+    socket.current.emit("userDisconnect");
   };
 
   const handleToggle = () => {
@@ -36,7 +40,6 @@ const Header = () => {
     <header className="header">
       <div className="logo">
         <img src={logo} alt="Cpmparador" />
-        {/* <h1>Comparador</h1> */}
       </div>
       <br />
       <div className="search-container">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./Login.css";
 import Button from "./Button";
 import { Link } from "react-router-dom";
@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 // import Captcha from "./Captcha";
 import { useAuth } from "../context/LogContext";
+import { SocketContext } from "../context/SocketContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -18,10 +19,11 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
-  const { login: loginContext } = useAuth();
+  const { login: loginContext, getVerifyAdmin } = useAuth();
+
+  const { socket } = useContext(SocketContext);
 
   const handleLogin = async () => {
-
     // if (!isHuman) {
     //   console.error("Por favor, complete el CAPTCHA");
     //   return;
@@ -36,6 +38,11 @@ const Login = () => {
       localStorage.setItem("token", token);
       loginContext(token);
       setError("");
+
+      const isAdmin = await getVerifyAdmin(email);
+      if (isAdmin === true) {
+        socket.current.emit("userAdmin", email);
+      }
       navigate("/home");
     }
   };
@@ -47,8 +54,8 @@ const Login = () => {
 
   return (
     <Form
-      name='normal_login'
-      className='login-form'
+      name="normal_login"
+      className="login-form"
       initialValues={{
         remember: true,
       }}
@@ -56,7 +63,7 @@ const Login = () => {
       <h1>Login</h1>
       <br />
       <Form.Item
-        name='username'
+        name="username"
         rules={[
           {
             required: true,
@@ -65,16 +72,16 @@ const Login = () => {
         ]}
       >
         <Input
-          prefix={<UserOutlined className='site-form-item-icon' />}
-          placeholder='Username'
-          className='input-login'
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          placeholder="Username"
+          className="input-login"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
       </Form.Item>
-      {error && <div className='error'>{error}</div>}
+      {error && <div className="error">{error}</div>}
       <Form.Item
-        name='password'
+        name="password"
         rules={[
           {
             required: true,
@@ -83,34 +90,33 @@ const Login = () => {
         ]}
       >
         <Input
-          prefix={<LockOutlined className='site-form-item-icon' />}
-          type='password'
-          placeholder='Password'
-          className='input-login'
+          prefix={<LockOutlined className="site-form-item-icon" />}
+          type="password"
+          placeholder="Password"
+          className="input-login"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
       </Form.Item>
-      {error && <div className='error'>{error}</div>}}
+      {error && <div className="error">{error}</div>}
       {/* <Form.Item>
->>>>>>> 58540b85e943e5c0c675ab0f82fe128fde931173
         <Captcha onChange={handleCaptchaChange} />
       </Form.Item> */}
-      <div className='forget-link'>
-        <Link to='/forgot-password' className='forget-password'>
+      <div className="forget-link">
+        <Link to="/forgot-password" className="forget-password">
           Forgot password?
         </Link>
       </div>
       <Button
-        color='primary'
-        htmlType='submit'
-        className='login-form-button'
+        color="primary"
+        htmlType="submit"
+        className="login-form-button"
         onClick={handleLogin}
       >
         Log in
       </Button>{" "}
-      <Link className='register' to='/register'>
-        <Button color='white'>register now!</Button>
+      <Link className="register" to="/register">
+        <Button color="white">register now!</Button>
       </Link>
     </Form>
   );
