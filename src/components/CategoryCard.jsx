@@ -27,7 +27,6 @@ const CategoryCard = ({ category }) => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        height: 350,
       }}
     >
       <Typography.Title level={2}>{category.category}</Typography.Title>
@@ -36,8 +35,8 @@ const CategoryCard = ({ category }) => {
       <br />
 
       <Button
-        color='white'
-        type='primary'
+        color="white"
+        type="primary"
         style={{ marginTop: 90 }}
         // onClick={handleClick}
       >

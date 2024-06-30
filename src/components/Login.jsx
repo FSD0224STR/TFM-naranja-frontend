@@ -19,9 +19,10 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
-  const { login: loginContext, getVerifyAdmin } = useAuth();
+  const { login: loginContext, getVerifyAdmin, setIsAdmin } = useAuth();
 
-  const { socket } = useContext(SocketContext);
+  const { socket, joinPrivateRoom, adminJoinRandomRoom } =
+    useContext(SocketContext);
 
   const handleLogin = async () => {
     // if (!isHuman) {
@@ -41,7 +42,12 @@ const Login = () => {
 
       const isAdmin = await getVerifyAdmin(email);
       if (isAdmin === true) {
-        socket.current.emit("userAdmin", email);
+        await adminJoinRandomRoom();
+        socket.current.emit("adminConnect", email);
+        setIsAdmin(true);
+      } else {
+        joinPrivateRoom();
+        setIsAdmin(false);
       }
       navigate("/home");
     }
