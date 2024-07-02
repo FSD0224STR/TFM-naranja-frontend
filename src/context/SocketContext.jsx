@@ -18,10 +18,6 @@ export const SocketContextProvider = ({ children }) => {
   useEffect(() => {
     socket.current = io("http://localhost:3000");
 
-    socket.current.on("message", (msg) => {
-      setMessagesList((prevMessages) => [...prevMessages, msg]);
-    });
-
     socket.current.on("privateMessage", (msg, typeUser) => {
       setMessagesList((prevMessages) => [...prevMessages, { msg, typeUser }]);
     });
@@ -49,7 +45,14 @@ export const SocketContextProvider = ({ children }) => {
     });
 
     socket.current.on("userDisconnect", (data) => {
-      setMessagesList((prevMessages) => [...prevMessages, data.msg]);
+      console.log("data: ", data);
+      console.log("data.msg: ", data.msg);
+      console.log("data.typeUser: ", data.typeUser);
+      setMessagesList((prevMessages) => [...prevMessages, data]);
+    });
+
+    socket.current.on("adminJoinRoom", (room) => {
+      socket.current.emit("adminJoinRoom", room);
     });
 
     return () => {
@@ -57,18 +60,17 @@ export const SocketContextProvider = ({ children }) => {
     };
   }, []);
 
-  const sendMessage = (e) => {
-    e.preventDefault();
-    socket.current.emit("message", chat);
-    setChat("");
-  };
-
   const joinPrivateRoom = () => {
     socket.current.emit("joinPrivateRoom");
   };
 
   const adminJoinRandomRoom = () => {
     socket.current.emit("adminJoinRandomRoom");
+  };
+
+  const userDisconnect = () => {
+    const typeUser = isAdmin ? "Admin" : "User";
+    socket.current.emit("userDisconnect", { room, typeUser });
   };
 
   const sendPrivateMessage = (e) => {
@@ -90,11 +92,11 @@ export const SocketContextProvider = ({ children }) => {
     setMessagesList,
     chat,
     setChat,
-    sendMessage,
     messagesEndRef,
     joinPrivateRoom,
     sendPrivateMessage,
     adminJoinRandomRoom,
+    userDisconnect,
   };
 
   return (

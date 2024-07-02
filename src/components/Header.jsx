@@ -11,7 +11,7 @@ const Header = () => {
   const [searchTerm, setSearchTerm] = React.useState("");
   const [isChecked, setIsChecked] = React.useState(false);
   const [showConfirm, setShowConfirm] = React.useState(false);
-  const { socket, setMessagesList } = useContext(SocketContext);
+  const { userDisconnect, setMessagesList } = useContext(SocketContext);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -21,7 +21,7 @@ const Header = () => {
     logout();
     setIsChecked(false);
     setShowConfirm(false);
-    socket.current.emit("userDisconnect");
+    userDisconnect();
     setMessagesList([]);
   };
 
