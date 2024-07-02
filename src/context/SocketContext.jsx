@@ -45,9 +45,6 @@ export const SocketContextProvider = ({ children }) => {
     });
 
     socket.current.on("userDisconnect", (data) => {
-      console.log("data: ", data);
-      console.log("data.msg: ", data.msg);
-      console.log("data.typeUser: ", data.typeUser);
       setMessagesList((prevMessages) => [...prevMessages, data]);
     });
 

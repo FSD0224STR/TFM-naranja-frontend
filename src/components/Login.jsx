@@ -21,7 +21,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { login: loginContext, getVerifyAdmin, setIsAdmin } = useAuth();
 
-  const { socket, joinPrivateRoom, adminJoinRandomRoom } =
+  const { socket, joinPrivateRoom, adminJoinRandomRoom, setMessagesList } =
     useContext(SocketContext);
 
   const handleLogin = async () => {
@@ -39,6 +39,7 @@ const Login = () => {
       localStorage.setItem("token", token);
       loginContext(token);
       setError("");
+      setMessagesList([]);
 
       const isAdmin = await getVerifyAdmin(email);
       if (isAdmin === true) {
