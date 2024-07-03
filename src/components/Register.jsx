@@ -22,6 +22,7 @@ import {
 import Button from "./Button";
 //import Captcha from "./Captcha";
 import "./Register.css";
+import Breadcrumb from "./BreadCrumb";
 
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
@@ -66,6 +67,7 @@ const Register = () => {
 
   return (
     <>
+      <Breadcrumb title='register' />
       <div className='container'>
         <Form
           name='form__container'
