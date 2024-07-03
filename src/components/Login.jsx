@@ -50,7 +50,7 @@ const Login = () => {
         joinPrivateRoom();
         setIsAdmin(false);
       }
-      navigate("/home");
+      navigate("/");
     }
   };
 
