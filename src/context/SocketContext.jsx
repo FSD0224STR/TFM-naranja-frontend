@@ -14,7 +14,9 @@ export const SocketContextProvider = ({ children }) => {
   const socket = useRef(null);
   const messagesEndRef = useRef(null);
   const { isAdmin } = useAuth();
+  const [isUserConnect, setIsUserConnect] = useState(true);
 
+  // Eventos en espera a ser llamados desde el backend para actualizar el listado de mensajes con los nuevos que llegan
   useEffect(() => {
     socket.current = io("http://localhost:3000");
 
@@ -23,6 +25,7 @@ export const SocketContextProvider = ({ children }) => {
     });
 
     socket.current.on("userConnect", (data) => {
+      setIsUserConnect(true);
       setMessagesList((prevMessages) => [
         ...prevMessages,
         { msg: data.msg, typeUser: "User" },
@@ -38,17 +41,25 @@ export const SocketContextProvider = ({ children }) => {
 
     socket.current.on("roomJoined", (room) => {
       setRoom(room);
+      setIsUserConnect(true);
     });
 
     socket.current.on("adminRoomJoined", (room) => {
       setRoom(room);
+      setIsUserConnect(true);
     });
 
     socket.current.on("userDisconnect", (data) => {
+      if (isAdmin) {
+        setIsUserConnect(true);
+      } else {
+        setIsUserConnect(false);
+      }
       setMessagesList((prevMessages) => [...prevMessages, data]);
     });
 
     socket.current.on("adminJoinRoom", (room) => {
+      setIsUserConnect(true);
       socket.current.emit("adminJoinRoom", room);
     });
 
@@ -57,28 +68,41 @@ export const SocketContextProvider = ({ children }) => {
     };
   }, []);
 
+  // Funcion para que el usuario se una a sala privada de socket
   const joinPrivateRoom = () => {
+    setIsUserConnect(true);
     socket.current.emit("joinPrivateRoom");
   };
 
+  // Funcion para emitir un mensaje para que un administrador se una a una sala al azar o se quede en espera para cuando se conecte un user
   const adminJoinRandomRoom = () => {
+    setIsUserConnect(true);
     socket.current.emit("adminJoinRandomRoom");
   };
 
   const userDisconnect = () => {
-    const typeUser = isAdmin ? "Admin" : "User";
+    let typeUser;
+    if (isAdmin) {
+      typeUser = "Admin";
+      setIsUserConnect(true);
+    } else {
+      typeUser = "User";
+      setIsUserConnect(false);
+    }
     socket.current.emit("userDisconnect", { room, typeUser });
   };
 
   const sendPrivateMessage = (e) => {
     e.preventDefault();
     if (room) {
+      // Comprobamos quien emite el mensaje para tratamiento posterior en el chat y poder estilar diferente
       const typeUser = isAdmin ? "Admin" : "User";
       socket.current.emit("privateMessage", { room, msg: chat, typeUser });
       setChat("");
     }
   };
 
+  // Con cada mensaje escrito el texto automaticamente baja hasta el final para ver el ultimo mensaje
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messagesList]);
@@ -94,6 +118,8 @@ export const SocketContextProvider = ({ children }) => {
     sendPrivateMessage,
     adminJoinRandomRoom,
     userDisconnect,
+    isUserConnect,
+    setIsUserConnect,
   };
 
   return (

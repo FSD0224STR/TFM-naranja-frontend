@@ -21,8 +21,13 @@ const Login = () => {
   const navigate = useNavigate();
   const { login: loginContext, getVerifyAdmin, setIsAdmin } = useAuth();
 
-  const { socket, joinPrivateRoom, adminJoinRandomRoom, setMessagesList } =
-    useContext(SocketContext);
+  const {
+    socket,
+    joinPrivateRoom,
+    adminJoinRandomRoom,
+    setMessagesList,
+    setIsUserConnect,
+  } = useContext(SocketContext);
 
   const handleLogin = async () => {
     // if (!isHuman) {
@@ -49,6 +54,7 @@ const Login = () => {
       } else {
         joinPrivateRoom();
         setIsAdmin(false);
+        setIsUserConnect(true);
       }
       navigate("/");
     }

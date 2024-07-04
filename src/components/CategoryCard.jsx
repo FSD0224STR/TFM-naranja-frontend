@@ -21,7 +21,6 @@ const CategoryCard = ({ category }) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          height: 350,
         }}
       >
         <Typography.Title level={2}>{category.category}</Typography.Title>

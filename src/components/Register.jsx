@@ -53,7 +53,7 @@ const Register = () => {
     } else {
       const token = response.data;
       localStorage.setItem("token", token);
-      navigate("/home");
+      navigate("/");
     }
   };
 
