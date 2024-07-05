@@ -3,9 +3,10 @@ import { Card, Typography, Row, Col } from "antd";
 import "./CardComponent.css";
 import Button from "./Button";
 import { GiOlive } from "react-icons/gi";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const CategoryCard = ({ category }) => {
+  const navigate = useNavigate();
   return (
     <Link to={`/listProducts/${category._id}`}>
       <Card

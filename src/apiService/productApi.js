@@ -44,7 +44,6 @@ export const findProducts = async (searchTerm) => {
 
 export const findAllProducts = async () => {
   const token = localStorage.getItem("token");
-
   const response = await fetch(`${URL}`, {
     method: "GET",
     headers: {
@@ -201,5 +200,6 @@ export const findProductsByCategory = async (category) => {
     throw new Error(error.message);
   }
   const products = await response.json();
+  console.log("respuesta del products api", products);
   return products;
 };

@@ -1,0 +1,20 @@
+.breadcrumb {
+  background-color: #f5f5f5;
+  padding: 1rem 0;
+  text-align: start;
+  margin-left: 1.2rem;
+}
+
+.breadcrumb span {
+  margin-right: 0.5rem;
+}
+
+.breadcrumb-link {
+  color: var(--darkBlue);
+  text-decoration: none;
+}
+
+.breadcrumb-link:hover {
+  color: #23527c;
+  text-decoration: underline;
+}

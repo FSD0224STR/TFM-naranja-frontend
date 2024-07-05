@@ -14,6 +14,7 @@ import {
 import ImgUpload from "./ImgUpload";
 import { ProductContext } from "../context/ProductContext";
 import "./AddProduct.css";
+import Breadcrumb from "./BreadCrumb";
 import { useNavigate } from "react-router-dom";
 
 const formItemLayout = {
@@ -190,7 +191,7 @@ const AddProduct = () => {
             placeholder="Please select brand"
           >
             {categoryOptions.map((categ) => (
-              <Select.Option key={categ._id} value={categ._id}>
+              <Select.Option key={categ._id} value={categ.category}>
                 {categ.category}
               </Select.Option>
             ))}
@@ -321,6 +322,22 @@ const AddProduct = () => {
           }}
         >
           <Button color="primary" htmlType="submit" onClick={handleLAddProduct}>
+            {/* <Button
+            color='primary'
+            htmlType='submit'
+            onClick={() =>
+              handleLAddProduct({
+                product,
+                description,
+                price,
+                brand,
+                origin,
+                allergens,
+                ingredients,
+                images,
+              })
+            }
+          > */}
             Create Product
           </Button>
 
