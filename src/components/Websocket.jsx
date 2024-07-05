@@ -5,6 +5,7 @@ import { BsSendArrowUp } from "react-icons/bs";
 import React from "react";
 import { useContext } from "react";
 import { SocketContext } from "../context/SocketContext";
+import { useAuth } from "../context/LogContext";
 
 const Websocket = () => {
   const {
@@ -17,6 +18,8 @@ const Websocket = () => {
     isUserConnect,
     adminJoinRandomRoom,
   } = useContext(SocketContext);
+
+  const { isAdmin } = useAuth();
 
   const handleActiveAdmin = () => {
     adminJoinRandomRoom();
@@ -51,10 +54,21 @@ const Websocket = () => {
                 <BsSendArrowUp />
               </button>
             </form>
-          ) : (
+          ) : isAdmin ? (
             <button className="btn-delete-room" onClick={handleActiveAdmin}>
               Delete Room
             </button>
+          ) : (
+            <form className="form-chat" onSubmit={sendPrivateMessage}>
+              <input
+                className="input-chat"
+                value={chat}
+                onChange={(e) => setChat(e.target.value)}
+              />
+              <button className="button-chat">
+                <BsSendArrowUp />
+              </button>
+            </form>
           )}
         </div>
       ) : (
