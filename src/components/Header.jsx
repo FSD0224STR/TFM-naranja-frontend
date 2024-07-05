@@ -59,7 +59,7 @@ const Header = () => {
         </button>
       </div>
       <div className="header-links">
-        <Link to="/home">Home</Link>
+        <Link to="/">Home</Link>
         {isLoggedIn ? (
           <>
             <Link to="/profile">Profile</Link>

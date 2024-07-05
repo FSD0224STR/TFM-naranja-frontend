@@ -322,22 +322,6 @@ const AddProduct = () => {
           }}
         >
           <Button color="primary" htmlType="submit" onClick={handleLAddProduct}>
-            {/* <Button
-            color='primary'
-            htmlType='submit'
-            onClick={() =>
-              handleLAddProduct({
-                product,
-                description,
-                price,
-                brand,
-                origin,
-                allergens,
-                ingredients,
-                images,
-              })
-            }
-          > */}
             Create Product
           </Button>
 

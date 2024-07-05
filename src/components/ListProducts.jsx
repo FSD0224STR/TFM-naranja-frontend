@@ -28,7 +28,6 @@ const ListProducts = () => {
 
   const handleLFindAllProducts = async () => {
     let response;
-    console.log("respuetsa", category);
     if (category) {
       response = await findProductsByCategory(category);
     } else {
@@ -37,8 +36,6 @@ const ListProducts = () => {
     if (response.error) {
       console.error("Error al listar productos:", response.error);
     } else {
-      console.log("la respuesta de data", response.data);
-
       setProducts(response.data);
     }
   };
@@ -53,17 +50,14 @@ const ListProducts = () => {
   }, [category]);
 
   useEffect(() => {
-    console.log("la respuesta de products de category1", products);
-
     setTotalProducts(products.length);
-    console.log("la respuesta de products de category 2", products.length);
   }, [products]);
 
   return (
     <>
-      <BreadCrumb title='listProducts' />
+      <BreadCrumb title="listProducts" />
 
-      <div className='list-products'>
+      <div className="list-products">
         <List
           grid={{
             gutter: 16,
@@ -77,17 +71,6 @@ const ListProducts = () => {
           dataSource={currentProducts}
           renderItem={(item) => (
             <List.Item>
-              {/* <Card
-              hoverable
-              key={item._id}
-              title={item.product}
-              cover={
-                <img
-                  alt="example"
-                  src="http://blog.cjo.pl/wp-content/uploads/2020/03/comidas-t%C3%ADpicas.jpg"
-                />
-              }
-            > */}
               <Card
                 hoverable
                 key={item._id}
@@ -97,27 +80,27 @@ const ListProducts = () => {
                     <img alt={item.product} src={item.images[0]} />
                   ) : (
                     <img
-                      alt='example'
-                      src='http://blog.cjo.pl/wp-content/uploads/2020/03/comidas-t%C3%ADpicas.jpg'
+                      alt="example"
+                      src="http://blog.cjo.pl/wp-content/uploads/2020/03/comidas-t%C3%ADpicas.jpg"
                     />
                   )
                 }
               >
                 <div style={{ display: "flex" }}>
                   <Button
-                    type='link'
+                    type="link"
                     onClick={() => handleLViewProduct(item._id)}
                   >
                     View Details
                   </Button>
 
-                  <Tooltip title='Add Product to Cart'>
+                  <Tooltip title="Add Product to Cart">
                     <span>
                       <Button
-                        type='link'
+                        type="link"
                         onClick={() => handleLAddProductCart(item)}
                       >
-                        <AiFillPlusCircle size={32} color='lightblue' />
+                        <AiFillPlusCircle size={32} color="lightblue" />
                       </Button>
                     </span>
                   </Tooltip>

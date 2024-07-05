@@ -200,6 +200,5 @@ export const findProductsByCategory = async (category) => {
     throw new Error(error.message);
   }
   const products = await response.json();
-  console.log("respuesta del products api", products);
   return products;
 };
