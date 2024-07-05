@@ -29,13 +29,13 @@ export default function App() {
               <Route path='/login' element={<Login />} />
               <Route path='/profile' element={<Profile />} />
               <Route path='/addProduct' element={<AddProduct />} />
-              <Route path='/listProducts' element={<ListProducts />} />
               <Route path='/editProduct/:id' element={<EditProduct />} />
               <Route path='/detailsProduct/:id' element={<DetailsProduct />} />
               <Route
-                path='/listProducts/:categoryId'
+                path='/listProducts/:category'
                 element={<ListProducts />}
               />
+              <Route path='/listProducts' element={<ListProducts />} />
             </Routes>
             <CartCompare />
             <Footer />

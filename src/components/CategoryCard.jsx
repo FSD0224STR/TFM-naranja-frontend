@@ -30,7 +30,7 @@ const CategoryCard = ({ category }) => {
       <br />
 
       <Button
-        onClick={() => navigate(`/listProducts/${category.category}`)}
+        onClick={() => navigate(`/listProducts/${category._id}`)}
         color='white'
         type='primary'
         style={{ marginTop: 90 }}
