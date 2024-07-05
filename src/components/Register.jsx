@@ -22,6 +22,7 @@ import {
 import Button from "./Button";
 //import Captcha from "./Captcha";
 import "./Register.css";
+import Breadcrumb from "./BreadCrumb";
 
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
@@ -38,25 +39,22 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [isHuman, setIsHuman] = useState(false);
+  // const [isHuman, setIsHuman] = useState(false);
   const navigate = useNavigate();
   // const [componentDisabled, setComponentDisabled] = useState(true);
 
   const handleRegister = async (email, password, name, lastName) => {
-    console.log("userData: ", email, password, name, lastName);
     const response = await register(email, password, name, lastName);
-    if (!isHuman) {
-      console.error("Por favor, complete el CAPTCHA");
-      return;
-    }
+    // if (!isHuman) {
+    //   console.error("Por favor, complete el CAPTCHA");
+    //   return;
+    // }
     if (response.error) {
       console.error("Error al registrar usuario:", response.error);
     } else {
-      console.log("Usuario registrado con exito:", response.data);
       const token = response.data;
-      console.log("token-front: ", token);
       localStorage.setItem("token", token);
-      navigate("/home");
+      navigate("/");
     }
   };
 
@@ -66,16 +64,17 @@ const Register = () => {
 
   return (
     <>
-      <div className='container'>
+      <Breadcrumb title="register" />
+      <div className="container">
         <Form
-          name='form__container'
+          name="form__container"
           labelCol={{
             span: 4,
           }}
           wrapperCol={{
             span: 14,
           }}
-          layout='horizontal'
+          layout="horizontal"
           // disabled={componentDisabled}
           // style={{
           //   maxWidth: 600,
@@ -83,55 +82,55 @@ const Register = () => {
         >
           <h1>Create a user account</h1>
           <br />
-          <Form.Item label=''>
+          <Form.Item label="">
             <Input
               value={name}
-              placeholder='First Name'
+              placeholder="First Name"
               onChange={(e) => setName(e.target.value)}
             />
           </Form.Item>
 
-          <Form.Item label=''>
+          <Form.Item label="">
             <Input
-              placeholder='Last Name'
+              placeholder="Last Name"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
           </Form.Item>
 
-          <Form.Item label=''>
+          <Form.Item label="">
             <Input
-              placeholder='Email'
+              placeholder="Email"
               value={email}
-              type='email'
+              type="email"
               onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Item>
 
-          <Form.Item label=''>
+          <Form.Item label="">
             <Input
-              placeholder='Password'
-              type='password'
+              placeholder="Password"
+              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Item>
 
-          <Form.Item label=''>
-            {/* <Captcha onChange={handleCaptchaChange} /> */}
-          </Form.Item>
+          {/* <Form.Item label="">
+            <Captcha onChange={handleCaptchaChange} />
+          </Form.Item> */}
 
-          <Form.Item label=''>
-            <Select placeholder='User Type'>
-              <Select.Option value=''>User</Select.Option>
-              <Select.Option value=''>Producer</Select.Option>
+          <Form.Item label="">
+            <Select placeholder="User Type">
+              <Select.Option value="">User</Select.Option>
+              <Select.Option value="">Producer</Select.Option>
             </Select>
           </Form.Item>
 
-          <Form.Item label=''>
+          <Form.Item label="">
             <Button
-              color='primary'
-              id='Register_btn'
+              color="primary"
+              id="Register_btn"
               onClick={() => handleRegister(name, lastName, email, password)}
             >
               Register now!
@@ -140,7 +139,7 @@ const Register = () => {
 
           <p>
             Do you already have an account ID?{" "}
-            <Link to='/login' className='forget-password'>
+            <Link to="/login" className="forget-password">
               Login
             </Link>{" "}
           </p>

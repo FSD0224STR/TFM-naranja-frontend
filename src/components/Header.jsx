@@ -3,12 +3,17 @@ import "./Header.css";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/LogContext";
 import logo from "../assets/Comparador-logo.png";
+import { useContext } from "react";
+import { SocketContext } from "../context/SocketContext";
+import { IoSearch } from "react-icons/io5";
+import { FaHeart } from "react-icons/fa";
 
 const Header = () => {
   const { isLoggedIn, logout } = useAuth();
   const [searchTerm, setSearchTerm] = React.useState("");
   const [isChecked, setIsChecked] = React.useState(false);
   const [showConfirm, setShowConfirm] = React.useState(false);
+  const { userDisconnect, setMessagesList } = useContext(SocketContext);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -18,6 +23,8 @@ const Header = () => {
     logout();
     setIsChecked(false);
     setShowConfirm(false);
+    userDisconnect();
+    setMessagesList([]);
   };
 
   const handleToggle = () => {
@@ -35,9 +42,7 @@ const Header = () => {
   return (
     <header className="header">
       <div className="logo">
-        <Link to="/">
-          <img src={logo} alt="Comparador" />
-        </Link>
+        <img src={logo} alt="Cpmparador" />
         {/* <h1>Comparador</h1> */}
       </div>
       <br />
@@ -49,12 +54,14 @@ const Header = () => {
           className="search-input"
           placeholder="Search..."
         />
-        <button className="search-button">&#x1F50E;&#xFE0E;</button>
+        <button className="search-button">
+          <IoSearch />
+        </button>
       </div>
       <div className="header-links">
+        <Link to="/">Home</Link>
         {isLoggedIn ? (
           <>
-            <Link to="/comparador">Comparador</Link>
             <Link to="/profile">Profile</Link>
             <Link to="/addProduct">Add Product</Link>
             <Link to="/listProducts">List Products</Link>

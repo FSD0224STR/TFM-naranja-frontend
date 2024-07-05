@@ -44,7 +44,6 @@ export const findProducts = async (searchTerm) => {
 
 export const findAllProducts = async () => {
   const token = localStorage.getItem("token");
-
   const response = await fetch(`${URL}`, {
     method: "GET",
     headers: {
