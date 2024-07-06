@@ -58,9 +58,9 @@ export const findAllProducts = async () => {
   return products;
 };
 
-export const findOneProduct = async (id) => {
+export const findOneProduct = async (slug) => {
   const token = localStorage.getItem("token");
-  const response = await fetch(`${URL}/${id}`, {
+  const response = await fetch(`${URL}/${slug}`, {
     method: "GET",
     headers: {
       authorization: `Bearer ${token}`,
@@ -75,10 +75,10 @@ export const findOneProduct = async (id) => {
   return products;
 };
 
-export const deleteProduct = async (id) => {
+export const deleteProduct = async (slug) => {
   const token = localStorage.getItem("token");
 
-  const response = await fetch(`${URL}/${id}`, {
+  const response = await fetch(`${URL}/${slug}`, {
     method: "DELETE",
     headers: {
       authorization: `Bearer ${token}`,
@@ -93,10 +93,10 @@ export const deleteProduct = async (id) => {
   return data;
 };
 
-export const editProduct = async (id, productData) => {
+export const editProduct = async (slug, productData) => {
   const token = localStorage.getItem("token");
 
-  const response = await fetch(`${URL}/${id}`, {
+  const response = await fetch(`${URL}/${slug}`, {
     method: "PUT",
     body: JSON.stringify(productData),
     headers: {
@@ -186,9 +186,9 @@ export const findBrand = async () => {
   return brands;
 };
 
-export const findProductsByCategory = async (category) => {
+export const findProductsByCategory = async (categoryId) => {
   const token = localStorage.getItem("token");
-  const response = await fetch(`${URL}/category/${category}`, {
+  const response = await fetch(`${URL}/category/${categoryId}`, {
     method: "GET",
     headers: {
       authorization: `Bearer ${token}`,

@@ -40,11 +40,13 @@ const ListProducts = () => {
     }
   };
 
-  const handleLViewProduct = (id) => {
-    navigate(`/detailsProduct/${id}`);
+  const handleLViewProduct = (slug) => {
+    navigate(`/detailsProduct/${slug}`);
   };
+  // const handleLViewProduct = (id) => {
+  //   navigate(`/detailsProduct/${id}`);
+  // };
 
-  // pasa el use params
   useEffect(() => {
     handleLFindAllProducts();
   }, [category]);
@@ -89,7 +91,8 @@ const ListProducts = () => {
                 <div style={{ display: "flex" }}>
                   <Button
                     type="link"
-                    onClick={() => handleLViewProduct(item._id)}
+                    onClick={() => handleLViewProduct(item.slug)}
+                    // onClick={() => handleLViewProduct(item._id)}
                   >
                     View Details
                   </Button>
