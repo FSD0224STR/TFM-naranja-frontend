@@ -43,7 +43,6 @@ const Header = () => {
     <header className="header">
       <div className="logo">
         <img src={logo} alt="Cpmparador" />
-        {/* <h1>Comparador</h1> */}
       </div>
       <br />
       <div className="search-container">

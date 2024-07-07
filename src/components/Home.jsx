@@ -36,12 +36,9 @@ const Home = () => {
         }}
       >
         {categories.map((category) => (
-          <Link to={`/listProducts/${category._id}`} key={category._id}>
+          <Link to={`/listProducts/${category.category}`} key={category._id}>
             <CategoryCard category={category} />
           </Link>
-          // <Link to={`/listProducts/${category._id}`} key={category._id}>
-          //   <CategoryCard category={category} loading={loading} />
-          // </Link>
         ))}
       </div>
     </div>

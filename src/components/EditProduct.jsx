@@ -43,7 +43,7 @@ const EditProduct = () => {
   const navigate = useNavigate();
 
   const [form] = Form.useForm();
-  const { id } = useParams();
+  const { slug } = useParams();
 
   const [product, setProduct] = useState("");
   const [price, setPrice] = useState(0);
@@ -76,7 +76,7 @@ const EditProduct = () => {
 
   const handleGetProduct = async () => {
     try {
-      const response = await findOneProduct(id);
+      const response = await findOneProduct(slug);
 
       if (response.error) {
         console.error("Error al obtener producto:", response.error);
@@ -85,6 +85,7 @@ const EditProduct = () => {
           product: response.data.product,
           description: response.data.description,
           price: response.data.price,
+          category: response.data.category,
           brand: response.data.brand,
           origin: response.data.origin,
           allergens: response.data.allergens,
@@ -105,6 +106,7 @@ const EditProduct = () => {
       product,
       description,
       price,
+      category,
       brand,
       origin,
       allergens,
@@ -112,7 +114,7 @@ const EditProduct = () => {
     });
 
     try {
-      const response = await editProduct(id, productData);
+      const response = await editProduct(slug, productData);
 
       if (response.error) {
         console.error("Error al editar producto:", response.error);
@@ -126,20 +128,20 @@ const EditProduct = () => {
   };
 
   const confirm = () => {
-    handleLDeleteProduct(id);
+    handleLDeleteProduct(slug);
     message.success("Producto Borrado con exito");
   };
   const cancel = () => {
     message.error("Operación de eliminación cancelada");
   };
 
-  const handleLDeleteProduct = async (id) => {
+  const handleLDeleteProduct = async (slug) => {
     setIsModalVisible(true);
   };
 
   const handleModalOk = async () => {
     try {
-      const response = await deleteProduct(id);
+      const response = await deleteProduct(slug);
 
       if (response.error) {
         console.error("Error al borrar producto:", response.error);
@@ -171,7 +173,7 @@ const EditProduct = () => {
     handleLFindOrigin();
     handleLFindAllergens();
     handleLFindIngredients();
-  }, [id, dummy, form]);
+  }, [slug, dummy, form]);
 
   return (
     <>
@@ -187,7 +189,7 @@ const EditProduct = () => {
           form={form}
           {...formItemLayout}
           disabled={isDisabled}
-          variant='filled'
+          variant="filled"
           style={{
             maxWidth: 1000,
             width: 800,
@@ -198,8 +200,8 @@ const EditProduct = () => {
           }}
         >
           <Form.Item
-            label='Name Product'
-            name='product'
+            label="Name Product"
+            name="product"
             rules={[
               {
                 required: true,
@@ -214,8 +216,8 @@ const EditProduct = () => {
           </Form.Item>
 
           <Form.Item
-            label='Description'
-            name='description'
+            label="Description"
+            name="description"
             rules={[
               {
                 required: true,
@@ -230,8 +232,8 @@ const EditProduct = () => {
           </Form.Item>
 
           <Form.Item
-            label='Price'
-            name='price'
+            label="Price"
+            name="price"
             rules={[
               {
                 required: true,
@@ -249,8 +251,8 @@ const EditProduct = () => {
           </Form.Item>
 
           <Form.Item
-            label='Category'
-            name='category'
+            label="Category"
+            name="category"
             rules={[
               {
                 required: true,
@@ -261,10 +263,10 @@ const EditProduct = () => {
             <Select
               value={category}
               onChange={(value) => setCategory(value)}
-              placeholder='Please select brand'
+              placeholder="Please select brand"
             >
               {categoryOptions.map((categ) => (
-                <Select.Option key={categ._id} value={categ.category}>
+                <Select.Option key={categ._id} value={categ._id}>
                   {categ.category}
                 </Select.Option>
               ))}
@@ -272,8 +274,8 @@ const EditProduct = () => {
           </Form.Item>
 
           <Form.Item
-            label='Brand'
-            name='brand'
+            label="Brand"
+            name="brand"
             rules={[
               {
                 required: true,
@@ -284,7 +286,7 @@ const EditProduct = () => {
             <Select
               value={brand}
               onChange={(value) => setBrand(value)}
-              placeholder='Please select origin'
+              placeholder="Please select origin"
             >
               {brandOptions.map((brand) => (
                 <Select.Option key={brand._id} value={brand.value}>
@@ -295,8 +297,8 @@ const EditProduct = () => {
           </Form.Item>
 
           <Form.Item
-            label='Origin'
-            name='origin'
+            label="Origin"
+            name="origin"
             rules={[
               {
                 required: true,
@@ -307,7 +309,7 @@ const EditProduct = () => {
             <Select
               value={origin}
               onChange={(value) => setOrigin(value)}
-              placeholder='Please select origin'
+              placeholder="Please select origin"
             >
               {originOptions.map((orig) => (
                 <Select.Option key={orig._id} value={orig.value}>
@@ -318,8 +320,8 @@ const EditProduct = () => {
           </Form.Item>
 
           <Form.Item
-            label='Allergies'
-            name='allergens'
+            label="Allergies"
+            name="allergens"
             rules={[
               {
                 required: true,
@@ -337,7 +339,7 @@ const EditProduct = () => {
                 maxHeight: 400,
                 overflow: "auto",
               }}
-              placeholder='Please select allergens'
+              placeholder="Please select allergens"
               allowClear
               multiple
               treeDefaultExpandAll
@@ -347,8 +349,8 @@ const EditProduct = () => {
           </Form.Item>
 
           <Form.Item
-            label='Ingredients'
-            name='ingredients'
+            label="Ingredients"
+            name="ingredients"
             rules={[
               {
                 required: true,
@@ -366,7 +368,7 @@ const EditProduct = () => {
                 maxHeight: 400,
                 overflow: "auto",
               }}
-              placeholder='Please select ingredients'
+              placeholder="Please select ingredients"
               allowClear
               multiple
               treeDefaultExpandAll
@@ -382,8 +384,9 @@ const EditProduct = () => {
           >
             {!isDisabled ? (
               <Button
-                color='primary'
-                onClick={() => handleLEditProduct(id, detailsProduct)}
+                color="primary"
+                onClick={() => handleLEditProduct(slug, detailsProduct)}
+                // onClick={() => handleLEditProduct(id, detailsProduct)}
               >
                 Save Changes
               </Button>
@@ -395,13 +398,14 @@ const EditProduct = () => {
                   marginTop: "1.5rem",
                 }}
               >
-                <Button color='primary' onClick={() => onActiveEdit()}>
+                <Button color="primary" onClick={() => onActiveEdit()}>
                   Active Edit
                 </Button>
                 <Button
-                  color='white'
+                  color="white"
                   danger
-                  onClick={() => handleLDeleteProduct(id)}
+                  onClick={() => handleLDeleteProduct(slug)}
+                  // onClick={() => handleLDeleteProduct(id)}
                 >
                   Delete
                 </Button>
@@ -410,7 +414,7 @@ const EditProduct = () => {
           </Form.Item>
         </Form>
         <Modal
-          title='Confirm Delete'
+          title="Confirm Delete"
           visible={isModalVisible}
           onOk={handleModalOk}
           onCancel={handleModalCancel}
