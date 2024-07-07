@@ -28,6 +28,7 @@ const ListProducts = () => {
 
   const handleLFindAllProducts = async () => {
     let response;
+
     if (category) {
       response = await findProductsByCategory(category);
     } else {
@@ -43,9 +44,6 @@ const ListProducts = () => {
   const handleLViewProduct = (slug) => {
     navigate(`/detailsProduct/${slug}`);
   };
-  // const handleLViewProduct = (id) => {
-  //   navigate(`/detailsProduct/${id}`);
-  // };
 
   useEffect(() => {
     handleLFindAllProducts();
@@ -92,7 +90,6 @@ const ListProducts = () => {
                   <Button
                     type="link"
                     onClick={() => handleLViewProduct(item.slug)}
-                    // onClick={() => handleLViewProduct(item._id)}
                   >
                     View Details
                   </Button>

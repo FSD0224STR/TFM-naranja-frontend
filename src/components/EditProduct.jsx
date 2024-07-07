@@ -44,7 +44,6 @@ const EditProduct = () => {
 
   const [form] = Form.useForm();
   const { slug } = useParams();
-  // const { id } = useParams();
 
   const [product, setProduct] = useState("");
   const [price, setPrice] = useState(0);
@@ -78,7 +77,6 @@ const EditProduct = () => {
   const handleGetProduct = async () => {
     try {
       const response = await findOneProduct(slug);
-      // const response = await findOneProduct(id);
 
       if (response.error) {
         console.error("Error al obtener producto:", response.error);
@@ -117,7 +115,6 @@ const EditProduct = () => {
 
     try {
       const response = await editProduct(slug, productData);
-      // const response = await editProduct(id, productData);
 
       if (response.error) {
         console.error("Error al editar producto:", response.error);
@@ -132,16 +129,12 @@ const EditProduct = () => {
 
   const confirm = () => {
     handleLDeleteProduct(slug);
-    // handleLDeleteProduct(id);
     message.success("Producto Borrado con exito");
   };
   const cancel = () => {
     message.error("Operación de eliminación cancelada");
   };
 
-  // const handleLDeleteProduct = async (id) => {
-  //   setIsModalVisible(true);
-  // };
   const handleLDeleteProduct = async (slug) => {
     setIsModalVisible(true);
   };
@@ -149,7 +142,6 @@ const EditProduct = () => {
   const handleModalOk = async () => {
     try {
       const response = await deleteProduct(slug);
-      // const response = await deleteProduct(id);
 
       if (response.error) {
         console.error("Error al borrar producto:", response.error);
@@ -182,7 +174,6 @@ const EditProduct = () => {
     handleLFindAllergens();
     handleLFindIngredients();
   }, [slug, dummy, form]);
-  // }, [id, dummy, form]);
 
   return (
     <>

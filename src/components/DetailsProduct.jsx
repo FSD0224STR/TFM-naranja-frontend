@@ -9,7 +9,6 @@ import "./DetailsProduct.css";
 import BreadCrumb from "./BreadCrumb";
 
 const DetailsProduct = () => {
-  // const { id } = useParams();
   const { slug } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
@@ -19,7 +18,6 @@ const DetailsProduct = () => {
   const handleGetProduct = async () => {
     try {
       const response = await findOneProduct(slug);
-      // const response = await findOneProduct(id);
 
       if (response.error) {
         console.error("Error al obtener producto:", response.error);
@@ -65,7 +63,6 @@ const DetailsProduct = () => {
               <Button
                 type="primary"
                 onClick={() => navigate(`/editProduct/${slug}`)}
-                // onClick={() => navigate(`/editProduct/${id}`)}
               >
                 <AiFillEdit className="icon-edit" />
               </Button>
@@ -82,7 +79,7 @@ const DetailsProduct = () => {
           <div className="product-details-container">
             <div className="detail-item">
               <label htmlFor="price">Description</label>
-              <p className="price">{product.description} €</p>
+              <p className="price">{product.description}</p>
             </div>
             <div className="detail-item">
               <label htmlFor="price">Price</label>
