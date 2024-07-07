@@ -11,10 +11,12 @@ import AddProduct from "./components/AddProduct";
 import ListProducts from "./components/ListProducts";
 import EditProduct from "./components/EditProduct";
 import DetailsProduct from "./components/DetailsProduct";
-import CartCompare from "../src/components/CartCompare";
+import CartCompare from "./components/CartCompare";
 import Websocket from "./components/Websocket";
+import { useAuth } from "./context/LogContext";
 
 export default function App() {
+  const { isLoggedIn } = useAuth();
   return (
     <>
       <Header />
@@ -30,8 +32,12 @@ export default function App() {
         <Route path="/listProducts/:category" element={<ListProducts />} />
         <Route path="/listProducts" element={<ListProducts />} />
       </Routes>
-      <CartCompare />
-      <Websocket></Websocket>
+      {isLoggedIn ? (
+        <>
+          <CartCompare />
+          <Websocket></Websocket>
+        </>
+      ) : null}
       <Footer />
     </>
   );
