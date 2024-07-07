@@ -1,50 +1,49 @@
 import React, { useState } from "react";
 import "./Register.css";
 import { Link } from "react-router-dom";
-import { PlusOutlined } from "@ant-design/icons";
 import { register } from "../apiService/userApi";
 import { useNavigate } from "react-router-dom";
-import {
-  Cascader,
-  Checkbox,
-  ColorPicker,
-  DatePicker,
-  Form,
-  Input,
-  InputNumber,
-  Radio,
-  Select,
-  Slider,
-  Switch,
-  TreeSelect,
-  Upload,
-} from "antd";
+import { Form, Input, message } from "antd";
 import Button from "./Button";
 //import Captcha from "./Captcha";
 import "./Register.css";
 import Breadcrumb from "./BreadCrumb";
-
-const { RangePicker } = DatePicker;
-const { TextArea } = Input;
-
-const normFile = (e) => {
-  if (Array.isArray(e)) {
-    return e;
-  }
-  return e?.fileList;
-};
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState(true);
   // const [isHuman, setIsHuman] = useState(false);
   const navigate = useNavigate();
   // const [componentDisabled, setComponentDisabled] = useState(true);
 
-  const handleRegister = async (email, password, name, lastName) => {
-    const response = await register(email, password, name, lastName);
+  const validateEmail = (email) => {
+    // ^[a-zA-Z0-9._%+-]+ --> Valida la parte local del correo electrónico antes del @.
+    // @[a-zA-Z0-9.-]+    --> Valida el dominio del correo electrónico después del @.
+    // \.[a-zA-Z]{2,}$    --> Valida la parte del TLD (dominio de nivel superior).
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
+
+  const handleEmailChange = (e) => {
+    const emailValue = e.target.value;
+    setEmail(emailValue);
+    setIsEmailValid(validateEmail(emailValue));
+  };
+
+  const handleSubmit = () => {
+    if (!isEmailValid) {
+      message.error("Please enter a valid email address.");
+      return;
+    }
+    handleRegister(name, lastName, email, password);
+    message.success("Registration successful!");
+  };
+
+  const handleRegister = async (email, password, firstname, lastname) => {
+    const response = await register(email, password, firstname, lastname);
     // if (!isHuman) {
     //   console.error("Por favor, complete el CAPTCHA");
     //   return;
@@ -98,12 +97,16 @@ const Register = () => {
             />
           </Form.Item>
 
-          <Form.Item label="">
+          <Form.Item
+            label=""
+            validateStatus={!isEmailValid ? "error" : ""}
+            help={!isEmailValid ? "Please enter a valid email address." : ""}
+          >
             <Input
               placeholder="Email"
               value={email}
               type="email"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleEmailChange}
             />
           </Form.Item>
 
@@ -121,18 +124,7 @@ const Register = () => {
           </Form.Item> */}
 
           <Form.Item label="">
-            <Select placeholder="User Type">
-              <Select.Option value="">User</Select.Option>
-              <Select.Option value="">Producer</Select.Option>
-            </Select>
-          </Form.Item>
-
-          <Form.Item label="">
-            <Button
-              color="primary"
-              id="Register_btn"
-              onClick={() => handleRegister(name, lastName, email, password)}
-            >
+            <Button color="primary" id="Register_btn" onClick={handleSubmit}>
               Register now!
             </Button>
           </Form.Item>

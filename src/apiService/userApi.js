@@ -11,11 +11,10 @@ export const login = async (email, password) => {
   return { data: token };
 };
 
-export const register = async (name, lastName, email, password) => {
-  console.log("front", (name, lastName, email, password));
+export const register = async (firstname, lastname, email, password) => {
   const response = await fetch(`${URL}/register`, {
     method: "POST",
-    body: JSON.stringify({ name, lastName, email, password }),
+    body: JSON.stringify({ firstname, lastname, email, password }),
     headers: { "Content-Type": "application/json" },
   });
 
@@ -43,18 +42,22 @@ export const updateUser = async (id, userData) => {
   }
 };
 
-export const verifyAdmin = async (email) => {
-  const response = await fetch(`${URL}/verifyAdmin`, {
+export const getUser = async (email) => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${URL}/getDataUser`, {
     method: "POST",
     body: JSON.stringify({ email }),
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
   });
 
-  if (!response.ok) {
+  if (!response.data) {
     const error = await response.json();
-    return { error: error.message };
+    return error;
   }
-  const text = await response.text();
-  const isAdmin = text ? JSON.parse(text) : false;
-  return { data: isAdmin };
+  const user = await response.json();
+  return user;
 };

@@ -16,6 +16,7 @@ import { ProductContext } from "../context/ProductContext";
 import "./AddProduct.css";
 import BreadCrumb from "./BreadCrumb";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/LogContext";
 
 const formItemLayout = {
   labelCol: {
@@ -37,6 +38,7 @@ const formItemLayout = {
 };
 
 const AddProduct = () => {
+  const { userData } = useAuth();
   const [form] = Form.useForm();
   const [productData, setProductData] = useState({
     product: "",
@@ -48,6 +50,7 @@ const AddProduct = () => {
     allergens: [],
     ingredients: [],
     images: [],
+    user: "",
   });
   const navigate = useNavigate();
 
@@ -69,6 +72,7 @@ const AddProduct = () => {
 
   const handleLAddProduct = async () => {
     try {
+      productData.user = userData._id;
       const response = await addProduct(productData);
 
       if (response.error) {
