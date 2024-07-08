@@ -94,7 +94,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Item>
-        {error && <div className='error'>{error}</div>}}
+        {error && <div className='error'>{error}</div>}
         {/* <Form.Item>
 >>>>>>> 58540b85e943e5c0c675ab0f82fe128fde931173
         <Captcha onChange={handleCaptchaChange} />

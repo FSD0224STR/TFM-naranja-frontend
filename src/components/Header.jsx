@@ -4,12 +4,14 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/LogContext";
 import logo from "../assets/Comparador-logo.png";
 import { IoSearch } from "react-icons/io5";
-import { FaHeart } from "react-icons/fa"; // Add this line
+import { FaHeart } from "react-icons/fa";
+import { MdPerson } from "react-icons/md";
+import { RiLogoutBoxRLine } from "react-icons/ri";
+import Button from "./Button";
 
 const Header = () => {
   const { isLoggedIn, logout } = useAuth();
   const [searchTerm, setSearchTerm] = React.useState("");
-  const [isChecked, setIsChecked] = React.useState(false);
   const [showConfirm, setShowConfirm] = React.useState(false);
 
   const handleSearch = (e) => {
@@ -18,16 +20,11 @@ const Header = () => {
 
   const handleLogout = () => {
     logout();
-    setIsChecked(false);
     setShowConfirm(false);
   };
 
-  const handleToggle = () => {
-    if (isChecked) {
-      setShowConfirm(true);
-    } else {
-      setIsChecked(!isChecked);
-    }
+  const handleConfirm = () => {
+    setShowConfirm(true);
   };
 
   const handleCancel = () => {
@@ -57,20 +54,17 @@ const Header = () => {
         <Link to='/home'>Home</Link>
         {isLoggedIn ? (
           <>
-            <Link to='/profile'>Profile</Link>
             <Link to='/addProduct'>Add Product</Link>
             <Link to='/listProducts'>List Products</Link>
             <Link to='/favouriteProducts'>
-              <FaHeart /> {/* Add this line */}
+              <FaHeart />
             </Link>
-            <label className='toggle-switch'>
-              <input
-                type='checkbox'
-                checked={isChecked}
-                onChange={handleToggle}
-              />
-              <span className='toggle-switch-slider'></span>
-            </label>
+            <Link to='/profile'>
+              <MdPerson />
+            </Link>
+            <Link to='#' onClick={handleConfirm}>
+              <RiLogoutBoxRLine />
+            </Link>
           </>
         ) : (
           <>
@@ -88,8 +82,12 @@ const Header = () => {
                 Adiós! but don't forget to come back for more chorizo 😉
               </small>
             </p>
-            <button onClick={handleLogout}>Yes, Logout</button>
-            <button onClick={handleCancel}>Cancel</button>
+            <Button color='red' onClick={handleLogout}>
+              Yes, Logout
+            </Button>
+            <Button color='primary' onClick={handleCancel}>
+              Cancel
+            </Button>
           </div>
         </div>
       )}
