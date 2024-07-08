@@ -1,0 +1,26 @@
+.comparador-inputs {
+  position: relative; /* Asegura que la posición relativa para el contenedor */
+}
+
+.suggestions-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #ccc;
+  border-top: none;
+  max-height: 200px;
+  overflow-y: auto;
+  position: absolute; /* Ajusta la posición absoluta para la lista de sugerencias */
+  z-index: 10; /* Ajusta el z-index para asegurarse de que se superponga correctamente */
+  width: 100%; /* Ajusta el ancho de la lista según el contenedor */
+  background-color: #fff; /* Fondo blanco para la lista */
+}
+
+.suggestions-list li {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.suggestions-list li.active {
+  background-color: #f0f0f0;
+}
