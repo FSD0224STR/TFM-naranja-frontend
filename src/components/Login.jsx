@@ -20,7 +20,12 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
-  const { login: loginContext, getVerifyAdmin, setIsAdmin } = useAuth();
+  const {
+    login: loginContext,
+    getDataUser,
+    setIsAdmin,
+    setUserData,
+  } = useAuth();
 
   const {
     socket,
@@ -47,8 +52,10 @@ const Login = () => {
       setError("");
       setMessagesList([]);
 
-      const isAdmin = await getVerifyAdmin(email);
-      if (isAdmin === true) {
+      const user = await getDataUser(email);
+      setUserData(user);
+
+      if (user.isAdmin === true) {
         await adminJoinRandomRoom();
         socket.current.emit("adminConnect", email);
         setIsAdmin(true);
