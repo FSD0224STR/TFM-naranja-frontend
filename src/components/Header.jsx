@@ -42,7 +42,9 @@ const Header = () => {
   return (
     <header className="header">
       <div className="logo">
-        <img src={logo} alt="Cpmparador" />
+        <Link to="/">
+          <img src={logo} alt="Comparador" />
+        </Link>
       </div>
       <br />
       <div className="search-container">
@@ -58,9 +60,9 @@ const Header = () => {
         </button>
       </div>
       <div className="header-links">
-        <Link to="/">Home</Link>
         {isLoggedIn ? (
           <>
+            <Link to="/comparador">Comparador</Link>
             <Link to="/profile">Profile</Link>
             <Link to="/addProduct">Add Product</Link>
             <Link to="/listProducts">List Products</Link>
