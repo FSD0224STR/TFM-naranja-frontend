@@ -1,81 +1,79 @@
 import React, { useState } from "react";
 import "./Register.css";
 import { Link } from "react-router-dom";
-import { PlusOutlined } from "@ant-design/icons";
 import { register } from "../apiService/userApi";
 import { useNavigate } from "react-router-dom";
-import {
-  Cascader,
-  Checkbox,
-  ColorPicker,
-  DatePicker,
-  Form,
-  Input,
-  InputNumber,
-  Radio,
-  Select,
-  Slider,
-  Switch,
-  TreeSelect,
-  Upload,
-} from "antd";
+import { Form, Input, message } from "antd";
 import Button from "./Button";
-import Captcha from "./Captcha";
+//import Captcha from "./Captcha";
 import "./Register.css";
-
-const { RangePicker } = DatePicker;
-const { TextArea } = Input;
-
-const normFile = (e) => {
-  if (Array.isArray(e)) {
-    return e;
-  }
-  return e?.fileList;
-};
+import Breadcrumb from "./BreadCrumb";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [isHuman, setIsHuman] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  // const [isHuman, setIsHuman] = useState(false);
   const navigate = useNavigate();
   // const [componentDisabled, setComponentDisabled] = useState(true);
 
-  const handleRegister = async (email, password, name, lastName) => {
-    console.log("userData: ", email, password, name, lastName);
-    const response = await register(email, password, name, lastName);
-    if (!isHuman) {
-      console.error("Por favor, complete el CAPTCHA");
+  const validateEmail = (email) => {
+    // ^[a-zA-Z0-9._%+-]+ --> Valida la parte local del correo electrónico antes del @.
+    // @[a-zA-Z0-9.-]+    --> Valida el dominio del correo electrónico después del @.
+    // \.[a-zA-Z]{2,}$    --> Valida la parte del TLD (dominio de nivel superior).
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
+
+  const handleEmailChange = (e) => {
+    const emailValue = e.target.value;
+    setEmail(emailValue);
+    setIsEmailValid(validateEmail(emailValue));
+  };
+
+  const handleSubmit = () => {
+    if (!isEmailValid) {
+      message.error("Please enter a valid email address.");
       return;
     }
+    handleRegister(name, lastName, email, password);
+    message.success("Registration successful!");
+  };
+
+  const handleRegister = async (email, password, firstname, lastname) => {
+    const response = await register(email, password, firstname, lastname);
+    // if (!isHuman) {
+    //   console.error("Por favor, complete el CAPTCHA");
+    //   return;
+    // }
     if (response.error) {
       console.error("Error al registrar usuario:", response.error);
     } else {
-      console.log("Usuario registrado con exito:", response.data);
       const token = response.data;
-      console.log("token-front: ", token);
       localStorage.setItem("token", token);
-      navigate("/home");
+      navigate("/");
     }
   };
 
-  const handleCaptchaChange = (value) => {
+  /*const handleCaptchaChange = (value) => {
     setIsHuman(value);
-  };
+  };*/
 
   return (
     <>
-      <div className='container'>
+      <Breadcrumb title="register" />
+      <div className="container">
         <Form
-          name='form__container'
+          name="form__container"
           labelCol={{
             span: 4,
           }}
           wrapperCol={{
             span: 14,
           }}
-          layout='horizontal'
+          layout="horizontal"
           // disabled={componentDisabled}
           // style={{
           //   maxWidth: 600,
@@ -83,63 +81,57 @@ const Register = () => {
         >
           <h1>Create a user account</h1>
           <br />
-          <Form.Item label=''>
+          <Form.Item label="">
             <Input
               value={name}
-              placeholder='First Name'
+              placeholder="First Name"
               onChange={(e) => setName(e.target.value)}
             />
           </Form.Item>
 
-          <Form.Item label=''>
+          <Form.Item label="">
             <Input
-              placeholder='Last Name'
+              placeholder="Last Name"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
           </Form.Item>
 
-          <Form.Item label=''>
+          <Form.Item
+            label=""
+            validateStatus={!isEmailValid ? "error" : ""}
+            help={!isEmailValid ? "Please enter a valid email address." : ""}
+          >
             <Input
-              placeholder='Email'
+              placeholder="Email"
               value={email}
-              type='email'
-              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              onChange={handleEmailChange}
             />
           </Form.Item>
 
-          <Form.Item label=''>
+          <Form.Item label="">
             <Input
-              placeholder='Password'
-              type='password'
+              placeholder="Password"
+              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Item>
 
-          <Form.Item label=''>
+          {/* <Form.Item label="">
             <Captcha onChange={handleCaptchaChange} />
-          </Form.Item>
+          </Form.Item> */}
 
-          <Form.Item label=''>
-            <Select placeholder='User Type'>
-              <Select.Option value=''>User</Select.Option>
-              <Select.Option value=''>Producer</Select.Option>
-            </Select>
-          </Form.Item>
-
-          <Form.Item label=''>
-            <Button
-              id='Register_btn'
-              onClick={() => handleRegister(name, lastName, email, password)}
-            >
+          <Form.Item label="">
+            <Button color="primary" id="Register_btn" onClick={handleSubmit}>
               Register now!
             </Button>
           </Form.Item>
 
           <p>
             Do you already have an account ID?{" "}
-            <Link to='/login' className='forget-password'>
+            <Link to="/login" className="forget-password">
               Login
             </Link>{" "}
           </p>

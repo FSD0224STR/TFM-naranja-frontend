@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { findProducts } from "../apiService/productApi";
 import ComparadorInputs from './ComparadorInputs';
-import { Card, Descriptions, Row, Col, Button, message } from 'antd';
+import { Card, Descriptions, Row, Col, Button } from 'antd';
 
 function Comparador() {
   const [productNames, setProductNames] = useState([]);
@@ -9,33 +9,54 @@ function Comparador() {
   const [error, setError] = useState(null);
 
   const handleCompare = async () => {
-    if (productNames.length === 0 || productNames.every(name => name.trim() === '')) {
-      setComparisonResults([]);
-      setError('No se han proporcionado nombres de productos.');
+    if (productNames.length !== 2) {
+      setError('Debes proporcionar exactamente dos nombres de productos para comparar.');
       return;
     }
 
-try {
-      const results = await Promise.all(
-        productNames
-          .filter(name => name.trim() !== '')
-          .map(name => findProducts(name.trim()))
-      );
+    try {
+      const [firstProductResult, secondProductResult] = await Promise.all([
+        findProducts(productNames[0].trim()),
+        findProducts(productNames[1].trim())
+      ]);
 
-      const dataResults = results.map(result => result.data);
-      setComparisonResults(dataResults);
+      if (firstProductResult.data.length === 0) {
+        setError(`No se encontraron productos para "${productNames[0]}"`);
+        return;
+      }
+
+      if (secondProductResult.data.length === 0) {
+        setError(`No se encontraron productos para "${productNames[1]}"`);
+        return;
+      }
+
+      const firstCategory = firstProductResult.data[0].category;
+      const secondCategory = secondProductResult.data[0].category;
+
+      if (firstCategory !== secondCategory) {
+        setError(`El segundo producto debe ser de la misma categoría que "${productNames[0]}"`);
+        return;
+      }
+
+      setComparisonResults([firstProductResult.data[0], secondProductResult.data[0]]);
       setError(null);
-      
-      dataResults.forEach((result, index) => {
-        if (result.length === 0) {
-          setError(`No se encontraron productos para "${productNames[index]}"`);
-        }
-      });
-
     } catch (error) {
+      console.error('Error fetching products:', error);
       setError('Error fetching products. Please try again.');
       setComparisonResults([]);
     }
+  };
+
+  const getPriceStyle = (price) => {
+    return { color: price > 7 ? 'red' : 'green' };
+  };
+
+  const getAllergensStyle = (allergens) => {
+    return { color: allergens.length > 3 ? 'red' : 'green' };
+  };
+
+  const getIngredientsStyle = (ingredients) => {
+    return { color: ingredients.length < 5 ? 'red' : 'green' };
   };
 
   return (
@@ -45,31 +66,41 @@ try {
       <Button type="primary" onClick={handleCompare}>Comparar</Button>
       <div style={{ marginTop: '16px', textAlign: 'center' }}>
         <Row gutter={16} justify="center">
-          {comparisonResults.map((result, index) => (
+          {comparisonResults.map((product, index) => (
             <Col span={8} key={index}>
-              {result.length > 0 && (
-                <Card>
-                  <h2>{productNames[index]}</h2>
-                  {result.map(product => (
-                    <Card
-                      key={product._id}
-                      title={product.product}
-                      bordered={false}
-                      style={{ marginBottom: '16px' }}
-                    >
-                      <Descriptions column={1}>
-                        <Descriptions.Item label="Precio">{product.price}</Descriptions.Item>
-                        <Descriptions.Item label="Categoría">{product.category}</Descriptions.Item>
-                        <Descriptions.Item label="Origen">{product.origin}</Descriptions.Item>
-                        <Descriptions.Item label="Marca">{product.brand}</Descriptions.Item>
-                        <Descriptions.Item label="Alérgenos">{product.allergens}</Descriptions.Item>
-                        <Descriptions.Item label="Ingredientes">{product.ingredients}</Descriptions.Item>
-                        <Descriptions.Item label="Descripción">{product.description}</Descriptions.Item>
-                      </Descriptions>
-                    </Card>
-                  ))}
+              <Card>
+                <h2>{productNames[index]}</h2>
+                <Card
+                  key={product._id}
+                  title={product.product}
+                  bordered={false}
+                  style={{ marginBottom: '16px' }}
+                >
+                  <Descriptions column={1}>
+                    <Descriptions.Item label="Precio" style={getPriceStyle(product.price)}>
+                      {product.price}€
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Categoría">
+                      {product.category}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Origen">
+                      {product.origin}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Marca">
+                      {product.brand}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Alérgenos" style={getAllergensStyle(product.allergens)}>
+                      {product.allergens.join(', ')}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Ingredientes" style={getIngredientsStyle(product.ingredients)}>
+                      {product.ingredients.join(', ')}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Descripción">
+                      {product.description}
+                    </Descriptions.Item>
+                  </Descriptions>
                 </Card>
-              )}
+              </Card>
             </Col>
           ))}
         </Row>

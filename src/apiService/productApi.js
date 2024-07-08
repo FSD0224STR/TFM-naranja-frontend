@@ -23,12 +23,15 @@ export const addProduct = async (productData) => {
 export const findProducts = async (searchTerm) => {
   const token = localStorage.getItem("token");
 
-  const response = await fetch(`${URL}/search?searchTerm=${encodeURIComponent(searchTerm)}`, {
-    method: "GET",
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await fetch(
+    `${URL}/search?searchTerm=${encodeURIComponent(searchTerm)}`,
+    {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   if (!response.ok) {
     const error = await response.json();
@@ -39,9 +42,39 @@ export const findProducts = async (searchTerm) => {
   return products;
 };
 
+export const fetchSuggestions = async (query, category) => {
+  try {
+    const token = localStorage.getItem('token');
+    const sanitizedQuery = query.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    let url = `${URL}/suggestions?query=${encodeURIComponent(sanitizedQuery)}`;
+
+    if (category) {
+      url += `&category=${encodeURIComponent(category)}`;
+    }
+
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Error al obtener sugerencias');
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error('Error fetching suggestions:', error);
+    throw error;
+  }
+};
+
+
+
+
+
 export const findAllProducts = async () => {
   const token = localStorage.getItem("token");
-
   const response = await fetch(`${URL}`, {
     method: "GET",
     headers: {
@@ -56,9 +89,9 @@ export const findAllProducts = async () => {
   return products;
 };
 
-export const findOneProduct = async (id) => {
+export const findOneProduct = async (slug) => {
   const token = localStorage.getItem("token");
-  const response = await fetch(`${URL}/${id}`, {
+  const response = await fetch(`${URL}/${slug}`, {
     method: "GET",
     headers: {
       authorization: `Bearer ${token}`,
@@ -73,11 +106,10 @@ export const findOneProduct = async (id) => {
   return products;
 };
 
-
-export const deleteProduct = async (id) => {
+export const deleteProduct = async (slug) => {
   const token = localStorage.getItem("token");
 
-  const response = await fetch(`${URL}/${id}`, {
+  const response = await fetch(`${URL}/${slug}`, {
     method: "DELETE",
     headers: {
       authorization: `Bearer ${token}`,
@@ -92,10 +124,10 @@ export const deleteProduct = async (id) => {
   return data;
 };
 
-export const editProduct = async (id, productData) => {
+export const editProduct = async (slug, productData) => {
   const token = localStorage.getItem("token");
 
-  const response = await fetch(`${URL}/${id}`, {
+  const response = await fetch(`${URL}/${slug}`, {
     method: "PUT",
     body: JSON.stringify(productData),
     headers: {
@@ -183,4 +215,21 @@ export const findBrand = async () => {
   }
   const brands = await response.json();
   return brands;
+};
+
+export const findProductsByCategory = async (categoryId) => {
+  const token = localStorage.getItem("token");
+  const response = await fetch(`${URL}/category/${categoryId}`, {
+    method: "GET",
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message);
+  }
+  const products = await response.json();
+  return products;
 };

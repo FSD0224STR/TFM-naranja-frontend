@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Comparador from "./Comparador";
 import { findCategories } from "../apiService/categoryApi";
 import CategoryCard from "./CategoryCard";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [categories, setCategories] = useState([]);
@@ -27,7 +27,6 @@ const Home = () => {
 
   return (
     <div style={{ padding: "2rem" }}>
-      <Comparador />
       <div
         style={{
           display: "flex",
@@ -37,7 +36,9 @@ const Home = () => {
         }}
       >
         {categories.map((category) => (
-          <CategoryCard key={category._id} category={category} />
+          <Link to={`/listProducts/${category.category}`} key={category._id}>
+            <CategoryCard category={category} />
+          </Link>
         ))}
       </div>
     </div>
