@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./Login.css";
 import Button from "./Button";
 import { Link } from "react-router-dom";
@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 // import Captcha from "./Captcha";
 import { useAuth } from "../context/LogContext";
+import { SocketContext } from "../context/SocketContext";
 import Breadcrumb from "./BreadCrumb";
 
 const Login = () => {
@@ -19,7 +20,20 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
-  const { login: loginContext } = useAuth();
+  const {
+    login: loginContext,
+    getDataUser,
+    setIsAdmin,
+    setUserData,
+  } = useAuth();
+
+  const {
+    socket,
+    joinPrivateRoom,
+    adminJoinRandomRoom,
+    setMessagesList,
+    setIsUserConnect,
+  } = useContext(SocketContext);
 
   const handleLogin = async () => {
     // if (!isHuman) {
@@ -36,7 +50,21 @@ const Login = () => {
       localStorage.setItem("token", token);
       loginContext(token);
       setError("");
-      navigate("/home");
+      setMessagesList([]);
+
+      const user = await getDataUser(email);
+      setUserData(user);
+
+      if (user.isAdmin === true) {
+        await adminJoinRandomRoom();
+        socket.current.emit("adminConnect", email);
+        setIsAdmin(true);
+      } else {
+        joinPrivateRoom();
+        setIsAdmin(false);
+        setIsUserConnect(true);
+      }
+      navigate("/");
     }
   };
 
@@ -96,7 +124,6 @@ const Login = () => {
         </Form.Item>
         {error && <div className='error'>{error}</div>}
         {/* <Form.Item>
->>>>>>> 58540b85e943e5c0c675ab0f82fe128fde931173
         <Captcha onChange={handleCaptchaChange} />
       </Form.Item> */}
         <div className='forget-link'>

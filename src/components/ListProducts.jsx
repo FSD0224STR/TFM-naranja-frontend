@@ -29,7 +29,7 @@ const ListProducts = () => {
 
   const handleLFindAllProducts = async () => {
     let response;
-    console.log("respuetsa", category);
+
     if (category) {
       response = await findProductsByCategory(category);
     } else {
@@ -38,26 +38,20 @@ const ListProducts = () => {
     if (response.error) {
       console.error("Error al listar productos:", response.error);
     } else {
-      console.log("la respuesta de data", response.data);
-
       setProducts(response.data);
     }
   };
 
-  const handleLViewProduct = (id) => {
-    navigate(`/detailsProduct/${id}`);
+  const handleLViewProduct = (slug) => {
+    navigate(`/detailsProduct/${slug}`);
   };
 
-  // pasa el use params
   useEffect(() => {
     handleLFindAllProducts();
   }, [category]);
 
   useEffect(() => {
-    console.log("la respuesta de products de category1", products);
-
     setTotalProducts(products.length);
-    console.log("la respuesta de products de category 2", products.length);
   }, [products]);
 
   return (

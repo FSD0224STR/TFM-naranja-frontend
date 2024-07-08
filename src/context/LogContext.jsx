@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { getUser } from "../apiService/userApi";
 
 const AuthContext = createContext();
 
@@ -9,12 +10,24 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [userData, setUserData] = useState({});
   const navigate = useNavigate();
+
+  const getDataUser = async (email) => {
+    const response = await getUser(email);
+
+    if (response.error) {
+      console.error("No puedo verificar el usuario");
+    } else {
+      return response.data;
+    }
+  };
 
   const login = (token) => {
     localStorage.setItem("token", token);
     setIsLoggedIn(true);
-    navigate("/home");
+    navigate("/");
   };
 
   const logout = () => {
@@ -24,7 +37,18 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        isLoggedIn,
+        login,
+        logout,
+        isAdmin,
+        getDataUser,
+        setIsAdmin,
+        userData,
+        setUserData,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

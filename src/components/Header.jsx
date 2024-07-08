@@ -3,8 +3,9 @@ import "./Header.css";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/LogContext";
 import logo from "../assets/Comparador-logo.png";
+import { useContext } from "react";
+import { SocketContext } from "../context/SocketContext";
 import { IoSearch } from "react-icons/io5";
-import { FaHeart } from "react-icons/fa";
 import { MdPerson } from "react-icons/md";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import Button from "./Button";
@@ -13,6 +14,7 @@ const Header = () => {
   const { isLoggedIn, logout } = useAuth();
   const [searchTerm, setSearchTerm] = React.useState("");
   const [showConfirm, setShowConfirm] = React.useState(false);
+  const { userDisconnect, setMessagesList } = useContext(SocketContext);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -21,6 +23,8 @@ const Header = () => {
   const handleLogout = () => {
     logout();
     setShowConfirm(false);
+    userDisconnect();
+    setMessagesList([]);
   };
 
   const handleConfirm = () => {
@@ -35,7 +39,6 @@ const Header = () => {
     <header className='header'>
       <div className='logo'>
         <img src={logo} alt='Cpmparador' />
-        {/* <h1>Comparador</h1> */}
       </div>
       <br />
       <div className='search-container'>
@@ -51,14 +54,11 @@ const Header = () => {
         </button>
       </div>
       <div className='header-links'>
-        <Link to='/home'>Home</Link>
+        <Link to='/'>Home</Link>
         {isLoggedIn ? (
           <>
             <Link to='/addProduct'>Add Product</Link>
             <Link to='/listProducts'>List Products</Link>
-            <Link to='/favouriteProducts'>
-              <FaHeart />
-            </Link>
             <Link to='/profile'>
               <MdPerson />
             </Link>

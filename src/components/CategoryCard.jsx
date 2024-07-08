@@ -21,7 +21,6 @@ const CategoryCard = ({ category }) => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        height: 350,
       }}
     >
       <Typography.Title level={2}>{category.category}</Typography.Title>
@@ -30,9 +29,9 @@ const CategoryCard = ({ category }) => {
       <br />
 
       <Button
-        onClick={() => navigate(`/listProducts/${category._id}`)}
-        color='white'
-        type='primary'
+        onClick={() => navigate(`/listProducts/${category.category}`)}
+        color="white"
+        type="primary"
         style={{ marginTop: 90 }}
       >
         Ver ahora
@@ -47,60 +46,3 @@ const CategoryCard = ({ category }) => {
 };
 
 export default CategoryCard;
-
-// const App = () => {
-//   return (
-//     <div>
-//       <Row gutter={[32, 64]} flexWrap='wrap'>
-//         <Col xs={24} sm={24} md={24} lg={24} xl={24} span={6} flex={1}>
-//           <CardComponent
-//             title='OLIVE OIL'
-//             text='Discover, Compare Extra virgin olive oil and choose the best.'
-//             image='https://picsum.photos/id/1015/400/600'
-//             discount={<GiOlive />}
-//           />
-//         </Col>
-//         <Col xs={24} sm={24} md={24} lg={24} xl={24} span={6} flex={1}>
-//           <CardComponent
-//             title='OLIVE OIL'
-//             text='Discover, Compare Extra virgin olive oil and choose the best.'
-//             image='https://picsum.photos/id/1016/400/600'
-//             discount='-40%'
-//             categoryId='olive-oil'
-//           />
-//         </Col>
-//         <Col xs={24} sm={24} md={24} lg={24} xl={24} span={6} flex={1}>
-//           <CardComponent
-//             title='OLIVE OIL'
-//             text='Discover, Compare Extra virgin olive oil and choose the best.'
-//             image='https://picsum.photos/id/1017/400/600'
-//             discount='-40%'
-//             categoryId='olive-oil'
-//           />
-//         </Col>
-//       </Row>
-//       <Row gutter={[32, 64]} flexWrap='wrap'>
-//         <Col xs={24} sm={24} md={24} lg={24} xl={24} span={6} flex={1}>
-//           <CardComponent
-//             title='The Big Brand'
-//             text='Hasta un 40% de descuento'
-//             image='https://picsum.photos/id/1018/400/600'
-//             discount='-40%'
-//             categoryId='olive-oil'
-//           />
-//         </Col>
-//         <Col xs={24} sm={24} md={24} lg={24} xl={24} span={6} flex={1}>
-//           <CardComponent
-//             title='The Big Brand'
-//             text='Hasta un 40% de descuento'
-//             image='https://picsum.photos/id/1019/400/600'
-//             discount='-40%'
-//             categoryId='olive-oil'
-//           />
-//         </Col>
-//       </Row>
-//     </div>
-//   );
-// };
-
-// export default App;
