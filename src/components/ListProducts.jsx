@@ -29,7 +29,7 @@ const ListProducts = () => {
 
   const handleLFindAllProducts = async () => {
     let response;
-
+    console.log("respuetsa", category);
     if (category) {
       response = await findProductsByCategory(category);
     } else {
