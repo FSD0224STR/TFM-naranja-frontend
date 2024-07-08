@@ -8,6 +8,7 @@ import Button from "./Button";
 //import Captcha from "./Captcha";
 import "./Register.css";
 import Breadcrumb from "./BreadCrumb";
+import { useAuth } from "../context/LogContext";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -26,6 +27,8 @@ const Register = () => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
   };
+
+  const { setIsLoggedIn } = useAuth();
 
   const handleEmailChange = (e) => {
     const emailValue = e.target.value;
@@ -53,6 +56,7 @@ const Register = () => {
     } else {
       const token = response.data;
       localStorage.setItem("token", token);
+      setIsLoggedIn(true);
       navigate("/");
     }
   };
