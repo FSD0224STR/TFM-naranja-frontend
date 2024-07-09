@@ -10,6 +10,7 @@ import Paginate from "./Pagination";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { CartContext } from "../context/CartContext";
 import BreadCrumb from "./BreadCrumb";
+import ProductCard from "./ProductCard";
 
 const ListProducts = () => {
   const [products, setProducts] = useState([]);
@@ -28,7 +29,7 @@ const ListProducts = () => {
 
   const handleLFindAllProducts = async () => {
     let response;
-
+    console.log("respuetsa", category);
     if (category) {
       response = await findProductsByCategory(category);
     } else {
@@ -55,9 +56,9 @@ const ListProducts = () => {
 
   return (
     <>
-      <BreadCrumb title="listProducts" />
+      <BreadCrumb title='listProducts' />
 
-      <div className="list-products">
+      <div className='list-products'>
         <List
           grid={{
             gutter: 16,
@@ -71,41 +72,11 @@ const ListProducts = () => {
           dataSource={currentProducts}
           renderItem={(item) => (
             <List.Item>
-              <Card
-                hoverable
-                key={item._id}
-                title={item.product}
-                cover={
-                  item.images && item.images.length > 0 ? (
-                    <img alt={item.product} src={item.images[0]} />
-                  ) : (
-                    <img
-                      alt="example"
-                      src="http://blog.cjo.pl/wp-content/uploads/2020/03/comidas-t%C3%ADpicas.jpg"
-                    />
-                  )
-                }
-              >
-                <div style={{ display: "flex" }}>
-                  <Button
-                    type="link"
-                    onClick={() => handleLViewProduct(item.slug)}
-                  >
-                    View Details
-                  </Button>
-
-                  <Tooltip title="Add Product to Cart">
-                    <span>
-                      <Button
-                        type="link"
-                        onClick={() => handleLAddProductCart(item)}
-                      >
-                        <AiFillPlusCircle size={32} color="lightblue" />
-                      </Button>
-                    </span>
-                  </Tooltip>
-                </div>
-              </Card>
+              <ProductCard
+                item={item}
+                handleLViewProduct={handleLViewProduct}
+                handleLAddProductCart={handleLAddProductCart}
+              />
             </List.Item>
           )}
         />
