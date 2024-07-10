@@ -9,7 +9,9 @@ export const useAuth = () => {
 }
 
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem("token") ? true : false;
+  });
   const [isAdmin, setIsAdmin] = useState(false);
   const [userData, setUserData] = useState({});
   const navigate = useNavigate();
@@ -49,6 +51,7 @@ export const AuthProvider = ({ children }) => {
         setIsAdmin,
         userData,
         setUserData,
+        setIsLoggedIn,
       }}
     >
       {children}
