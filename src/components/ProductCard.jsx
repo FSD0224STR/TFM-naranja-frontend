@@ -160,9 +160,9 @@
 
 // export default ProductCard;
 import { useState } from "react";
-import { Card, Tooltip } from "antd";
+import { Card, Tooltip, message } from "antd";
 import { AiFillPlusCircle } from "react-icons/ai";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaCopy, FaRegCopy } from "react-icons/fa";
 import Button from "./Button";
 
 const ProductCard = ({
@@ -180,6 +180,18 @@ const ProductCard = ({
   const handleToggleWishlist = () => {
     setInWishlist(!inWishlist);
     handleLAddToWishlist(item);
+  };
+
+  const handleCopyLink = () => {
+    const productLink = `http://localhost:5173/detailsProduct/${item._id}`;
+    navigator.clipboard
+      .writeText(productLink)
+      .then(() => {
+        message.success("Product link copied to clipboard!");
+      })
+      .catch((err) => {
+        message.error("Failed to copy product link.");
+      });
   };
 
   return (
@@ -203,7 +215,6 @@ const ProductCard = ({
         maxHeight: "350px",
         margin: "20px auto",
         maxWidth: "450px",
-        // boxShadow: "0 4px 5px #023859",
         borderRadius: "0px",
         backgroundImage: `url(${imageUrl})`,
         backgroundSize: "cover",
@@ -211,17 +222,18 @@ const ProductCard = ({
         overflow: "hidden",
       }}
     >
-      <span style={{ marginLeft: 10 }}>
+      {/* <span style={{ marginLeft: 10 }}>
         {inWishlist ? (
-          <FaHeart size={20} color='#FF69B4' onClick={handleToggleWishlist} />
+          <FaCopy size={20} color='#FF69B4' onClick={handleToggleWishlist} />
         ) : (
-          <FaRegHeart
-            size={20}
-            color='#FF69B4'
-            onClick={handleToggleWishlist}
-          />
+          <FaRegCopy size={20} color='#FF69B4' onClick={handleToggleWishlist} />
         )}
-      </span>
+      </span> */}
+      <Tooltip title='Copy Product Link'>
+        <span style={{ marginLeft: 10 }}>
+          <FaCopy size={20} color='#1877f2' onClick={handleCopyLink} />
+        </span>
+      </Tooltip>
       <div
         style={{
           position: "absolute",
@@ -250,7 +262,7 @@ const ProductCard = ({
           View Details
         </Button>
 
-        <Tooltip style={{ Color: "#1877f2" }} title='Add Product to Compare'>
+        <Tooltip style={{ color: "#1877f2" }} title='Add Product to Compare'>
           <span>
             <AiFillPlusCircle
               onClick={() => handleLAddProductCart(item)}
