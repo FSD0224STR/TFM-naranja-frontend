@@ -5,11 +5,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   findAllProducts,
   findProductsByCategory,
+  deleteProduct,
 } from "../apiService/productApi";
 import Paginate from "./Pagination";
-import { AiFillPlusCircle } from "react-icons/ai";
+import { AiFillPlusCircle, AiFillDelete } from "react-icons/ai";
 import { CartContext } from "../context/CartContext";
 import BreadCrumb from "./BreadCrumb";
+import { AuthContext } from "../context/LogContext"
 
 const ListProducts = () => {
   const [products, setProducts] = useState([]);
@@ -18,6 +20,7 @@ const ListProducts = () => {
   const { category } = useParams();
 
   const { handleLAddProductCart } = useContext(CartContext);
+  const { isAdmin } = useContext(AuthContext); 
 
   // Variables para controlar el paginado
   const [currentPage, setCurrentPage] = useState(1);
@@ -43,6 +46,15 @@ const ListProducts = () => {
 
   const handleLViewProduct = (slug) => {
     navigate(`/detailsProduct/${slug}`);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteProduct(id);
+      setProducts(products.filter((product) => product._id !== id));
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
   };
 
   useEffect(() => {
@@ -104,6 +116,15 @@ const ListProducts = () => {
                       </Button>
                     </span>
                   </Tooltip>
+                  {isAdmin && ( 
+                    <Tooltip title="Delete Product">
+                      <span>
+                        <Button type="link" onClick={() => handleDelete(item._id)}>
+                          <AiFillDelete size={32} color="red" />
+                        </Button>
+                      </span>
+                    </Tooltip>
+                  )}
                 </div>
               </Card>
             </List.Item>

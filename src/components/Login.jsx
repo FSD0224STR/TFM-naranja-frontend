@@ -36,26 +36,20 @@ const Login = () => {
   } = useContext(SocketContext);
 
   const handleLogin = async () => {
-    // if (!isHuman) {
-    //   console.error("Por favor, complete el CAPTCHA");
-    //   return;
-    // }
-
     const response = await login(email, password);
     if (response.error) {
-      if (response.error === "Unauthorized");
-      setError("Usuario o contraseña incorrecta");
+      if (response.error === "Unauthorized") setError("Usuario o contraseña incorrecta");
     } else {
-      const token = response.data;
+      const { token, isAdmin } = response;
       localStorage.setItem("token", token);
-      loginContext(token);
+      loginContext(token, isAdmin);
       setError("");
       setMessagesList([]);
-
+      
       const user = await getDataUser(email);
       setUserData(user);
 
-      if (user.isAdmin === true) {
+      if (isAdmin) {
         await adminJoinRandomRoom();
         socket.current.emit("adminConnect", email);
         setIsAdmin(true);
