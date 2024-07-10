@@ -61,7 +61,16 @@ const ComparadorCard = ({
             </span>
           </Descriptions.Item>
           <Descriptions.Item label='Descripción' className='description-item'>
-            <span className='value'>{product.description}</span>
+            <span
+              className='value'
+              style={{
+                maxWidth: "100%",
+                overflowWrap: "break-word",
+                wordBreak: "break-all",
+              }}
+            >
+              {product.description}
+            </span>
           </Descriptions.Item>
         </Descriptions>
       </Card>
