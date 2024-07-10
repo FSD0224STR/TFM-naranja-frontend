@@ -5,11 +5,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   findAllProducts,
   findProductsByCategory,
+  deleteProduct,
 } from "../apiService/productApi";
 import Paginate from "./Pagination";
-import { AiFillPlusCircle } from "react-icons/ai";
+import { AiFillPlusCircle, AiFillDelete } from "react-icons/ai";
 import { CartContext } from "../context/CartContext";
 import BreadCrumb from "./BreadCrumb";
+import { AuthContext } from "../context/LogContext";
 import ProductCard from "./ProductCard";
 
 const ListProducts = () => {
@@ -19,6 +21,7 @@ const ListProducts = () => {
   const { category } = useParams();
 
   const { handleLAddProductCart } = useContext(CartContext);
+  const { isAdmin } = useContext(AuthContext);
 
   // Variables para controlar el paginado
   const [currentPage, setCurrentPage] = useState(1);
@@ -29,7 +32,7 @@ const ListProducts = () => {
 
   const handleLFindAllProducts = async () => {
     let response;
-    console.log("respuetsa", category);
+
     if (category) {
       response = await findProductsByCategory(category);
     } else {
@@ -46,6 +49,15 @@ const ListProducts = () => {
     navigate(`/detailsProduct/${slug}`);
   };
 
+  const handleDelete = async (id) => {
+    try {
+      await deleteProduct(id);
+      setProducts(products.filter((product) => product._id !== id));
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
+  };
+
   useEffect(() => {
     handleLFindAllProducts();
   }, [category]);
@@ -56,9 +68,9 @@ const ListProducts = () => {
 
   return (
     <>
-      <BreadCrumb title='listProducts' />
+      <BreadCrumb title="listProducts" />
 
-      <div className='list-products'>
+      <div className="list-products">
         <List
           grid={{
             gutter: 16,

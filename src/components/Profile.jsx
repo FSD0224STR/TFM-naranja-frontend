@@ -68,13 +68,13 @@ export default function Profile() {
   }, []);
 
   return (
-    <div className='styleAccount'>
-      <div className='styleInfo'>
+    <div className="styleAccount">
+      <div className="styleInfo">
         <h1>User profile</h1>
         <p>Create your profile and change your personal infos</p>
       </div>
-      <form className='styleBox' onSubmit={handleSubmit}>
-        <div className='styleImg'>
+      <form className="styleBox" onSubmit={handleSubmit}>
+        <div className="styleImg">
           {/* <input
             onUpload={(file) => handleImageUpload(file)}
             label='Upload your image'
@@ -82,47 +82,47 @@ export default function Profile() {
           {userData.imageFileUrl && (
             <img
               src={userData.imageFileUrl}
-              alt='Image'
+              alt="Image"
               width={150}
               height={150}
-              className='imageBox'
+              className="imageBox"
             />
           )}
-          <p className='imagePara'>Upload your image</p>
+          <p className="imagePara">Upload your image</p>
         </div>
-        <div className='accountForm'>
+        <div className="accountForm">
           <input
-            type='text'
-            name='username'
-            placeholder='Username'
+            type="text"
+            name="username"
+            placeholder="Username"
             value={userData.username}
             onChange={handleInputChange}
           />
           <input
-            type='text'
-            name='fullname'
-            placeholder='Full Name'
+            type="text"
+            name="fullname"
+            placeholder="Full Name"
             value={userData.fullname}
             onChange={handleInputChange}
           />
           <input
-            type='password'
-            name='password'
-            placeholder='Password'
-            value={userData.password}
-            onChange={handleInputChange}
-          />
-          <input
-            type='email'
-            name='email'
-            placeholder='email'
+            type="email"
+            name="email"
+            placeholder="email"
             value={userData.email}
             onChange={handleInputChange}
           />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={userData.password}
+            onChange={handleInputChange}
+          />
 
-          <Button type='submit'>Update Profile</Button>
+          <Button type="submit">Update Profile</Button>
         </div>
-        <div className='userInfo'>
+        <div className="userInfo">
           <h2>User Information</h2>
           <p>Username: {userData.username}</p>
           <p>Full Name: {userData.fullname}</p>
@@ -130,10 +130,10 @@ export default function Profile() {
           {userData.imageFileUrl && (
             <img
               src={userData.imageFileUrl}
-              alt='Image'
+              alt="Image"
               width={100}
               height={100}
-              className='imageBox'
+              className="imageBox"
             />
           )}
         </div>

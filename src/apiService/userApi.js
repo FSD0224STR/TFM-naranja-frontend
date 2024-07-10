@@ -1,4 +1,5 @@
 const URL = "http://localhost:3000/users";
+
 export const login = async (email, password) => {
   const response = await fetch(`${URL}/login`, {
     method: "POST",
@@ -6,9 +7,13 @@ export const login = async (email, password) => {
     headers: { "Content-Type": "application/json" },
   });
 
-  if (!response.ok) return { error: response.statusText };
-  const token = await response.json();
-  return { data: token };
+  if (!response.ok) {
+    const error = await response.json();
+    return { error: error.message };
+  }
+
+  const data = await response.json();
+  return { token: data.token, isAdmin: data.isAdmin };
 };
 
 export const register = async (firstname, lastname, email, password) => {

@@ -53,6 +53,7 @@ const EditProduct = () => {
   const [origin, setOrigin] = useState("");
   const [allergens, setAllergens] = useState("");
   const [ingredients, setIngredients] = useState("");
+  const [user, setUser] = useState("");
   const [detailsProduct, setDetailsProduct] = useState({});
 
   const {
@@ -77,6 +78,8 @@ const EditProduct = () => {
   const handleGetProduct = async () => {
     try {
       const response = await findOneProduct(slug);
+
+      setUser(response.data.user);
 
       if (response.error) {
         console.error("Error al obtener producto:", response.error);
@@ -112,6 +115,8 @@ const EditProduct = () => {
       allergens,
       ingredients,
     });
+
+    productData.user = user;
 
     try {
       const response = await editProduct(slug, productData);
@@ -386,7 +391,6 @@ const EditProduct = () => {
               <Button
                 color="primary"
                 onClick={() => handleLEditProduct(slug, detailsProduct)}
-                // onClick={() => handleLEditProduct(id, detailsProduct)}
               >
                 Save Changes
               </Button>
@@ -405,7 +409,6 @@ const EditProduct = () => {
                   color="white"
                   danger
                   onClick={() => handleLDeleteProduct(slug)}
-                  // onClick={() => handleLDeleteProduct(id)}
                 >
                   Delete
                 </Button>
