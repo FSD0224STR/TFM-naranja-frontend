@@ -213,11 +213,11 @@ const ProductCard = ({
     >
       <span style={{ marginLeft: 10 }}>
         {inWishlist ? (
-          <FaHeart size={20} color='#FF69B4' onClick={handleToggleWishlist} />
+          <FaHeart size={20} color="#FF69B4" onClick={handleToggleWishlist} />
         ) : (
           <FaRegHeart
             size={20}
-            color='#FF69B4'
+            color="#FF69B4"
             onClick={handleToggleWishlist}
           />
         )}
@@ -237,9 +237,9 @@ const ProductCard = ({
         }}
       >
         <Button
-          color='white'
-          type='primary'
-          onClick={() => handleLViewProduct(item._id)}
+          color="white"
+          type="primary"
+          onClick={() => handleLViewProduct(item.slug)}
           style={{
             display: "flex",
             marginRight: "12px",
@@ -250,12 +250,12 @@ const ProductCard = ({
           View Details
         </Button>
 
-        <Tooltip style={{ Color: "#1877f2" }} title='Add Product to Compare'>
+        <Tooltip style={{ Color: "#1877f2" }} title="Add Product to Compare">
           <span>
             <AiFillPlusCircle
               onClick={() => handleLAddProductCart(item)}
               size={26}
-              color='#1877f2'
+              color="#1877f2"
             />
           </span>
         </Tooltip>

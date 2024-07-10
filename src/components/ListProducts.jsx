@@ -11,7 +11,7 @@ import Paginate from "./Pagination";
 import { AiFillPlusCircle, AiFillDelete } from "react-icons/ai";
 import { CartContext } from "../context/CartContext";
 import BreadCrumb from "./BreadCrumb";
-import { AuthContext } from "../context/LogContext"
+import { AuthContext } from "../context/LogContext";
 import ProductCard from "./ProductCard";
 
 const ListProducts = () => {
@@ -21,7 +21,7 @@ const ListProducts = () => {
   const { category } = useParams();
 
   const { handleLAddProductCart } = useContext(CartContext);
-  const { isAdmin } = useContext(AuthContext); 
+  const { isAdmin } = useContext(AuthContext);
 
   // Variables para controlar el paginado
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,7 +32,7 @@ const ListProducts = () => {
 
   const handleLFindAllProducts = async () => {
     let response;
-    console.log("respuetsa", category);
+
     if (category) {
       response = await findProductsByCategory(category);
     } else {
@@ -68,9 +68,9 @@ const ListProducts = () => {
 
   return (
     <>
-      <BreadCrumb title='listProducts' />
+      <BreadCrumb title="listProducts" />
 
-      <div className='list-products'>
+      <div className="list-products">
         <List
           grid={{
             gutter: 16,
