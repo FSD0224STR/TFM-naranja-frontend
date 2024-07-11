@@ -16,13 +16,11 @@ const Websocket = () => {
     sendPrivateMessage,
     messagesEndRef,
     isUserConnect,
-    adminJoinRandomRoom,
   } = useContext(SocketContext);
 
   const { isAdmin } = useAuth();
 
   const handleActiveAdmin = () => {
-    adminJoinRandomRoom();
     setMessagesList("");
   };
 

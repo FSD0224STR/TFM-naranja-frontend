@@ -25,6 +25,7 @@ const Login = () => {
     getDataUser,
     setIsAdmin,
     setUserData,
+    userData,
   } = useAuth();
 
   const {
@@ -38,24 +39,25 @@ const Login = () => {
   const handleLogin = async () => {
     const response = await login(email, password);
     if (response.error) {
-      if (response.error === "Unauthorized") setError("Usuario o contraseña incorrecta");
+      if (response.error === "Unauthorized")
+        setError("Usuario o contraseña incorrecta");
     } else {
       const { token, isAdmin } = response;
       localStorage.setItem("token", token);
       loginContext(token, isAdmin);
       setError("");
       setMessagesList([]);
-      
+
       const user = await getDataUser(email);
       setUserData(user);
 
       if (isAdmin) {
-        await adminJoinRandomRoom();
-        socket.current.emit("adminConnect", email);
+        await adminJoinRandomRoom(userData.firstname);
+        socket.current.emit("adminConnect", userData.firstname);
         setIsAdmin(true);
       } else {
         joinPrivateRoom();
-        setIsAdmin(false);
+        setIsAdmin(isAdmin);
         setIsUserConnect(true);
       }
       navigate("/");
@@ -69,11 +71,11 @@ const Login = () => {
 
   return (
     <>
-      <Breadcrumb title='login' />
+      <Breadcrumb title="login" />
 
       <Form
-        name='normal_login'
-        className='login-form'
+        name="normal_login"
+        className="login-form"
         initialValues={{
           remember: true,
         }}
@@ -81,7 +83,7 @@ const Login = () => {
         <h1>Login</h1>
         <br />
         <Form.Item
-          name='username'
+          name="username"
           rules={[
             {
               required: true,
@@ -90,16 +92,16 @@ const Login = () => {
           ]}
         >
           <Input
-            prefix={<UserOutlined className='site-form-item-icon' />}
-            placeholder='Username'
-            className='input-login'
+            prefix={<UserOutlined className="site-form-item-icon" />}
+            placeholder="Username"
+            className="input-login"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </Form.Item>
-        {error && <div className='error'>{error}</div>}
+        {error && <div className="error">{error}</div>}
         <Form.Item
-          name='password'
+          name="password"
           rules={[
             {
               required: true,
@@ -108,33 +110,33 @@ const Login = () => {
           ]}
         >
           <Input
-            prefix={<LockOutlined className='site-form-item-icon' />}
-            type='password'
-            placeholder='Password'
-            className='input-login'
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            type="password"
+            placeholder="Password"
+            className="input-login"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Item>
-        {error && <div className='error'>{error}</div>}
+        {error && <div className="error">{error}</div>}
         {/* <Form.Item>
         <Captcha onChange={handleCaptchaChange} />
       </Form.Item> */}
-        <div className='forget-link'>
-          <Link to='/forgot-password' className='forget-password'>
+        <div className="forget-link">
+          <Link to="/forgot-password" className="forget-password">
             Forgot password?
           </Link>
         </div>
         <Button
-          color='primary'
-          htmlType='submit'
-          className='login-form-button'
+          color="primary"
+          htmlType="submit"
+          className="login-form-button"
           onClick={handleLogin}
         >
           Log in
         </Button>{" "}
-        <Link className='register' to='/register'>
-          <Button color='white'>register now!</Button>
+        <Link className="register" to="/register">
+          <Button color="white">register now!</Button>
         </Link>
       </Form>
     </>

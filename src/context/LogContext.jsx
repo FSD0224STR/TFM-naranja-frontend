@@ -6,7 +6,7 @@ const AuthContext = createContext();
 
 export const useAuth = () => {
   return useContext(AuthContext);
-}
+};
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const login = (token, isAdminStatus ) => {
+  const login = (token, isAdminStatus) => {
     localStorage.setItem("token", token);
     setIsLoggedIn(true);
     setIsAdmin(isAdminStatus);
@@ -58,4 +58,4 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-export { AuthContext }
+export { AuthContext };
