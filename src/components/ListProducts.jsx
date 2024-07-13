@@ -1,18 +1,16 @@
-import { Card, List, Button, Tooltip } from "antd";
+import { List } from "antd";
 import { useState, useEffect, useContext } from "react";
 import "./ListProducts.css";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   findAllProducts,
   findProductsByCategory,
-  deleteProduct,
 } from "../apiService/productApi";
 import Paginate from "./Pagination";
-import { AiFillPlusCircle, AiFillDelete } from "react-icons/ai";
 import { CartContext } from "../context/CartContext";
 import BreadCrumb from "./BreadCrumb";
-import { AuthContext } from "../context/LogContext";
 import ProductCard from "./ProductCard";
+import FilterProducts from "./FilterProducts";
 
 const ListProducts = () => {
   const [products, setProducts] = useState([]);
@@ -61,6 +59,10 @@ const ListProducts = () => {
       <BreadCrumb title="listProducts" />
 
       <div className="list-products">
+        <FilterProducts
+          setProducts={setProducts}
+          setTotalProducts={setTotalProducts}
+        />
         <List
           grid={{
             gutter: 16,

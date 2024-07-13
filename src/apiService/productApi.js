@@ -232,3 +232,34 @@ export const findProductsByCategory = async (categoryId) => {
   const products = await response.json();
   return products;
 };
+
+export const getFilterProducts = async ({
+  product,
+  category,
+  minPrice,
+  maxPrice,
+}) => {
+  const token = localStorage.getItem("token");
+
+  const queryParams = new URLSearchParams();
+  if (product) queryParams.append("product", product);
+  if (category) queryParams.append("category", category);
+  if (minPrice) queryParams.append("minPrice", minPrice);
+  if (maxPrice) queryParams.append("maxPrice", maxPrice);
+
+  const response = await fetch(`${URL}/filters?${queryParams.toString()}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message);
+  }
+
+  const data = await response.json();
+  return data;
+};
