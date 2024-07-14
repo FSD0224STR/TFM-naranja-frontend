@@ -13,8 +13,8 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1.5rem;
-  width: 100%;
+  gap: 1rem;
+  width: 98%;
 }
 
 .input-filter-name,
@@ -94,10 +94,9 @@
 }
 
 button[type="submit"],
-button[type="button"] {
+.button-filter-reset {
   padding: 0.3rem 0.5rem;
   border: none;
-  color: #fff;
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
@@ -106,17 +105,18 @@ button[type="button"] {
   max-width: 5rem;
 }
 
-.button-filter {
+button[type="submit"] {
   background-color: var(--darkBlue);
-}
-
-.button-filter-reset {
-  background-color: red;
   color: #fff;
 }
 
+.button-filter-reset {
+  background-color: white;
+  color: black;
+}
+
 button[type="submit"]:hover,
-button[type="button"]:hover {
+.button-filter-reset {
   opacity: 0.8;
 }
 
@@ -125,5 +125,5 @@ button[type="submit"]:hover {
 }
 
 .button-filter-reset:hover {
-  background-color: var(--lightblue);
+  color: var(--lightblue);
 }

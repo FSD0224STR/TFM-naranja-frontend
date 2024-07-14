@@ -3,11 +3,14 @@ import { getFilterProducts } from "../apiService/productApi";
 import { ProductContext } from "../context/ProductContext";
 import "./FilterProducts.css";
 
-const FilterProducts = ({ setProducts, setTotalProducts }) => {
+const FilterProducts = ({ setProducts, setTotalProducts, defaultCategory }) => {
+  const valueMinPrice = 1;
+  const valueMaxPrice = 300;
+
   const [product, setProduct] = useState("");
   const [category, setCategory] = useState("");
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(300);
+  const [minPrice, setMinPrice] = useState(valueMinPrice);
+  const [maxPrice, setMaxPrice] = useState(valueMaxPrice);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -37,13 +40,18 @@ const FilterProducts = ({ setProducts, setTotalProducts }) => {
 
   const resetFilter = () => {
     setProduct("");
-    setCategory("");
-    setMinPrice(0);
-    setMaxPrice(300);
+    if (!defaultCategory) {
+      setCategory("");
+    }
+    setMinPrice(valueMinPrice);
+    setMaxPrice(valueMaxPrice);
   };
 
   useEffect(() => {
     handleLFindCategories();
+    if (defaultCategory) {
+      setCategory(defaultCategory);
+    }
   }, []);
 
   return (
@@ -63,15 +71,22 @@ const FilterProducts = ({ setProducts, setTotalProducts }) => {
           <label>
             Category:
             <select
+              disabled={defaultCategory ? true : false}
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
-              <option value="" disabled>
-                Please select category
-              </option>
+              {defaultCategory ? (
+                <option value={defaultCategory} disabled>
+                  {defaultCategory}
+                </option>
+              ) : (
+                <option value="" disabled>
+                  Please select category
+                </option>
+              )}
               {categoryOptions.map((categ) => (
                 <option key={categ._id} value={categ._id}>
-                  {categ.category}
+                  {defaultCategory ? defaultCategory : categ.category}
                 </option>
               ))}
             </select>
@@ -82,8 +97,8 @@ const FilterProducts = ({ setProducts, setTotalProducts }) => {
             Min Price: {minPrice}
             <input
               type="range"
-              min="1"
-              max="300"
+              min={valueMinPrice}
+              max={valueMaxPrice}
               value={minPrice}
               onChange={(e) => setMinPrice(e.target.value)}
             />
@@ -94,8 +109,8 @@ const FilterProducts = ({ setProducts, setTotalProducts }) => {
             Max Price: {maxPrice}
             <input
               type="range"
-              min="1"
-              max="300"
+              min={valueMinPrice}
+              max={valueMaxPrice}
               value={maxPrice}
               onChange={(e) => setMaxPrice(e.target.value)}
             />
@@ -106,7 +121,7 @@ const FilterProducts = ({ setProducts, setTotalProducts }) => {
         </button>
         <button
           className="button-filter-reset"
-          type="button"
+          type="url"
           onClick={resetFilter}
         >
           Reset

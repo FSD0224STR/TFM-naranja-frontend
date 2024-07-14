@@ -62,6 +62,7 @@ const ListProducts = () => {
         <FilterProducts
           setProducts={setProducts}
           setTotalProducts={setTotalProducts}
+          defaultCategory={category}
         />
         <List
           grid={{
