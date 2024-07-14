@@ -20,13 +20,7 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
-  const {
-    login: loginContext,
-    getDataUser,
-    setIsAdmin,
-    setUserData,
-    userData,
-  } = useAuth();
+  const { login: loginContext, setIsAdmin, userData } = useAuth();
 
   const {
     socket,
@@ -42,24 +36,20 @@ const Login = () => {
       if (response.error === "Unauthorized")
         setError("Usuario o contraseña incorrecta");
     } else {
-      const { token, isAdmin } = response;
+      const { token } = response;
       localStorage.setItem("token", token);
-      loginContext(token, isAdmin);
+      loginContext(token);
       setError("");
       setMessagesList([]);
 
-      const user = await getDataUser(email);
-      setUserData(user);
-
-      if (isAdmin) {
+      if (userData.isAdmin) {
         await adminJoinRandomRoom(userData.firstname);
         socket.current.emit("adminConnect", userData.firstname);
-        setIsAdmin(true);
       } else {
         joinPrivateRoom();
-        setIsAdmin(isAdmin);
         setIsUserConnect(true);
       }
+      setIsAdmin(userData.isAdmin);
       navigate("/");
     }
   };

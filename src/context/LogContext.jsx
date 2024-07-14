@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUser } from "../apiService/userApi";
 
@@ -22,14 +22,13 @@ export const AuthProvider = ({ children }) => {
     if (response.error) {
       console.error("No puedo verificar el usuario");
     } else {
-      return response.data;
+      setUserData(response.data);
     }
   };
 
-  const login = (token, isAdminStatus) => {
+  const login = (token) => {
     localStorage.setItem("token", token);
     setIsLoggedIn(true);
-    setIsAdmin(isAdminStatus);
     navigate("/");
   };
 
@@ -39,6 +38,44 @@ export const AuthProvider = ({ children }) => {
     setIsAdmin(false);
     navigate("/login");
   };
+
+  const getTokenData = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      return decodeToken(token);
+    }
+    console.error("Error decoding token:");
+    return null;
+  };
+
+  const decodeToken = (token) => {
+    try {
+      // Divide el token en sus tres partes (header, payload, signature) y decodifica la parte del payload de Base64 a un objeto JSON.
+      // Usa 'atob' para decodificar la cadena Base64 y convierte el resultado a JSON.
+      const base64Url = token.split(".")[1];
+      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split("")
+          .map((c) => {
+            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          .join("")
+      );
+      return JSON.parse(jsonPayload);
+    } catch (error) {
+      console.error("Error decoding token:", error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    const data = getTokenData();
+    if (data) {
+      getDataUser(data.email);
+      setIsAdmin(userData.isAdmin);
+    }
+  }, []);
 
   return (
     <AuthContext.Provider
