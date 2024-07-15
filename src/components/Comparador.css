@@ -1,62 +1,66 @@
-body {
-  background-color: white;
-}
-.comparador {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  border-radius: 25px;
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-  /* background-color: var(--dark-131921); */
-}
-
-.comparador h1 {
-  text-align: center;
-  margin-bottom: 40px;
-  color: var(--dark-131921);
-}
-
-.comparador-inputs {
+.hero-section {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  background-color: #f0f5ff;
+  text-align: center;
+}
+
+.hero-title {
+  color: #011c26;
+  font-size: 2.5rem;
   margin-bottom: 20px;
-  border-radius: 25px !important;
 }
 
-.comparador-input {
-  margin-right: 10px;
-  border-radius: 25px !important;
-  margin-bottom: 10px;
-  flex-basis: calc(33.33% - 10px);
-}
-
-.comparador .comparadorButton {
-  display: end;
-  height: 40px;
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
-  border-radius: 4px;
-  background-color: #1890ff;
-  color: #fff;
-  font-size: 16px;
-  margin-top: 10px;
-  border: none;
-  cursor: pointer;
+  max-width: 600px;
 }
 
-.comparadorResult {
-  margin-top: 40px;
+@media (min-width: 768px) {
+  .input-container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 
-.comparador-product {
-  margin-bottom: 20px;
+input[type="text"],
+.compare-button {
+  width: 100%;
+  max-width: 400px;
+  margin: 10px 0;
 }
 
-.comparador-product h3 {
-  margin-top: 0;
+.compare-button {
+  max-width: 200px;
 }
 
-.comparador-error {
-  color: red;
-  font-size: 14px;
-  margin-top: 10px;
+@media (min-width: 768px) {
+  input[type="text"] {
+    width: 48%;
+  }
+
+  .compare-button {
+    width: 48%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+
+  input[type="text"],
+  .compare-button {
+    max-width: none;
+    width: 48%;
+  }
+
+  .compare-button {
+    width: 48%;
+  }
 }

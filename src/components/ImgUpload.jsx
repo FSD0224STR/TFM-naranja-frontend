@@ -50,7 +50,7 @@ const ImgUpload = ({ onSetImages }) => {
         })
       );
 
-      setImageUrls(imageUrls); // store the image URLs
+      setImageUrls(imageUrls);
       setImages([]);
       setImagesPreview([]);
       onSetImages(imageUrls);
