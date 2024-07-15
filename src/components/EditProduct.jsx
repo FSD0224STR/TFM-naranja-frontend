@@ -53,6 +53,7 @@ const EditProduct = () => {
   const [origin, setOrigin] = useState("");
   const [allergens, setAllergens] = useState("");
   const [ingredients, setIngredients] = useState("");
+  const [user, setUser] = useState("");
   const [detailsProduct, setDetailsProduct] = useState({});
 
   const {
@@ -77,6 +78,8 @@ const EditProduct = () => {
   const handleGetProduct = async () => {
     try {
       const response = await findOneProduct(slug);
+
+      setUser(response.data.user);
 
       if (response.error) {
         console.error("Error al obtener producto:", response.error);
@@ -113,6 +116,8 @@ const EditProduct = () => {
       ingredients,
     });
 
+    productData.user = user;
+
     try {
       const response = await editProduct(slug, productData);
 
@@ -135,7 +140,7 @@ const EditProduct = () => {
     message.error("Operación de eliminación cancelada");
   };
 
-  const handleLDeleteProduct = async (slug) => {
+  const handleLDeleteProduct = async () => {
     setIsModalVisible(true);
   };
 
@@ -149,7 +154,7 @@ const EditProduct = () => {
         navigate("/listProducts");
       }
     } catch (error) {
-      console.error("Error al ejecutar editProduct:");
+      console.error("Error al ejecutar deleteProduct");
     }
     setIsModalVisible(false);
   };
@@ -386,7 +391,6 @@ const EditProduct = () => {
               <Button
                 color="primary"
                 onClick={() => handleLEditProduct(slug, detailsProduct)}
-                // onClick={() => handleLEditProduct(id, detailsProduct)}
               >
                 Save Changes
               </Button>
@@ -405,7 +409,6 @@ const EditProduct = () => {
                   color="white"
                   danger
                   onClick={() => handleLDeleteProduct(slug)}
-                  // onClick={() => handleLDeleteProduct(id)}
                 >
                   Delete
                 </Button>

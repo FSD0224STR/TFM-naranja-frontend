@@ -44,8 +44,11 @@ export const findProducts = async (searchTerm) => {
 
 export const fetchSuggestions = async (query, category) => {
   try {
-    const token = localStorage.getItem('token');
-    const sanitizedQuery = query.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const token = localStorage.getItem("token");
+    const sanitizedQuery = query
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
     let url = `${URL}/suggestions?query=${encodeURIComponent(sanitizedQuery)}`;
 
     if (category) {
@@ -59,19 +62,15 @@ export const fetchSuggestions = async (query, category) => {
     });
 
     if (!response.ok) {
-      throw new Error('Error al obtener sugerencias');
+      throw new Error("Error al obtener sugerencias");
     }
 
     return response.json();
   } catch (error) {
-    console.error('Error fetching suggestions:', error);
+    console.error("Error fetching suggestions:", error);
     throw error;
   }
 };
-
-
-
-
 
 export const findAllProducts = async () => {
   const token = localStorage.getItem("token");
@@ -232,4 +231,35 @@ export const findProductsByCategory = async (categoryId) => {
   }
   const products = await response.json();
   return products;
+};
+
+export const getFilterProducts = async ({
+  product,
+  category,
+  minPrice,
+  maxPrice,
+}) => {
+  const token = localStorage.getItem("token");
+
+  const queryParams = new URLSearchParams();
+  if (product) queryParams.append("product", product);
+  if (category) queryParams.append("category", category);
+  if (minPrice) queryParams.append("minPrice", minPrice);
+  if (maxPrice) queryParams.append("maxPrice", maxPrice);
+
+  const response = await fetch(`${URL}/filters?${queryParams.toString()}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message);
+  }
+
+  const data = await response.json();
+  return data;
 };

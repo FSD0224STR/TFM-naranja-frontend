@@ -20,12 +20,7 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
-  const {
-    login: loginContext,
-    getDataUser,
-    setIsAdmin,
-    setUserData,
-  } = useAuth();
+  const { login: loginContext, setIsAdmin, userData } = useAuth();
 
   const {
     socket,
@@ -36,34 +31,25 @@ const Login = () => {
   } = useContext(SocketContext);
 
   const handleLogin = async () => {
-    // if (!isHuman) {
-    //   console.error("Por favor, complete el CAPTCHA");
-    //   return;
-    // }
-
     const response = await login(email, password);
     if (response.error) {
-      if (response.error === "Unauthorized");
-      setError("Usuario o contraseña incorrecta");
+      if (response.error === "Unauthorized")
+        setError("Usuario o contraseña incorrecta");
     } else {
-      const token = response.data;
+      const { token } = response;
       localStorage.setItem("token", token);
       loginContext(token);
       setError("");
       setMessagesList([]);
 
-      const user = await getDataUser(email);
-      setUserData(user);
-
-      if (user.isAdmin === true) {
-        await adminJoinRandomRoom();
-        socket.current.emit("adminConnect", email);
-        setIsAdmin(true);
+      if (userData.isAdmin) {
+        await adminJoinRandomRoom(userData.firstname);
+        socket.current.emit("adminConnect", userData.firstname);
       } else {
         joinPrivateRoom();
-        setIsAdmin(false);
         setIsUserConnect(true);
       }
+      setIsAdmin(userData.isAdmin);
       navigate("/");
     }
   };

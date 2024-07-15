@@ -3,36 +3,27 @@
   justify-content: center;
   color: #ffffff;
   margin: 0px 0px;
-
   background-color: var(--darkBlue-febd69);
-  /* background-color: lightgrey; */
+}
 
-  /* padding: 100%; */
-  /* max-width: 100%;
-  max-height: 800px !important; */
-}
-.footer img {
-  width: 24px;
-  height: 24px;
-}
 .footer .container {
   min-width: 100%;
   background-color: var(--darkBlue-febd69);
-
-  /* background-color: lightgrey; */
   padding: 50px;
+  margin: 40px;
+
   column-gap: 80px;
-  /* max-height: 600px; */
 }
+
 .footer .container .top {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   column-gap: 50px;
 }
 .footer .container .top .item {
-  display: flex;
+  display: grid;
   flex-direction: column;
-  gap: 20px;
+  /* gap: 10px; */
 }
 .footer .container .top .item h2 {
   font-size: 16px;
@@ -41,11 +32,7 @@
 .footer .container .top .item span {
   font-weight: 300;
 }
-.footer .container hr {
-  margin: 50px 0px;
-  height: 0;
-  border: 1px solid #ebe9e9;
-}
+
 .footer .container .bottom {
   display: flex;
   align-items: center;
@@ -73,10 +60,52 @@
   color: #ffffff;
   gap: 20px;
 }
-.footer .container .bottom .right .link {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #ffffff;
-  column-gap: 50px;
+
+@media (max-width: 768px) {
+  .footer .container {
+    padding: 30px;
+    column-gap: 40px;
+  }
+  .footer .container .top {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .footer .container .top .item {
+    gap: 5px;
+  }
+  .footer .container .bottom {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .footer .container .bottom .left {
+    gap: 10px;
+  }
+  .footer .container .bottom .right {
+    gap: 20px;
+  }
+  .footer .container .bottom .right .social {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer .container {
+    padding: 20px;
+    column-gap: 20px;
+  }
+  .footer .container .top .item {
+    gap: 2px;
+  }
+  .footer .container .bottom .left {
+    gap: 5px;
+  }
+  .footer .container .bottom .right {
+    gap: 10px;
+  }
+  .footer .container .bottom .right .social {
+    gap: 5px;
+  }
+  .footer .container .bottom .right .link {
+    display: none;
+  }
 }

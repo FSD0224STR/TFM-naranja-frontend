@@ -1,23 +1,50 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Footer.css";
-import facebook from "../assets/facebook.png";
-import github from "../assets/github.png";
-import x from "../assets/x.png";
-import instagram from "../assets/instagram.png";
-import accessibility from "../assets/accessibility.png";
+import { findCategories } from "../apiService/categoryApi";
+import { Link } from "react-router-dom";
+import {
+  FaFacebook,
+  FaGithub,
+  FaInstagram,
+  FaAccessibleIcon,
+} from "react-icons/fa";
 
 function Footer() {
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchCategories = async () => {
+    const response = await findCategories();
+    if (response.error) {
+      console.error("Error al obtener categorías:", response.error);
+    } else {
+      setCategories(response.data);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  if (loading) {
+    return <div>Cargando...</div>;
+  }
+
   return (
     <div className='footer'>
       <div className='container'>
         <div className='top'>
           <div className='item'>
             <h2>Categories</h2>
-            <span>Olive oil</span>
-            <span>Cheeses</span>
-            <span>Tomates</span>
-            <span>Vinagres</span>
-            <span>Add you product</span>
+            {categories.map((category) => (
+              <Link
+                to={`/listProducts/${category.category}`}
+                key={category._id}
+              >
+                <span style={{ color: "white" }}>{category.category}</span>
+              </Link>
+            ))}
           </div>
           <div className='item'>
             <h2>About</h2>
@@ -33,7 +60,7 @@ function Footer() {
             <span>Cookies</span>
           </div>
         </div>
-        <hr />
+        {/* <hr /> */}
         <div className='bottom'>
           <div className='left'>
             <h2>Comparador</h2>
@@ -42,12 +69,11 @@ function Footer() {
           </div>
           <div className='right'>
             <div className='social'>
-              <img src={x} alt='' />
-              <img src={facebook} alt='' />
-              <img src={instagram} alt='' />
-              <img src={github} alt='' />
+              <FaFacebook size={24} color='#4267B2' />
+              <FaInstagram size={24} color='#E1306C' />
+              <FaGithub size={24} color='#fff' />
+              <FaAccessibleIcon size={24} color='#fff' />
             </div>
-            <img src={accessibility} alt='' />
           </div>
         </div>
       </div>
