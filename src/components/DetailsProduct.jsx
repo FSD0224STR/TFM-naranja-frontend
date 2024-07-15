@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Tag, Tooltip, Button, Carousel } from "antd";
+import { Tag, Tooltip, Button, Carousel, Image } from "antd";
 import { AiFillEdit } from "react-icons/ai";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { CartContext } from "../context/CartContext";
@@ -39,79 +39,85 @@ const DetailsProduct = () => {
 
   return (
     <>
-      <BreadCrumb title="listProducts" />
+      <BreadCrumb title='listProducts' />
 
-      <div className="product-details">
-        <div className="product-image-container">
+      <div className='product-details'>
+        <div className='product-image-container'>
           {product && product.images && (
             <Carousel autoplay>
               {product.images.map((images, index) => (
                 <div key={index}>
-                  <img src={images} alt={`Product image ${index + 1}`} />
+                  <Image
+                    style={{
+                      height: "fit-content",
+                    }}
+                    src={images}
+                    alt={`Product image ${index + 1}`}
+                  />
                 </div>
               ))}
             </Carousel>
           )}
         </div>
-        <div className="product-info-container">
-          <h1 className="product-title">{product.product}</h1>
-          <p className="product-subtitle">
+        <div className='product-info-container'>
+          <h1 className='product-title'>{product.product}</h1>
+          <p className='product-subtitle'>
             {product.description.substring(0, 100)}
           </p>
-          <div className="product-actions">
-            <Tooltip title="Edit Product">
+          <div className='product-actions'>
+            <Tooltip title='Edit Product'>
               <Button
-                type="primary"
+                type='primary'
                 onClick={() => navigate(`/editProduct/${slug}`)}
               >
-                <AiFillEdit className="icon-edit" />
+                <AiFillEdit className='icon-edit' />
               </Button>
             </Tooltip>
-            <Tooltip title="Add Product to Cart">
+            <Tooltip title='Add Product to Cart'>
               <Button
-                type="link"
+                type='link'
                 onClick={() => handleLAddProductCart(product)}
               >
-                <AiFillPlusCircle size={35} color="lightblue" />
+                <AiFillPlusCircle size={35} color='lightblue' />
               </Button>
             </Tooltip>
           </div>
-          <div className="product-details-container">
-            <div className="detail-item">
-              <label htmlFor="price">Description</label>
-              <p className="price">{product.description}</p>
+          <div className='product-details-container'>
+            <div className='detail-item'>
+              <label htmlFor='price'>Description</label>
+              <p className='price'>{product.description}</p>
             </div>
-            <div className="detail-item">
-              <label htmlFor="price">Price</label>
-              <p className="price">{product.price} €</p>
+            <div className='detail-item'>
+              <label htmlFor='price'>Price</label>
+              <p className='price'>{product.price} €</p>
             </div>
-            <div className="detail-item">
-              <label htmlFor="category">Category</label>
-              <p className="category">{product.category}</p>
+            <div className='detail-item'>
+              <label htmlFor='category'>Category</label>
+              <p className='category'>{product.category}</p>
             </div>
-            <div className="detail-item">
-              <label htmlFor="brand">Brand</label>
-              <p className="brand">{product.brand}</p>
+            <div className='detail-item'>
+              <label htmlFor='brand'>Brand</label>
+              <p className='brand'>{product.brand}</p>
             </div>
-            <div className="detail-item">
-              <label htmlFor="origin">Origin</label>
-              <p className="origin">{product.origin}</p>
+            <div className='detail-item'>
+              <label htmlFor='origin'>Origin</label>
+              <p className='origin'>{product.origin}</p>
             </div>
-            <div className="detail-item">
-              <label htmlFor="allergens">Allergens</label>
-              <div className="allergens">
+            <div className='detail-item'>
+              <label htmlFor='allergens'>Allergens</label>
+              <div className='allergens'>
                 {product.allergens.map((allergen, index) => (
-                  <Tag color="red" key={index}>
+                  <Tag color='red' key={index}>
                     {allergen}
                   </Tag>
                 ))}
               </div>
             </div>
-            <div className="detail-item">
-              <label htmlFor="ingredients">Ingredients</label>
-              <div className="ingredients">
+            <div className='detail-item'>
+              <label htmlFor='ingredients'>Ingredients</label>
+              <div className='ingredients'>
                 {product.ingredients.map((ingredient, index) => (
-                  <Tag color="blue" key={index}>
+                  <Tag color='blue' key={index}>
                     {ingredient}
                   </Tag>
                 ))}

@@ -1,143 +1,180 @@
-import React, { useState, useCallback, useEffect } from "react";
-import "./Profile.css";
+import React, { useState, useEffect } from "react";
+import { Form, Input, Avatar } from "antd";
+import { updateUser, getUser } from "../apiService/userApi";
+import { useAuth } from "../context/LogContext";
+import Breadcrumb from "./BreadCrumb";
+import ImgUpload from "./ImgUpload";
 import Button from "./Button";
-import { updateUser } from "../apiService/userApi";
-// import ImageUploader from "./ImageUploader";
+import "./Profile.css";
 
-export default function Profile() {
-  const [userData, setUserData] = useState({
-    id: "", // Add id property to store the user's ID
-    username: "",
-    fullname: "",
-    password: "",
-    email: "",
-    description: "",
-    imageFileUrl: null,
-    imageFile: null,
-  });
-
-  const handleInputChange = useCallback((event) => {
-    const { name, value } = event.target;
-    setUserData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  }, []);
-
-  const handleImageUpload = useCallback((uploadedFile) => {
-    setUserData((prevState) => ({
-      ...prevState,
-      imageFileUrl: uploadedFile.secure_url,
-      imageFile: uploadedFile, // Store the uploaded file
-    }));
-  }, []);
-
-  const handleSubmit = useCallback(
-    async (event) => {
-      event.preventDefault();
-      // Preparando el data
-      const formData = new FormData();
-      formData.append("username", userData.username);
-      formData.append("fullname", userData.fullname);
-      formData.append("password", userData.password);
-      formData.append("description", userData.description);
-      if (userData.imageFile && userData.imageFile instanceof File) {
-        formData.append("image", userData.imageFile); // Send the File object
-      }
-
-      try {
-        const response = await updateUser(userData.id, formData);
-        if (response.error) {
-          console.error(`Error updating user: ${response.error}`);
-        } else {
-          alert(`User updated successfully!`);
-        }
-      } catch (error) {
-        console.error(`Error updating user: ${error.message}`);
-      }
-    },
-    [userData]
-  );
+const Profile = () => {
+  const { userData, getDataUser, setUserData } = useAuth();
+  const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [profilePicture, setProfilePicture] = useState(userData.image);
+  const [formData, setFormData] = useState(userData);
 
   useEffect(() => {
-    // Fetch user data from API or local storage
-    const userId = localStorage.getItem("userId");
-    if (userId) {
-      setUserData((prevState) => ({ ...prevState, id: userId }));
+    const fetchData = async () => {
+      const email = userData.email;
+      const response = await getDataUser(email);
+      if (!response.error) {
+        setUserData(response.data);
+        setProfilePicture(response.data.image);
+      } else {
+        console.error("Error fetching user data:", response.error);
+      }
+    };
+
+    fetchData();
+  }, [getDataUser, setUserData, userData.email]);
+
+  useEffect(() => {
+    setFormData(userData);
+  }, [userData]);
+
+  const handleUpdate = async () => {
+    setLoading(true);
+    const response = await updateUser(userData._id, {
+      ...formData,
+      image: profilePicture,
+    });
+    setLoading(false);
+    if (!response.error) {
+      const updatedUser = await getDataUser(userData.email);
+      if (!updatedUser.error) {
+        setUserData(updatedUser.data);
+        setProfilePicture(updatedUser.data.image);
+      } else {
+        console.error("Error fetching updated user data:", updatedUser.error);
+      }
+      setIsEditing(false);
+      alert("User updated successfully!");
+    } else {
+      alert("Error updating user: " + response.error);
     }
-  }, []);
+  };
+
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    setFormData(userData);
+  };
+
+  const handleImageUpload = (imageUrl) => {
+    setProfilePicture(imageUrl);
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  };
+
+  useEffect(() => {
+    console.log("userData:", userData);
+    console.log("formData:", formData);
+    console.log("profilePicture:", profilePicture);
+  }, [userData, formData, profilePicture]);
 
   return (
-    <div className="styleAccount">
-      <div className="styleInfo">
-        <h1>User profile</h1>
-        <p>Create your profile and change your personal infos</p>
-      </div>
-      <form className="styleBox" onSubmit={handleSubmit}>
-        <div className="styleImg">
-          {/* <input
-            onUpload={(file) => handleImageUpload(file)}
-            label='Upload your image'
-          /> */}
-          {userData.imageFileUrl && (
-            <img
-              src={userData.imageFileUrl}
-              alt="Image"
-              width={150}
-              height={150}
-              className="imageBox"
-            />
-          )}
-          <p className="imagePara">Upload your image</p>
-        </div>
-        <div className="accountForm">
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={userData.username}
-            onChange={handleInputChange}
-          />
-          <input
-            type="text"
-            name="fullname"
-            placeholder="Full Name"
-            value={userData.fullname}
-            onChange={handleInputChange}
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="email"
-            value={userData.email}
-            onChange={handleInputChange}
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={userData.password}
-            onChange={handleInputChange}
-          />
+    <>
+      <Breadcrumb title='Profile' />
 
-          <Button type="submit">Update Profile</Button>
-        </div>
-        <div className="userInfo">
-          <h2>User Information</h2>
-          <p>Username: {userData.username}</p>
-          <p>Full Name: {userData.fullname}</p>
-          <p>Email: {userData.email}</p>
-          {userData.imageFileUrl && (
-            <img
-              src={userData.imageFileUrl}
-              alt="Image"
-              width={100}
-              height={100}
-              className="imageBox"
+      <div className='profile-container'>
+        <h1 className='profile-title'>User Profile</h1>
+        {isEditing ? (
+          <Form
+            onSubmit={(event) => {
+              event.preventDefault();
+              handleUpdate();
+            }}
+            layout='vertical'
+            className='profile-form'
+          >
+            <Form.Item label='First Name'>
+              <Input
+                className='profile-input'
+                value={formData.firstname}
+                onChange={handleInputChange}
+                name='firstname'
+              />
+            </Form.Item>
+            <Form.Item label='Last Name'>
+              <Input
+                className='profile-input'
+                value={formData.lastname}
+                onChange={handleInputChange}
+                name='lastname'
+              />
+            </Form.Item>
+            <Form.Item label='Email'>
+              <Input
+                disabled
+                className='profile-input'
+                value={formData.email}
+                onChange={handleInputChange}
+                name='email'
+              />
+            </Form.Item>
+            <Form.Item label='Profile Picture'>
+              <ImgUpload
+                onSetImages={handleImageUpload}
+                currentImage={profilePicture}
+                className='profile-image-upload'
+              />
+            </Form.Item>
+            <Form.Item>
+              <Button
+                color='white'
+                type='primary'
+                htmlType='submit'
+                loading={loading}
+                className='profile-button'
+              >
+                Update
+              </Button>
+              <Button
+                color='red'
+                type='default'
+                onClick={handleCancel}
+                className='profile-button'
+              >
+                Cancel
+              </Button>
+            </Form.Item>
+          </Form>
+        ) : (
+          <div className='profile-view'>
+            <Avatar
+              size={100}
+              src={profilePicture}
+              className='profile-avatar'
             />
-          )}
-        </div>
-      </form>
-    </div>
+            <p>
+              <strong>First Name:</strong> {userData.firstname}
+            </p>
+            <p>
+              <strong>Last Name:</strong> {userData.lastname}
+            </p>
+            <p>
+              <strong>Email:</strong> {userData.email}
+            </p>
+            <Button
+              color='white'
+              type='primary'
+              onClick={handleEdit}
+              className='profile-button'
+            >
+              Edit
+            </Button>
+          </div>
+        )}
+      </div>
+    </>
   );
-}
+};
+
+export default Profile;

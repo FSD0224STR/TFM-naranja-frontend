@@ -38,7 +38,10 @@ function Footer() {
           <div className='item'>
             <h2>Categories</h2>
             {categories.map((category) => (
-              <Link to={`/listProducts/${category._id}`} key={category._id}>
+              <Link
+                to={`/listProducts/${category.category}`}
+                key={category._id}
+              >
                 <span style={{ color: "white" }}>{category.category}</span>
               </Link>
             ))}
