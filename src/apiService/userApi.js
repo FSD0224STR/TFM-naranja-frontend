@@ -1,4 +1,7 @@
-const URL = "http://localhost:3000/users";
+// const URL = "http://localhost:3000/users";
+// const URL = `${import.meta.env.BACKEND}/users`;
+const URL_BASE = import.meta.env.BACKEND || "http://localhost:3000";
+const URL = `${URL_BASE}/users`;
 
 export const login = async (email, password) => {
   const response = await fetch(`${URL}/login`, {
