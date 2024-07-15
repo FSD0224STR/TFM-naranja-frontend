@@ -140,7 +140,7 @@ const EditProduct = () => {
     message.error("Operación de eliminación cancelada");
   };
 
-  const handleLDeleteProduct = async (slug) => {
+  const handleLDeleteProduct = async () => {
     setIsModalVisible(true);
   };
 
@@ -154,7 +154,7 @@ const EditProduct = () => {
         navigate("/listProducts");
       }
     } catch (error) {
-      console.error("Error al ejecutar editProduct:");
+      console.error("Error al ejecutar deleteProduct");
     }
     setIsModalVisible(false);
   };
