@@ -1,5 +1,3 @@
-// const URL = "http://localhost:3000/products";
-// const URL = `${import.meta.env.BACKEND}/products`;
 const URL_BASE = import.meta.env.BACKEND || "http://localhost:3000";
 const URL = `${URL_BASE}/products`;
 
@@ -76,7 +74,6 @@ export const fetchSuggestions = async (query, category) => {
 };
 
 export const findAllProducts = async () => {
-  console.log("import.meta.env.BACKEND: ", import.meta.env.BACKEND);
   const token = localStorage.getItem("token");
   const response = await fetch(`${URL}`, {
     method: "GET",
