@@ -1,4 +1,5 @@
-const URL = "http://localhost:3000/users";
+const URL_BASE = import.meta.env.BACKEND || "http://localhost:3000";
+const URL = `${URL_BASE}/users`;
 
 export const login = async (email, password) => {
   const response = await fetch(`${URL}/login`, {
@@ -32,18 +33,21 @@ export const register = async (firstname, lastname, email, password) => {
 };
 
 export const updateUser = async (id, userData) => {
+  const token = localStorage.getItem("token");
+
   try {
     const response = await fetch(`${URL}/${id}`, {
       method: "PUT",
       body: JSON.stringify(userData),
       headers: {
-        "Content-Type": "aplication/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
     });
     return await response.json();
   } catch (error) {
-    return { error: error.message };
+    const errorUser = await response.json();
+    return errorUser;
   }
 };
 

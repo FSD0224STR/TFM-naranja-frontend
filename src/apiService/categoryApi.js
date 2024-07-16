@@ -1,4 +1,5 @@
-const URL = "http://localhost:3000/categories";
+const URL_BASE = import.meta.env.BACKEND || "http://localhost:3000";
+const URL = `${URL_BASE}/categories`;
 
 export const findCategories = async () => {
   const token = localStorage.getItem("token");

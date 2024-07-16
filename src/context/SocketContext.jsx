@@ -13,8 +13,9 @@ export const SocketContextProvider = ({ children }) => {
   const [room, setRoom] = useState(null);
   const socket = useRef(null);
   const messagesEndRef = useRef(null);
-  const { isAdmin } = useAuth();
+  const { isAdmin, userData } = useAuth();
   const [isUserConnect, setIsUserConnect] = useState(true);
+  const firstname = userData.firstname;
 
   // Eventos en espera a ser llamados desde el backend para actualizar el listado de mensajes con los nuevos que llegan
   useEffect(() => {
@@ -60,7 +61,7 @@ export const SocketContextProvider = ({ children }) => {
 
     socket.current.on("adminJoinRoom", (room) => {
       setIsUserConnect(true);
-      socket.current.emit("adminJoinRoom", room);
+      socket.current.emit("adminJoinRoom", room, firstname);
     });
 
     return () => {
@@ -75,9 +76,9 @@ export const SocketContextProvider = ({ children }) => {
   };
 
   // Funcion para emitir un mensaje para que un administrador se una a una sala al azar o se quede en espera para cuando se conecte un user
-  const adminJoinRandomRoom = () => {
+  const adminJoinRandomRoom = (firstname) => {
     setIsUserConnect(true);
-    socket.current.emit("adminJoinRandomRoom");
+    socket.current.emit("adminJoinRandomRoom", firstname);
   };
 
   const userDisconnect = () => {
@@ -89,7 +90,7 @@ export const SocketContextProvider = ({ children }) => {
       typeUser = "User";
       setIsUserConnect(false);
     }
-    socket.current.emit("userDisconnect", { room, typeUser });
+    socket.current.emit("userDisconnect", { room, typeUser, firstname });
   };
 
   const sendPrivateMessage = (e) => {

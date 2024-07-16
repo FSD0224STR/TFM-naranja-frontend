@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { findProducts } from "../apiService/productApi";
-import ComparadorInputs from './ComparadorInputs';
-import { Card, Descriptions, Row, Col, Button } from 'antd';
+import ComparadorInputs from "./ComparadorInputs";
+import { Card, Descriptions, Row, Col } from "antd";
+import Button from "./Button";
+import ComparadorCard from "./ComparadorCard.jsx";
 
 function Comparador() {
   const [productNames, setProductNames] = useState([]);
@@ -35,31 +37,39 @@ function Comparador() {
       setComparisonResults(validResults);
       setError(null);
     } catch (error) {
-      console.error('Error fetching products:', error);
-      setError('Error fetching products. Please try again.');
+      console.error("Error fetching products:", error);
+      setError("Error fetching products. Please try again.");
       setComparisonResults([]);
     }
   };
 
   const getPriceStyle = (price) => {
-    return { color: price > 7 ? 'red' : 'green' };
+    return { color: price > 7 ? "red" : "green" };
   };
 
   const getAllergensStyle = (allergens) => {
-    return { color: allergens.length > 3 ? 'red' : 'green' };
+    return { color: allergens.length > 3 ? "red" : "green" };
   };
 
   const getIngredientsStyle = (ingredients) => {
-    return { color: ingredients.length < 5 ? 'red' : 'green' };
+    return { color: ingredients.length < 5 ? "red" : "green" };
   };
 
   return (
     <>
-      <h1 style={{ textAlign: 'center' }}>Comparador de Productos</h1>
-      <ComparadorInputs onInputChange={setProductNames} />
-      <Button type="primary" onClick={handleCompare}>Comparar</Button>
-      <div style={{ marginTop: '16px', textAlign: 'center' }}>
-        <Row gutter={16} justify="center">
+      <div>
+        <h1 style={{ textAlign: "center", padding: "20px", color: "#011c26" }}>
+          Comparador de Productos
+        </h1>
+        <ComparadorInputs onInputChange={setProductNames} />
+        <Button color='primary' type='primary' onClick={handleCompare}>
+          Comparar
+        </Button>
+      </div>
+      <div
+        style={{ marginTop: "16px", textAlign: "center", marginBottom: "40px" }}
+      >
+        <Row gutter={16} justify='center'>
           {comparisonResults.map((product, index) => (
             <Col span={8} key={index}>
               <Card>

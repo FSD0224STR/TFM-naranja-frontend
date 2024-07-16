@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchSuggestions } from "../apiService/productApi";
+import "./ComparadorInputs.css";
 
 const ComparadorInputs = ({ onInputChange }) => {
   const [inputs, setInputs] = useState([{ id: 1, value: "" }, { id: 2, value: "" }]);
@@ -22,6 +23,7 @@ const ComparadorInputs = ({ onInputChange }) => {
         setSuggestions(fetchedSuggestions);
         setActiveIndex(-1);
       } catch (error) {
+        console.error("Error fetching suggestions:", error);
         console.error("Error fetching suggestions:", error);
         setSuggestions([]);
       }
@@ -79,11 +81,11 @@ const ComparadorInputs = ({ onInputChange }) => {
   };
 
   return (
-    <div className="comparador-inputs">
+    <div className='comparador-inputs'>
       {inputs.map((input, index) => (
         <div key={input.id}>
           <input
-            type="text"
+            type='text'
             value={input.value}
             onChange={(event) => handleInputChange(index, event)}
             onFocus={() => setCurrentInputIndex(index)}
