@@ -32,6 +32,7 @@ export default function App() {
         <Route path="/listProducts/:category" element={<ListProducts />} />
         <Route path="/listProducts" element={<ListProducts />} />
       </Routes>
+      {console.log("import.meta.env.BACKEND: ", import.meta.env.BACKEND)}
       {isLoggedIn ? (
         <>
           <CartCompare />
