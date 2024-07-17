@@ -73,7 +73,7 @@
   opacity: 1;
 }
 
-.input-filter-minPrice input::-webkit-slider-thumb,
+/* .input-filter-minPrice input::-webkit-slider-thumb,
 .input-filter-maxPrice input::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -82,16 +82,16 @@
   background: var(--turquoise-232f3e);
   cursor: pointer;
   border-radius: 50%;
-}
+} */
 
-.input-filter-minPrice input::-moz-range-thumb,
+/* .input-filter-minPrice input::-moz-range-thumb,
 .input-filter-maxPrice input::-moz-range-thumb {
   width: 1rem;
   height: 1rem;
   background: var(--turquoise-232f3e);
   cursor: pointer;
   border-radius: 50%;
-}
+} */
 
 button[type="submit"],
 .button-filter-reset {
