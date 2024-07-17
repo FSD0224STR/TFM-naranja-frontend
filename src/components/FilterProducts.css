@@ -49,11 +49,11 @@
   line-height: 1;
 }
 
-.input-filter-category select {
+/* .input-filter-category select {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-}
+} */
 
 .input-filter-minPrice input,
 .input-filter-maxPrice input {
