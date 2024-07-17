@@ -3,7 +3,7 @@ import "./Login.css";
 import Button from "./Button";
 import { Link } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Form, Input } from "antd";
+import { Form, Input, message } from "antd";
 import { login } from "../apiService/userApi";
 import { useNavigate } from "react-router-dom";
 
@@ -35,6 +35,7 @@ const Login = () => {
     if (response.error) {
       if (response.error === "Unauthorized")
         setError("Usuario o contraseña incorrecta");
+      message.error("Usuario o contraseña incorrecta");
     } else {
       const { token } = response;
       localStorage.setItem("token", token);

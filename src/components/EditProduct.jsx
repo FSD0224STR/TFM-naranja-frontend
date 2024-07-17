@@ -14,8 +14,6 @@ import {
   Select,
   TreeSelect,
   message,
-  Popconfirm,
-  Upload,
   Modal,
 } from "antd";
 import { ProductContext } from "../context/ProductContext";
@@ -82,7 +80,7 @@ const EditProduct = () => {
       setUser(response.data.user);
 
       if (response.error) {
-        console.error("Error al obtener producto:", response.error);
+        message.error("Error al obtener producto");
       } else {
         form.setFieldsValue({
           product: response.data.product,
@@ -96,7 +94,7 @@ const EditProduct = () => {
         });
       }
     } catch (error) {
-      console.error("Error al ejecutar findOneProduct:");
+      message.error("Error al ejecutar funcion de obtener un producto");
     }
   };
 
@@ -122,13 +120,13 @@ const EditProduct = () => {
       const response = await editProduct(slug, productData);
 
       if (response.error) {
-        console.error("Error al editar producto:", response.error);
+        message.error("Error al editar producto");
       } else {
         refresh(!dummy);
         setIsDisabled(!isDisabled);
       }
     } catch (error) {
-      console.error("Error al ejecutar editProduct:");
+      message.error("Error al ejecutando funcion de añadir producto");
     }
   };
 
@@ -149,12 +147,12 @@ const EditProduct = () => {
       const response = await deleteProduct(slug);
 
       if (response.error) {
-        console.error("Error al borrar producto:", response.error);
+        message.error("Error al borrar producto");
       } else {
         navigate("/listProducts");
       }
     } catch (error) {
-      console.error("Error al ejecutar deleteProduct");
+      message.error("Error al ejecutando funcion de borrado");
     }
     setIsModalVisible(false);
   };

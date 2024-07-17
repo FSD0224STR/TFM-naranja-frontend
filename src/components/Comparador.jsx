@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { findProducts } from "../apiService/productApi";
 import ComparadorInputs from "./ComparadorInputs";
-import { Card, Descriptions, Row, Col } from "antd";
+import { Row, Col, message } from "antd";
 import Button from "./Button";
 import ComparadorCard from "./ComparadorCard.jsx";
 
@@ -50,7 +50,7 @@ function Comparador() {
       ]);
       setError(null);
     } catch (error) {
-      console.error("Error fetching products:", error);
+      message.error("Error recuperando productos");
       setError("Error fetching products. Please try again.");
       setComparisonResults([]);
     }
@@ -75,14 +75,14 @@ function Comparador() {
           Comparador de Productos
         </h1>
         <ComparadorInputs onInputChange={setProductNames} />
-        <Button color='primary' type='primary' onClick={handleCompare}>
+        <Button color="primary" type="primary" onClick={handleCompare}>
           Comparar
         </Button>
       </div>
       <div
         style={{ marginTop: "16px", textAlign: "center", marginBottom: "40px" }}
       >
-        <Row gutter={16} justify='center'>
+        <Row gutter={16} justify="center">
           {comparisonResults.map((product, index) => (
             <Col span={8} key={index}>
               <ComparadorCard

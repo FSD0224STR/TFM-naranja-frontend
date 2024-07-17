@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import {
   findAllergens,
   findBrand,
@@ -7,6 +6,7 @@ import {
   findOrigin,
 } from "../apiService/productApi";
 import { findCategories } from "../apiService/categoryApi";
+import { message } from "antd";
 
 export const ProductContext = React.createContext();
 
@@ -22,8 +22,8 @@ export const ProductContextProvider = ({ children }) => {
       const response = await findCategories();
 
       if (response.error) {
-        console.error(
-          "Error al listar categorias del producto:",
+        message.error(
+          "Error al listar categorias del producto",
           response.error
         );
       } else {
@@ -31,7 +31,7 @@ export const ProductContextProvider = ({ children }) => {
         setCategoryOptions(data);
       }
     } catch (error) {
-      console.error("Error al ejecutar findCategories:");
+      message.error("Error al ejecutar funcion de obtener categorías");
     }
   };
 
@@ -40,13 +40,13 @@ export const ProductContextProvider = ({ children }) => {
       const response = await findBrand();
 
       if (response.error) {
-        console.error("Error al listar marca del producto:", response.error);
+        message.error("Error al listar marca del producto");
       } else {
         const data = Array.isArray(response.data) ? response.data : [];
         setBrandOptions(data);
       }
     } catch (error) {
-      console.error("Error al ejecutar findBrands:");
+      message.error("Error al ejecuta funcion recuperar marcas");
     }
   };
 
@@ -55,13 +55,13 @@ export const ProductContextProvider = ({ children }) => {
       const response = await findOrigin();
 
       if (response.error) {
-        console.error("Error al listar origen del producto:", response.error);
+        message.error("Error al listar origen del producto:", response.error);
       } else {
         const data = Array.isArray(response.data) ? response.data : [];
         setOriginOptions(data);
       }
     } catch (error) {
-      console.error("Error al ejecutar findOrigin:");
+      message.error("Error al ejecutar funcion recuperar origen de producto");
     }
   };
 
@@ -70,13 +70,15 @@ export const ProductContextProvider = ({ children }) => {
       const response = await findAllergens();
 
       if (response.error) {
-        console.error("Error al listar alergenos:", response.error);
+        message.error("Error al listar alergenos");
         setError(response.error);
       } else {
         setAllergensData(response.data);
       }
     } catch (error) {
-      console.error("Error al ejecutar findAllergens:");
+      message.error(
+        "Error al ejecutar funcion recuperar alergenos del producto"
+      );
     }
   };
 
@@ -85,12 +87,12 @@ export const ProductContextProvider = ({ children }) => {
       const response = await findIngredients();
 
       if (response.error) {
-        console.error("Error al listar ingredientes:", response.error);
+        message.error("Error al listar ingredientes");
       } else {
         setIngredientsData(response.data);
       }
     } catch (error) {
-      console.error("Error al ejecutar findIngredients:");
+      message.error("Error al ejecutar recuperar ingredientes del producto");
     }
   };
 

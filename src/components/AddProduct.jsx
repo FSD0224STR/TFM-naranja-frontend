@@ -15,7 +15,6 @@ import ImgUpload from "./ImgUpload";
 import { ProductContext } from "../context/ProductContext";
 import "./AddProduct.css";
 import BreadCrumb from "./BreadCrumb";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/LogContext";
 
 const formItemLayout = {
@@ -52,7 +51,6 @@ const AddProduct = () => {
     images: [],
     user: "",
   });
-  const navigate = useNavigate();
 
   const onSetImages = (newImages) =>
     setProductData((prev) => ({ ...prev, images: newImages }));
@@ -76,14 +74,13 @@ const AddProduct = () => {
       const response = await addProduct(productData);
 
       if (response.error) {
-        console.error("Error al añadir producto:", response.error);
+        message.error("Error al añadir producto:", response.error);
       } else {
         openNotificationWithIcon("success");
         form.resetFields();
-        // navigate(`/detailsProduct/${productData}`);
       }
     } catch (error) {
-      console.error("Error al añadir producto:", error);
+      message.error("Error al intentar añadir producto");
     }
   };
 

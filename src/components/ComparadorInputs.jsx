@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { fetchSuggestions } from "../apiService/productApi";
 import "./ComparadorInputs.css";
+import { message } from "antd";
 
 const ComparadorInputs = ({ onInputChange }) => {
   const [inputs, setInputs] = useState([
@@ -66,7 +67,7 @@ const ComparadorInputs = ({ onInputChange }) => {
         setSuggestions(fetchedSuggestions);
         setActiveIndex(-1);
       } catch (error) {
-        console.error("Error fetching suggestions:", error);
+        message.error("Error recuperando sugerencias");
         setSuggestions([]);
       }
     } else {
@@ -93,11 +94,11 @@ const ComparadorInputs = ({ onInputChange }) => {
   };
 
   return (
-    <div className='comparador-inputs'>
+    <div className="comparador-inputs">
       {inputs.map((input, index) => (
         <div key={input.id}>
           <input
-            type='text'
+            type="text"
             value={input.value}
             onChange={(event) => handleInputChange(index, event)}
             onFocus={() => setCurrentInputIndex(index)} // Set the current input index on focus
@@ -105,7 +106,7 @@ const ComparadorInputs = ({ onInputChange }) => {
         </div>
       ))}
       {suggestions.length > 0 && (
-        <ul className='suggestions-list'>
+        <ul className="suggestions-list">
           {suggestions.map((suggestion, index) => (
             <li
               key={index}
