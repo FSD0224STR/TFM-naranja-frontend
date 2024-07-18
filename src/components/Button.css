@@ -19,10 +19,6 @@
   border: none;
   transition: background-color 0.3s ease;
 }
-/* .button:hover {
-  background-color: var(--lightblue-feb569);
-  color: #131921;
-} */
 
 .button.primary {
   background-color: var(--darkBlue-febd69);
