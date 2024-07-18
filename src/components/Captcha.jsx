@@ -1,4 +1,4 @@
-/*import React from "react";
+import React from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 
 const Captcha = ({ onChange }) => {
@@ -16,12 +16,4 @@ const Captcha = ({ onChange }) => {
   );
 };
 
-export default Captcha; */
-
-
-
-
-// 6Lelgf4pAAAAAK5JC3Ihag_ca8stfLRxjnRuwxXU CLAVE WEB
-
-
-// 6Lelgf4pAAAAAI60WioxReT7EydWWJ-4jUKkGDXH CLAVE SECRETA
+export default Captcha;

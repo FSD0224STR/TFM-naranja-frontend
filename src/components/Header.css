@@ -48,7 +48,6 @@
 .search-input {
   padding: 10px;
   border: none;
-  /* background-color: var(--lightblue-feb569), rgb(4, 212, 212), lightblue; */
   color: var(--darkBlue-febd69);
   border-radius: 25px !important;
   width: 500px;
@@ -63,7 +62,6 @@
 .search-container {
   position: relative;
   display: inline-block;
-  /* border: 1px solid #ccc; */
   border-radius: 25px;
   overflow: hidden;
 }

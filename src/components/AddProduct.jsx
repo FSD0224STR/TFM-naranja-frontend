@@ -80,7 +80,6 @@ const AddProduct = () => {
       } else {
         openNotificationWithIcon("success");
         form.resetFields();
-        // navigate(`/detailsProduct/${productData}`);
       }
     } catch (error) {
       console.error("Error al añadir producto:", error);

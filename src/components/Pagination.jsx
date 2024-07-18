@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import { Pagination } from "antd";
 
 const Paginate = ({ total, current, pageSize, onChange }) => {
