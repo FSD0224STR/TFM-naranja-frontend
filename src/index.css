@@ -16,7 +16,6 @@ a {
   cursor: pointer;
 }
 .container {
-  /* padding-left: 10%; */
   padding-right: 10%;
   margin: 50;
 }
@@ -34,7 +33,6 @@ a {
   cursor: pointer;
   transition: border-color 0.25s;
 }
-/* new for Responsive/// */
 
 a {
   font-weight: 500;

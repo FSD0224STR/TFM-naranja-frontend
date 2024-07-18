@@ -17,13 +17,11 @@
 
 .footer .container .top {
   display: flex;
-  /* justify-content: space-between; */
   column-gap: 50px;
 }
 .footer .container .top .item {
   display: grid;
   flex-direction: column;
-  /* gap: 10px; */
 }
 .footer .container .top .item h2 {
   font-size: 16px;

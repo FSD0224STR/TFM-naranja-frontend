@@ -23,22 +23,16 @@ const CategoryCard = ({ category }) => {
       }}
     >
       <Typography.Title level={2}>{category.category}</Typography.Title>
-      {/* <Typography.Text>{text}</Typography.Text> */}
       <br />
       <br />
 
       <Button
         onClick={() => navigate(`/listProducts/${category.category}`)}
-        color='white'
-        type='primary'
+        color="white"
+        type="primary"
         style={{ marginTop: 90 }}
       >
         Ver ahora
-        {/* {typeof subtitle === "tring"? (
-            <span style={{ marginLeft: 10, color: "#FF69B4" }}>{subtitle}</span>
-          ) : (
-            subtitle
-          )} */}
       </Button>
     </Card>
   );

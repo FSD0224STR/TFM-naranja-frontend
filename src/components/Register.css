@@ -1,35 +1,28 @@
- *{
- justify-content: center;
-} 
+* {
+  justify-content: center;
+}
 
 :root {
-  --primary-color: #007bff; 
-  --secondary-color: #6c757d; 
-  --background-color: #f7f7f7; 
-  --form-item-spacing: 1rem; 
-  --container-max-width: 900px; 
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --background-color: #f7f7f7;
+  --form-item-spacing: 1rem;
+  --container-max-width: 900px;
 }
 
-.form__container{
- /* display: flex;
- justify-content: center; */
- padding: 0px !important;
- margin: 0px !important;
+.form__container {
+  padding: 0px !important;
+  margin: 0px !important;
 }
-
 
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* height: 100vh; */
-  /* background-color: white; */
-  text-align:center;
+  text-align: center;
   padding: 0px !important;
- /* margin: 100px !important; */
-margin-top: 10vh;
-margin-bottom: 10vh;
-
+  margin-top: 10vh;
+  margin-bottom: 10vh;
 }
 
 form.ant-form {
@@ -38,19 +31,16 @@ form.ant-form {
   padding: 32px;
   background-color: #fff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  display:list-item;
+  display: list-item;
   justify-content: center;
-  align-items: center; 
- max-width: 400px;
+  align-items: center;
+  max-width: 400px;
 }
 
 .ant-form-item {
   margin-bottom: 16px;
   justify-content: center;
   align-items: center;
-/* width: 500px !important; */
-/* padding: 0% !important; */
-
 }
 
 .ant-form-item-control-input-content {
@@ -64,9 +54,8 @@ form.ant-form {
 .ant-input,
 .ant-select {
   border-radius: 25px !important;
-width: 100vh;
+  width: 100vh;
   height: 44px;
-  /* padding: 0 12px; */
   font-size: 16px;
   line-height: 44px;
   color: #333;
@@ -80,81 +69,13 @@ width: 100vh;
   border-color: #40a9ff;
   box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
   border-radius: 25px;
-
 }
 .ant-row .ant-form-item-row {
   margin-right: 0;
   border-radius: 25px;
-width: 100vh;
-
-
+  width: 100vh;
 }
 
- .Register__btn {
+.Register__btn {
   width: 300px !important;
-  /* height: 44px;
-  padding: 0 24px;
-  font-size: 16px;
-  line-height: 44px;
-  border-radius: 4px;
-  color: #fff;
-  background-color: #1890ff;
-  border-color: #1890ff; */
-}
-/*
-.ant-btn:hover {
-  background-color: #40a9ff;
-  border-color: #40a9ff;
-}
-
-.ant-btn-disabled,
-.ant-btn-disabled:hover {
-  background-color: #e6e6e6;
-  border-color: #e6e6e6;
-  color: #c3c3c3;
-} 
-
-.captcha-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 44px;
-  background-color: #f5f5f5;
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
-}
-
-.captcha-img {
-  height: 32px;
-  margin-right: 8px;
-}
-
-.captcha-input {
-  height: 32px;
-  padding: 0 12px;
-  font-size: 16px;
-  line-height: 32px;
-  color: #333;
-  border: none;
-  outline: none;
-  flex: 1;
-}
-
-.captcha-input:focus {
-  box-shadow: none;
-}
-
-
-/*.form-register {
-  margin: 1.5rem;
-}
-
-.container {
-  margin-top: 50px;
-  display: flex;
-  justify-content: center;
-}
-
-#form__container {
-  width: 100%;
 }
