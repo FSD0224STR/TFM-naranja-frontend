@@ -20,7 +20,6 @@
 }
 
 .product-title {
-  /* width:fit-content; */
   padding-bottom: 30px;
   font-size: 46px;
   font-weight: bold;
@@ -53,5 +52,5 @@
 
 .detail-item label {
   font-weight: bold;
-  /*   margin-bottom: 1rem; */
+  margin-bottom: 0.5rem;
 }
