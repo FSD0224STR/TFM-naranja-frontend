@@ -36,14 +36,14 @@ const Header = () => {
   };
 
   return (
-    <header className='header'>
-      <div className='logo'>
-        <Link to='/'>
-          <img src={logo} alt='Comparador' />
+    <header className="header">
+      <div className="logo">
+        <Link to="/">
+          <img src={logo} alt="Comparador" />
         </Link>
       </div>
       <br />
-      <div className='search-container'>
+      {/* <div className='search-container'>
         <input
           type='text'
           value={searchTerm}
@@ -54,40 +54,40 @@ const Header = () => {
         <button className='search-button'>
           <IoSearch />
         </button>
-      </div>
-      <div className='header-links'>
+      </div> */}
+      <div className="header-links">
         {isLoggedIn ? (
           <>
-            <Link to='/comparador'>Comparador</Link>
-            <Link to='/addProduct'>Add Product</Link>
-            <Link to='/listProducts'>List Products</Link>
-            <Link to='/profile'>
+            <Link to="/comparador">Comparador</Link>
+            <Link to="/addProduct">Add Product</Link>
+            <Link to="/listProducts">List Products</Link>
+            <Link to="/profile">
               <MdPerson />
             </Link>
-            <Link to='#' onClick={handleConfirm}>
+            <Link to="#" onClick={handleConfirm}>
               <RiLogoutBoxRLine />
             </Link>
           </>
         ) : (
           <>
-            <Link to='/register'>Register</Link>
-            <Link to='/login'>Login</Link>
+            <Link to="/register">Register</Link>
+            <Link to="/login">Login</Link>
           </>
         )}
       </div>
       {showConfirm && (
-        <div className='confirm-box'>
-          <div className='confirm-content'>
+        <div className="confirm-box">
+          <div className="confirm-content">
             <h2>Confirm Logout</h2>
             <p>
               <small>
                 Adiós! but don't forget to come back for more chorizo 😉
               </small>
             </p>
-            <Button color='red' onClick={handleLogout}>
+            <Button color="red" onClick={handleLogout}>
               Yes, Logout
             </Button>
-            <Button color='primary' onClick={handleCancel}>
+            <Button color="primary" onClick={handleCancel}>
               Cancel
             </Button>
           </div>
