@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "./Login.css";
 import Button from "./Button";
 import { Link } from "react-router-dom";
@@ -20,7 +20,7 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
-  const { login: loginContext, setIsAdmin, userData } = useAuth();
+  const { login: loginContext, setIsAdmin, userData, getDataUser } = useAuth();
 
   const {
     socket,
@@ -43,15 +43,19 @@ const Login = () => {
       setError("");
       setMessagesList([]);
 
-      if (userData.isAdmin) {
-        await adminJoinRandomRoom(userData.firstname);
-        socket.current.emit("adminConnect", userData.firstname);
-      } else {
-        joinPrivateRoom();
-        setIsUserConnect(true);
-      }
-      setIsAdmin(userData.isAdmin);
-      navigate("/");
+      await getDataUser(email);
+
+      setTimeout(() => {
+        if (userData.isAdmin) {
+          adminJoinRandomRoom(userData.firstname);
+          socket.current.emit("adminConnect", userData.firstname);
+        } else {
+          joinPrivateRoom();
+          setIsUserConnect(true);
+        }
+        setIsAdmin(userData.isAdmin);
+        navigate("/");
+      }, 1000);
     }
   };
 
