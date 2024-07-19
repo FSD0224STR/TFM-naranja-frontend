@@ -34,27 +34,28 @@ export const findProducts = async (searchTerm) => {
     }
   );
 
+  console.log("Response status:", response.status);
+
   if (!response.ok) {
     const error = await response.json();
+    console.error("Error response:", error);
     throw new Error(error.message);
   }
 
   const products = await response.json();
+  console.log("Products returned:", products);
   return products;
 };
 
-export const fetchSuggestions = async (query, category) => {
+export const fetchSuggestions = async (query) => {
   try {
     const token = localStorage.getItem("token");
     const sanitizedQuery = query
       .toLowerCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "");
-    let url = `${URL}/suggestions?query=${encodeURIComponent(sanitizedQuery)}`;
 
-    if (category) {
-      url += `&category=${encodeURIComponent(category)}`;
-    }
+    const url = `${URL}/suggestions?query=${encodeURIComponent(sanitizedQuery)}`;
 
     const response = await fetch(url, {
       headers: {
@@ -63,15 +64,18 @@ export const fetchSuggestions = async (query, category) => {
     });
 
     if (!response.ok) {
-      throw new Error("Error al obtener sugerencias");
+      const errorDetails = await response.text();
+      throw new Error(`Error al obtener sugerencias: ${errorDetails}`);
     }
 
-    return response.json();
+    return await response.json();
   } catch (error) {
     console.error("Error fetching suggestions:", error);
     throw error;
   }
 };
+
+
 
 export const findAllProducts = async () => {
   const token = localStorage.getItem("token");
