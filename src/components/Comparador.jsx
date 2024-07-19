@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { findProducts } from "../apiService/productApi";
 import ComparadorInputs from "./ComparadorInputs";
-import { Card, Descriptions, Row, Col } from "antd";
+import { Row, Col, message } from "antd";
 import Button from "./Button";
 import './Comparador.css'; // Asegúrate de importar el archivo CSS
 
@@ -50,7 +50,7 @@ function Comparador() {
       setError(null);
       comparadorInputsRef.current.resetInputs(); // Llamar a la función de reseteo
     } catch (error) {
-      console.error("Error fetching products:", error);
+      message.error("Error recuperando productos");
       setError("Error fetching products. Please try again.");
       setComparisonResults([]);
     }
@@ -82,7 +82,7 @@ function Comparador() {
       <div
         style={{ marginTop: "16px", textAlign: "center", marginBottom: "40px" }}
       >
-        <Row gutter={16} justify='center'>
+        <Row gutter={16} justify="center">
           {comparisonResults.map((product, index) => (
             <Col span={8} key={index}>
               <Card>

@@ -12,7 +12,6 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [profilePicture, setProfilePicture] = useState(userData.image);
-  const [formData, setFormData] = useState(userData);
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -28,9 +27,9 @@ const Profile = () => {
     setLoading(true);
 
     try {
+      const values = await form.validateFields();
       const response = await updateUser(userData._id, {
-        firstname: formData.firstname,
-        lastname: formData.lastname,
+        ...values,
         image: profilePicture,
       });
 
@@ -60,18 +59,12 @@ const Profile = () => {
 
   const handleCancel = () => {
     setIsEditing(false);
-    setFormData(userData);
     form.resetFields();
     setProfilePicture(userData.image);
   };
 
   const handleImageUpload = (imageUrl) => {
     setProfilePicture(imageUrl);
-  };
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
 
   return (
@@ -86,31 +79,20 @@ const Profile = () => {
             onFinish={handleUpdate}
             layout="vertical"
             className="profile-form"
+            initialValues={{
+              firstname: userData.firstname,
+              lastname: userData.lastname,
+              email: userData.email,
+            }}
           >
-            <Form.Item label="First Name">
-              <Input
-                className="profile-input"
-                value={formData.firstname}
-                onChange={handleInputChange}
-                name="firstname"
-              />
+            <Form.Item label="First Name" name="firstname">
+              <Input className="profile-input" />
             </Form.Item>
-            <Form.Item label="Last Name">
-              <Input
-                className="profile-input"
-                value={formData.lastname}
-                onChange={handleInputChange}
-                name="lastname"
-              />
+            <Form.Item label="Last Name" name="lastname">
+              <Input className="profile-input" />
             </Form.Item>
-            <Form.Item label="Email">
-              <Input
-                disabled
-                className="profile-input"
-                value={formData.email}
-                onChange={handleInputChange}
-                name="email"
-              />
+            <Form.Item label="Email" name="email">
+              <Input disabled className="profile-input" />
             </Form.Item>
             <Form.Item label="Profile Picture">
               <ImgUpload

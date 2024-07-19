@@ -55,7 +55,7 @@ const ImgUpload = ({ onSetImages }) => {
       setImagesPreview([]);
       onSetImages(imageUrls);
     } catch (error) {
-      console.error(error);
+      message.error("Error cargando imagenes en cloudinary");
       setUploading(false);
     }
   };

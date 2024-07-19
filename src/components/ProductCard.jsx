@@ -4,12 +4,7 @@ import { AiFillPlusCircle } from "react-icons/ai";
 import { FaCopy, FaRegCopy } from "react-icons/fa";
 import Button from "./Button";
 
-const ProductCard = ({
-  item,
-  handleLViewProduct,
-  handleLAddProductCart,
-  handleLAddToCopyList,
-}) => {
+const ProductCard = ({ item, handleLViewProduct, handleLAddProductCart }) => {
   const [isCopied, setIsCopied] = useState(false);
   const imageUrl =
     item.images && item.images.length > 0
@@ -27,7 +22,6 @@ const ProductCard = ({
         message.error("Copiar el product link falla.");
       });
     setIsCopied(!isCopied);
-    handleLAddToCopyList(item);
   };
 
   return (
@@ -58,12 +52,12 @@ const ProductCard = ({
         overflow: "hidden",
       }}
     >
-      <Tooltip title='Copy Product Link'>
+      <Tooltip title="Copy Product Link">
         <span style={{ marginLeft: 10 }}>
           {isCopied ? (
-            <FaCopy size={20} color='#FF69B4' />
+            <FaCopy size={20} color="#FF69B4" />
           ) : (
-            <FaRegCopy size={20} color='#FF69B4' onClick={handleCopyProduct} />
+            <FaRegCopy size={20} color="#FF69B4" onClick={handleCopyProduct} />
           )}
         </span>
       </Tooltip>
@@ -82,8 +76,8 @@ const ProductCard = ({
         }}
       >
         <Button
-          color='white'
-          type='primary'
+          color="white"
+          type="primary"
           onClick={() => handleLViewProduct(item.slug)}
           style={{
             display: "flex",
@@ -95,12 +89,12 @@ const ProductCard = ({
           View Details
         </Button>
 
-        <Tooltip style={{ color: "#1877f2" }} title='Add Product to Compare'>
+        <Tooltip style={{ color: "#1877f2" }} title="Add Product to Compare">
           <span>
             <AiFillPlusCircle
               onClick={() => handleLAddProductCart(item)}
               size={26}
-              color='#1877f2'
+              color="#1877f2"
             />
           </span>
         </Tooltip>
