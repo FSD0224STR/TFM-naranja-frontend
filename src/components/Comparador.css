@@ -1,3 +1,5 @@
+/* Comparador.css */
+
 .hero-section {
   display: flex;
   flex-direction: column;
@@ -63,4 +65,30 @@ input[type="text"],
   .compare-button {
     width: 48%;
   }
+}
+
+/* Nuevas clases para los estilos de comparación */
+
+.price-high {
+  color: red !important;
+}
+
+.price-low {
+  color: green !important;
+}
+
+.allergens-high {
+  color: red !important;
+}
+
+.allergens-low {
+  color: green !important;
+}
+
+.ingredients-low {
+  color: red !important;
+}
+
+.ingredients-high {
+  color: green !important;
 }
