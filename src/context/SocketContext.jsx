@@ -19,11 +19,7 @@ export const SocketContextProvider = ({ children }) => {
 
   // Eventos en espera a ser llamados desde el backend para actualizar el listado de mensajes con los nuevos que llegan
   useEffect(() => {
-    const backendUrl = import.meta.env.VITE_BACKEND;
-    console.log("Conectando al backend en:", backendUrl);
-    socket.current = io(backendUrl, {
-      withCredentials: true,
-    });
+    socket.current = io(import.meta.env.VITE_BACKEND);
 
     socket.current.on("privateMessage", (msg, typeUser) => {
       setMessagesList((prevMessages) => [...prevMessages, { msg, typeUser }]);
