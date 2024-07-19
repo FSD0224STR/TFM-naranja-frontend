@@ -1,0 +1,60 @@
+.login-form {
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  border-radius: 25px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  display: flex;
+}
+
+.site-form-item-icon {
+  color: #1890ff;
+}
+
+.input-login {
+  height: 40px;
+  border-radius: 25px;
+  border: 1px solid #d9d9d9;
+  padding: 0 10px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.forget-link {
+  margin: 10px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.forget-password {
+  color: #1890ff;
+}
+
+.login-form-button {
+  display: flex;
+  height: 40px;
+  width: 100%;
+  border-radius: 4px;
+  background-color: #1890ff;
+  color: #fff;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.register {
+  width: 100%;
+  height: 40px;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #388cdb !important;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.error {
+  color: red;
+}

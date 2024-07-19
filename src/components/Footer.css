@@ -1,0 +1,109 @@
+.footer {
+  display: flex;
+  justify-content: center;
+  color: #ffffff;
+  margin: 0px 0px;
+  background-color: var(--darkBlue-febd69);
+}
+
+.footer .container {
+  min-width: 100%;
+  background-color: var(--darkBlue-febd69);
+  padding: 50px;
+  margin: 40px;
+
+  column-gap: 80px;
+}
+
+.footer .container .top {
+  display: flex;
+  column-gap: 50px;
+}
+.footer .container .top .item {
+  display: grid;
+  flex-direction: column;
+}
+.footer .container .top .item h2 {
+  font-size: 16px;
+  color: #ffffff;
+}
+.footer .container .top .item span {
+  font-weight: 300;
+}
+
+.footer .container .bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer .container .bottom .left {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.footer .container .bottom .left span {
+  font-size: 13px;
+  white-space: nowrap;
+}
+.footer .container .bottom .right {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  column-gap: 60px;
+}
+.footer .container .bottom .right .social {
+  display: flex;
+  color: #ffffff;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .footer .container {
+    padding: 30px;
+    column-gap: 40px;
+  }
+  .footer .container .top {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .footer .container .top .item {
+    gap: 5px;
+  }
+  .footer .container .bottom {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .footer .container .bottom .left {
+    gap: 10px;
+  }
+  .footer .container .bottom .right {
+    gap: 20px;
+  }
+  .footer .container .bottom .right .social {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer .container {
+    padding: 20px;
+    column-gap: 20px;
+  }
+  .footer .container .top .item {
+    gap: 2px;
+  }
+  .footer .container .bottom .left {
+    gap: 5px;
+  }
+  .footer .container .bottom .right {
+    gap: 10px;
+  }
+  .footer .container .bottom .right .social {
+    gap: 5px;
+  }
+  .footer .container .bottom .right .link {
+    display: none;
+  }
+}
