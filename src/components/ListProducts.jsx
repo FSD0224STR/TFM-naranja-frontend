@@ -11,6 +11,7 @@ import { CartContext } from "../context/CartContext";
 import BreadCrumb from "./BreadCrumb";
 import ProductCard from "./ProductCard";
 import FilterProducts from "./FilterProducts";
+import { message } from "antd";
 
 const ListProducts = () => {
   const [products, setProducts] = useState([]);
@@ -36,7 +37,7 @@ const ListProducts = () => {
       response = await findAllProducts();
     }
     if (response.error) {
-      console.error("Error al listar productos:", response.error);
+      message.error("Error al listar productos");
     } else {
       setProducts(response.data);
     }

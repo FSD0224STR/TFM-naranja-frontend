@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUser } from "../apiService/userApi";
+import { message } from "antd";
 
 const AuthContext = createContext();
 
@@ -20,7 +21,7 @@ export const AuthProvider = ({ children }) => {
     const response = await getUser(email);
 
     if (response.error) {
-      console.error("No puedo verificar el usuario");
+      message.error("No puedo verificar el usuario");
     } else {
       setUserData(response.data);
     }
@@ -63,7 +64,7 @@ export const AuthProvider = ({ children }) => {
       );
       return JSON.parse(jsonPayload);
     } catch (error) {
-      console.error("Error decoding token:", error);
+      message.error("Error decoding token:", error);
       return null;
     }
   };

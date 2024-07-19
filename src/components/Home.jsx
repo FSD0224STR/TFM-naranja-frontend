@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { findCategories } from "../apiService/categoryApi";
 import CategoryCard from "./CategoryCard";
 import { Link } from "react-router-dom";
+import { message } from "antd";
 
 const Home = () => {
   const [categories, setCategories] = useState([]);
@@ -10,7 +11,7 @@ const Home = () => {
   const fetchCategories = async () => {
     const response = await findCategories();
     if (response.error) {
-      console.error("Error al obtener categorías:", response.error);
+      message.error("Error al obtener categorías");
     } else {
       setCategories(response.data);
     }

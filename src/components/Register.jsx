@@ -48,11 +48,11 @@ const Register = () => {
   const handleRegister = async (email, password, firstname, lastname) => {
     const response = await register(email, password, firstname, lastname);
     // if (!isHuman) {
-    //   console.error("Por favor, complete el CAPTCHA");
+    //   message.error("Por favor, complete el CAPTCHA");
     //   return;
     // }
     if (response.error) {
-      console.error("Error al registrar usuario:", response.error);
+      message.error("Error al registrar usuario");
     } else {
       const token = response.data;
       localStorage.setItem("token", token);

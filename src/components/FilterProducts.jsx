@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { getFilterProducts } from "../apiService/productApi";
 import { ProductContext } from "../context/ProductContext";
 import "./FilterProducts.css";
+import { message } from "antd";
 
 const FilterProducts = ({ setProducts, setTotalProducts, defaultCategory }) => {
   const valueMinPrice = 1;
@@ -12,14 +13,12 @@ const FilterProducts = ({ setProducts, setTotalProducts, defaultCategory }) => {
   const [minPrice, setMinPrice] = useState(valueMinPrice);
   const [maxPrice, setMaxPrice] = useState(valueMaxPrice);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const { categoryOptions, handleLFindCategories } = useContext(ProductContext);
 
   const handleFilter = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
 
     try {
       const response = await getFilterProducts({
@@ -32,7 +31,7 @@ const FilterProducts = ({ setProducts, setTotalProducts, defaultCategory }) => {
       setTotalProducts(response.data.length);
       resetFilter();
     } catch (err) {
-      setError("Error fetching products: ", err);
+      message.error("Error filtrando productos");
     } finally {
       setLoading(false);
     }
