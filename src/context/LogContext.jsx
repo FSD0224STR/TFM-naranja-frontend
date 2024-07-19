@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
     if (response.error) {
       console.error("No puedo verificar el usuario");
     } else {
-      setUserData(response.data);
+      setUserData(() => response.data);
     }
   };
 
@@ -71,8 +71,9 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const data = getTokenData();
     if (data) {
-      getDataUser(data.email);
-      setIsAdmin(userData.isAdmin);
+      getDataUser(data.email).then(() => {
+        setIsAdmin(userData.isAdmin);
+      });
     }
   }, []);
 
