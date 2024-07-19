@@ -42,7 +42,7 @@ const Register = () => {
       return;
     }
     handleRegister(name, lastName, email, password);
-    message.success("Registration successful!");
+    // message.success("Registration successful!");
   };
 
   const handleRegister = async (email, password, firstname, lastname) => {
@@ -54,10 +54,11 @@ const Register = () => {
     if (response.error) {
       message.error("Error al registrar usuario");
     } else {
-      const token = response.data;
-      localStorage.setItem("token", token);
-      setIsLoggedIn(true);
-      navigate("/");
+      message.success("Registro correcto");
+      // const token = response.data;
+      // localStorage.setItem("token", token);
+      // setIsLoggedIn(true);
+      // navigate("/");
     }
   };
 
