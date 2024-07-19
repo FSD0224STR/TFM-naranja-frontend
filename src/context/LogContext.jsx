@@ -44,7 +44,6 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       return decodeToken(token);
     }
-    console.error("Error decoding token:");
     return null;
   };
 
