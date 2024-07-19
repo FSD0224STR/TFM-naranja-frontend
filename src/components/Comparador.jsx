@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { findProducts } from "../apiService/productApi";
 import ComparadorInputs from "./ComparadorInputs";
-import { Row, Col, message, Card } from "antd";
+import { Row, Col, message, Card, Descriptions } from "antd";
 import Button from "./Button";
 import "./Comparador.css"; // Asegúrate de importar el archivo CSS
 
